@@ -1,0 +1,86 @@
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s
+}
+.fade-enter, .fade-leave-active {
+  opacity: 0
+}
+
+.datepicker-slide-enter-active, .datepicker-slide-leave-active {
+  	opacity: 1;
+	transform: translateY(0);
+	transition: all 0.3s ease;
+}
+.datepicker-slide-enter, .datepicker-slide-leave-active {
+  	opacity: 0;
+	transform: translateY(-15px);
+}
+
+.slidev-enter-active,
+.slidev-leave-active {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	opacity: 1;
+	transform: translateX(0);
+	transition: all .3s ease-out;
+}
+.slidev-leave-to , .slidev-enter{  opacity: 0;  }
+.direction-next{
+	.slidev-leave-to {  transform: translateX(100%);  }
+	.slidev-enter    {  transform: translateX(-100%);  }
+}
+.direction-prev{
+	.slidev-leave-to {  transform: translateX(-100%);  }
+	.slidev-enter    {  transform: translateX(100%);  }
+}
+
+
+.slideh-enter-active,
+.slideh-leave-active {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	opacity: 1;
+	transform: translateY(0);
+	transition: all .3s ease-in-out;
+}
+.slideh-leave-to , .slideh-enter{  opacity: 0;  }
+.direction-next{
+	.slideh-leave-to {  transform: translateY(100%);  }
+	.slideh-enter    {  transform: translateY(-100%);  }
+}
+.direction-prev{
+	.slideh-leave-to {  transform: translateY(-100%);  }
+	.slideh-enter    {  transform: translateY(100%);  }
+}
+
+
+
+.fade-transition {
+	opacity: 1;
+	transition: all 0.3s ease;
+}
+
+.fade-enter, .fade-leave {
+	opacity: 0;
+}
+
+
+.fast-updating {
+	.slideh-enter-active,
+	.slideh-leave-active {
+		transition: all 170ms ease-in-out;
+	}
+	.direction-next{
+		.slideh-leave-to {  transform: translateY(45%);  }
+		.slideh-enter    {  transform: translateY(-5%);  }
+	}
+	.direction-prev{
+		.slideh-leave-to {  transform: translateY(-45%);  }
+		.slideh-enter    {  transform: translateY(5%);  }
+	}
+}

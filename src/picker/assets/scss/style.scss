@@ -1,0 +1,494 @@
+@import 'variables';
+@import 'transitions';
+
+
+.clearfix{
+	&:after, &:before{
+		content: " ";
+		display: table;
+	}
+	&:after {
+		clear: both;
+	}
+}
+
+
+.#{$prefix}input-group{
+	display: table;
+	width: 100%;
+
+	border: solid 1px #bdbdbd;
+
+	.#{$prefix}icon-btn{
+		display: table-cell;
+		width: 1%;
+		cursor: pointer;
+		padding: 0 10px;
+		vertical-align: middle;
+		> svg{
+			vertical-align: middle;
+		}
+	}
+	input{
+		display: table-cell;
+		border: none ;
+		border-top-right-radius: 0 ;
+		border-bottom-right-radius: 0 ;
+	}
+}
+
+.#{$prefix}wrapper{
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0, 0.5);
+	z-index: 9999;
+}
+
+.fade-scale-enter-active, .fade-scale-leave-active {
+	transition: opacity .5s
+}
+.fade-scale-enter, .fade-scale-leave-active {
+	opacity: 0;
+	.#{$prefix}content{
+		transform: scale(0.7, 0.7);
+		opacity: 0;
+	}
+}
+
+.#{$prefix}container{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+}
+
+.#{$prefix}content {
+
+	opacity: 1;
+	transition: all .4s cubic-bezier(0.25, 0.1, 0.17, 1.84);
+	text-align: right;
+	direction: rtl;
+	width: $width;
+
+	background-color: #ffffff;
+	-webkit-box-shadow: 5px 22px 95px -14px rgba(0,0,0,1);
+	-moz-box-shadow: 5px 22px 95px -14px rgba(0,0,0,1);
+	box-shadow: 5px 22px 95px -14px rgba(0,0,0,1);
+	cursor: default;
+}
+
+.#{$prefix}header {
+	color: #ffffff;
+	padding: 10px 20px;
+	position: relative;
+	&.landscape {
+		height: 374px;
+		width: 165px;
+		float: left;
+	}
+}
+
+.#{$prefix}body {
+	position: relative;
+	.landscape {
+		float: left;
+	}
+}
+
+.#{$prefix}year-label {
+	margin-bottom: 2px;
+	position: relative;
+	height: 24px;
+	opacity: 0.7;
+	overflow: hidden;
+	cursor: pointer;
+	font-size: 16px;
+
+	> span {
+		display: inline-block;
+		padding: 0 10px;
+		line-height: 22px;
+		height: 22px;
+		border-width: 1px;
+		border-style: solid;
+		border-radius: 2px;
+		transition: all 0.1s ease-out;
+		&:not(:hover){
+			border-color: transparent !important;
+			color: inherit !important;
+		}
+	}
+}
+
+.#{$prefix}date {
+	position: relative;
+	font-size: 28px;
+	line-height: 40px;
+	height: 40px;
+	overflow: hidden;
+
+	span {
+		display: block;
+		height: inherit;
+		line-height: inherit;
+	}
+
+	&.landscape {
+		line-height: 40px;
+		height: 80px;
+	}
+}
+
+.#{$prefix}week {
+	font-size: 12px;
+	padding: 0 14px;
+	line-height: 20px;
+	color: #b9b9b9;
+	margin-bottom: 10px;
+	height: 20px;
+}
+
+.#{$prefix}weekday {
+	float: right;
+	width: $day-size;
+	text-align: center;
+}
+
+.#{$prefix}days {
+	padding: 0 18px;
+	position: relative;
+	overflow: hidden;
+	transition: height 300ms cubic-bezier(0.75, 0.02, 0.27, 0.99);
+}
+
+.#{$prefix}day {
+	width: $day-size;
+	height: $day-size;
+	float: right;
+	line-height: $day-size;
+	position: relative;
+
+	&:not(.empty){
+		cursor: pointer;
+		transition: color 450ms ease;
+		text-align: center;
+	}
+
+	&[disabled] {
+		cursor: default;
+		color: darken(#ffffff, 20%);
+
+		.#{$prefix}day-effect {
+			background-color: transparent;
+		}
+
+		.#{$prefix}day-text {
+			color: darken(#ffffff, 20%);
+		}
+	}
+
+	&:not([disabled]){
+		&:hover {
+			color: #ffffff;
+			.#{$prefix}day-effect {
+				transform: scale(1);
+				opacity: 0.6;
+			}
+		}
+
+		&.selected {
+			color: #ffffff;
+			.#{$prefix}day-effect {
+				transform: scale(1);
+				opacity: 1;
+			}
+		}
+	}
+}
+
+.#{$prefix}day-effect {
+	position: absolute;
+	width: $day-size - 4px;
+	height: $day-size - 4px;
+	border-radius: 50%;
+	top: 2px;
+	left: 2px;
+	transform: scale(0);
+	opacity: 0;
+	transition: all 450ms ease;
+}
+
+.#{$prefix}day-text {
+	position: relative;
+}
+
+.#{$prefix}controls {
+	position: relative;
+	z-index: 2;
+	height: $month-label-height;
+	line-height: $month-label-height;
+	text-align: center;
+
+	button {
+		position: relative;
+		background-color: transparent;
+		border: none;
+		user-select: none;
+		outline: none;
+		cursor: pointer;
+		&[disabled]{
+			opacity: 0.3;
+			cursor: default;
+		}
+	}
+
+	&.double {
+		width: 630px;
+	}
+
+	&.landscape {
+		float: left;
+	}
+}
+
+.#{$prefix}next {
+	width: $month-label-height;
+	height: $month-label-height;
+	line-height: $month-label-height;
+	float: right;
+}
+
+.#{$prefix}prev {
+	width: $month-label-height;
+	height: $month-label-height;
+	line-height: $month-label-height;
+	float: left;
+}
+
+.#{$prefix}arrow {
+	width: 11px;
+	height: 11px;
+}
+
+.#{$prefix}month {
+	position: relative;
+	overflow: hidden;
+}
+
+.#{$prefix}month-label {
+	position: absolute;
+	top: 0;
+	left: $month-label-height;
+	right: $month-label-height;
+	overflow: hidden;
+	width: 90px;
+	margin-left: auto;
+	margin-right: auto;
+	line-height: $month-label-height;
+	height: $month-label-height;
+	text-align: center;
+	cursor: pointer;
+	> span {
+		display: inline-block;
+		padding: 0 5px;
+		line-height: 26px;
+		height: 26px;
+		border-width: 1px;
+		border-style: solid;
+		border-radius: 2px;
+		transition: all 0.1s ease-out;
+		white-space: nowrap;
+		&:not(:hover){
+				border-color: transparent !important;
+				color: inherit !important;
+		}
+	}
+}
+
+.#{$prefix}actions {
+	text-align: right;
+	padding: 8px;
+	button {
+		border: none;
+		background-color: transparent;
+		display: inline-block;
+		cursor: pointer;
+		outline: none;
+		font-size: 14px;
+		text-transform: uppercase;
+		min-width: 88px;
+		text-align: center;
+		-webkit-appearance: none;
+		line-height: 36px;
+		height: 36px;
+		transition: all 0.3s ease;
+		&:hover {
+			background-color: darken(#ffffff, 5%);
+		}
+		&[disabled]{
+			opacity: 0.6;
+			cursor: default;
+		}
+	}
+}
+
+.#{$prefix}addon-list {
+	width: 100%;
+	background-color: #ffffff;
+	position: absolute;
+	z-index: 2;
+	overflow: auto;
+	top: 0;
+	bottom: 52px;
+	border-bottom: solid 1px #eee;
+	direction: ltr;
+
+	.#{$prefix}addon-list-content {
+		direction: rtl;
+		.#{$prefix}addon-list-item {
+			width: (1/3)*100%;
+			text-align: center;
+			font-size: 14px;
+			height: 44px;
+			line-height: 36px;
+			transition: all 0.3s ease;
+			color: #8a8a8a;
+			cursor: pointer;
+			float: right;
+			border: solid 4px #fff;
+			&.selected, &:hover {
+				background-color: #f9f9f9;
+			}
+			&.selected {
+				font-size: 17px;
+				background-color: #f5f5f5;
+			}
+		}
+	}
+
+	&.#{$prefix}month-list{
+		padding-top: 15px;
+		&.can-close{
+			padding-top: 30px;
+		}
+		.#{$prefix}addon-list-item {
+			font-weight: 300;
+			height: 54px;
+			line-height: 46px;
+			&.selected, &:hover {  }
+
+			&[disabled]{
+				opacity: 0.3;
+				cursor: default !important;
+				background-color: transparent !important;
+			}
+		}
+	}
+
+	&.double {
+		width: 630px;
+	}
+	&.landscape {
+		margin-top: 0;
+		margin-left: 165px;
+		height: 374px;
+	}
+}
+
+.close-addon{
+	position: absolute;
+	top: 4px;
+	left: 4px;
+	z-index: 2;
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+	color: #444;
+	font-family: sans-serif;
+	text-align: center;
+	cursor: pointer;
+	background-color: rgba(0,0,0,0.1);
+}
+
+.#{$prefix}time{
+
+	user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+
+	.#{$prefix}time-h,
+	.#{$prefix}time-m {
+		position: relative;
+		margin-top: 70px;
+		float: left;
+		width: 50%;
+		height: 100%;
+		text-align: center;
+		color: #a2a2a2;
+		font-family: sans-serif;
+		.counter{
+			font-size: 90px;
+			height: 100px;
+			line-height: 100px;
+			overflow: hidden;
+			position: relative;
+			direction: ltr;
+		}
+		.counter-item{
+			height: inherit;
+			width: 51px;
+			display: inline-block;
+			vertical-align: text-top;
+			position: relative;
+		}
+	}
+	.#{$prefix}time-h:after{
+		position: absolute;
+		top: 50%;
+		right: 0;
+		content: ':';
+		font-size: 70px;
+		transform: translate(50%, -50%);
+	}
+
+	.up-arrow-btn,
+	.down-arrow-btn{
+		display: block;
+		cursor: pointer;
+		outline: none;
+		height: 34px;
+		&:active svg path{  }
+	}
+}
+
+.#{$prefix}prev-step{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 30px;
+	height: 30px;
+	text-align: center;
+	padding: 9px;
+	cursor: pointer;
+	&:hover{
+		background-color: rgba(0,0,0,0.2);
+	}
+}
+
+[data-type="time"]{
+	.#{$prefix}time {
+		.#{$prefix}time-m,
+		.#{$prefix}time-h{
+			margin-top: 40px;
+		}
+	}
+}

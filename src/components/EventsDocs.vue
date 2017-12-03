@@ -1,0 +1,127 @@
+<template>
+    <div>
+        <card title="@input">
+            <date-picker value="1396/05/02" format="jYYYY/jMM/jDD" @input="date=$event"></date-picker>
+            <code class="code">{{ date }}</code>
+
+            <template slot="code">
+                <highlight-code lang="html" v-pre>
+                    &lt;date-picker
+                        value="1396/05/02"
+                        format="jYYYY/jMM/jDD"
+                        @input="date=$event"&gt;
+                    &lt;/date-picker&gt;
+                    &lt;span&gt;{{ date }}&lt;/span&gt;
+                </highlight-code>
+            </template>
+            <template slot="docs">
+                <highlight-code :lang="'javascript'">
+                    /**
+                     * @input
+                     * triggers when datepicker submitted.
+                     * returns formatted date as string.
+                     */
+                    "$event"
+                    type: String
+                    example: 1396 | 1396/05/03 | 1396/05/03 22:20 | 22:20 | ...
+                </highlight-code>
+            </template>
+        </card>
+
+        <card title="@change">
+            <date-picker
+                    v-model="date_1"
+                    format="jYYYY/jMM/jDD"
+                    @change="dateMoment=$event"
+            ></date-picker>
+            <code class="code">{{ dateMoment.format('dddd jDD jMMMM jYYYY') }}</code>
+            <code class="code">{{ date_1 }}</code>
+
+            <template slot="code">
+                <highlight-code lang="html" v-pre>
+                    &lt;date-picker
+                        v-model="date"
+                        format="YYYY/MM/DD"
+                        @change="dateMoment=$event"&gt;
+                    &lt;/date-picker&gt;
+                    &lt;span&gt;{{ dateMoment.format('dddd jDD jMMMM jYYYY') }}&lt;/span&gt;
+                    &lt;span&gt;{{ date }}&lt;/span&gt;
+                </highlight-code>
+                <highlight-code lang="javascript" v-pre>
+                    import moment from 'moment-jalaali';
+                    export default {
+                        data(){
+                            return {
+                                date: '1396/05/03',
+                                dateMoment: moment('1396/05/03', 'jYYYY/jMM/jDD'),
+                            }
+                        }
+                    }
+                </highlight-code>
+            </template>
+            <template slot="docs">
+                <highlight-code :lang="'javascript'">
+                    /**
+                     * @change
+                     * triggers when datepicker submitted.
+                     * returns moment object.
+                     */
+                    "$event"
+                    type: moment Object
+                </highlight-code>
+                <p>See <a href="http://momentjs.com/">momentjs</a></p>
+            </template>
+        </card>
+
+        <card title="@close">
+            <date-picker value="1396/05/02" format="jYYYY/jMM/jDD" @input="date=$event"></date-picker>
+            <code class="code">{{ date }}</code>
+
+            <template slot="code">
+                <highlight-code lang="html" v-pre>
+                    &lt;date-picker v-model="date" @close="onClose"&gt;&lt;/date-picker&gt;
+                </highlight-code>
+                <highlight-code lang="javascript" v-pre>
+                    export default {
+                        data(){
+                            return {
+                                date: '1396/05/03',
+                            }
+                        },
+                        methods: {
+                            onClose(){
+                                console.log('The datepicker was closed');
+                            }
+                        }
+                    }
+                </highlight-code>
+            </template>
+
+            <template slot="docs">
+                <highlight-code :lang="'javascript'">
+                    /**
+                     * @close
+                     * triggers when datepicker closed.
+                     * returns null
+                     */
+                </highlight-code>
+            </template>
+        </card>
+    </div>
+</template>
+
+<script>
+
+    import moment from 'moment-jalaali';
+
+    export default {
+
+        data() {
+            return {
+                date: '',
+                date_1: '1396/05/03',
+                dateMoment: moment('1396/05/03', 'jYYYY/jMM/jDD')
+            }
+        }
+    }
+</script>
