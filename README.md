@@ -1,8 +1,10 @@
 # vue-persian-datetime-picker
 
+[![npm version](https://badge.fury.io/js/vue-persian-datetime-picker.svg)](https://www.npmjs.com/package/vue-persian-datetime-picker)
+
 > A vue plugin to select jalali date and time
 
-### [Demo](http://samples.itperfect.ir/vue-persian-datetime-picker/) 
+See documentation and demo at (https://talkhabi.github.io/vue-persian-datetime-picker) 
 
 
 ### Installing
