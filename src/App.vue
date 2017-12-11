@@ -36,6 +36,8 @@
 
         <auto-submit></auto-submit>
 
+        <wrapper-submit></wrapper-submit>
+
         <picker-color></picker-color>
 
 
@@ -83,6 +85,7 @@
     import InputSettings from './components/examples/InputSettings.vue';
     import AltField from './components/examples/AltField.vue';
     import AutoSubmit from './components/examples/AutoSubmit.vue';
+    import WrapperSubmit from './components/examples/WrapperSubmit.vue';
     import PickerColor from './components/examples/PickerColor.vue';
     import SimpleDatetime from './components/examples/SimpleDatetime.vue';
     import DatetimeMinAndMax from './components/examples/DatetimeMinAndMax.vue';
@@ -111,6 +114,7 @@
             InputSettings,
             AltField,
             AutoSubmit,
+            WrapperSubmit,
             PickerColor,
             SimpleDatetime,
             DatetimeMinAndMax,

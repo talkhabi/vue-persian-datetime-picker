@@ -24,7 +24,7 @@
         </template>
 
         <transition name="fade-scale">
-            <div v-if="visible" :class="[prefix('wrapper')]" @click.self="visible=false" :data-type="type">
+            <div v-if="visible" :class="[prefix('wrapper')]" @click.self="wrapperClick" :data-type="type">
                 <div :class="[prefix('container')]">
                     <div :class="[prefix('content')]">
                         <div :class="[prefix('header')]" :style="{'background-color': color}">
@@ -342,6 +342,14 @@
              * @default False
              */
             autoSubmit: {type: Boolean, 'default': false},
+
+            /**
+             * Auto submit when clicking the wrapper
+             * @type Boolean
+             * @default false
+             * @version 1.0.6
+             */
+            wrapperSubmit: {type: Boolean, 'default': false},
         },
         data() {
             return {
@@ -608,6 +616,12 @@
                 }
                 if(this.output){
                     this.updateDates(val);
+                    this.submit();
+                }
+            },
+            wrapperClick(){
+                this.visible = false;
+                if(this.wrapperSubmit){
                     this.submit();
                 }
             }

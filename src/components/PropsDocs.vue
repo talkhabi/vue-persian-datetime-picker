@@ -157,7 +157,15 @@
                  * @type Boolean
                  * @default False
                  */
-                autoSubmit: false
+                autoSubmit: false,
+
+                /**
+                 * Auto submit when clicking the wrapper
+                 * @type Boolean
+                 * @default false
+                 * @version 1.0.6
+                 */
+                wrapperSubmit: false
             &rbrace;
         </highlight-code>
     </div>
