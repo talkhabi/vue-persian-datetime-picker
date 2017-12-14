@@ -159,9 +159,9 @@
                             </transition>
 
                             <div :class="[prefix('actions')]">
-                                <button @click="submit()" :style="{'color': color}">تایید</button>
-                                <button @click="visible=false" :style="{'color': color}">انصراف</button>
-                                <button @click="goToday()" :style="{'color': color}" v-if="canGoToday">اکنون</button>
+                                <button type="button" @click="submit()" :style="{'color': color}">تایید</button>
+                                <button type="button" @click="visible=false" :style="{'color': color}">انصراف</button>
+                                <button type="button" @click="goToday()" :style="{'color': color}" v-if="canGoToday">اکنون</button>
                             </div>
                         </div>
                     </div>
