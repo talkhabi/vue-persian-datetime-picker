@@ -46,10 +46,10 @@
                         <div :class="[prefix('body'), directionClassDate]">
                             <template v-if="steps.indexOf('d') != -1">
                                 <div :class="[prefix('controls')]">
-                                    <button :class="[prefix('next')]" class="right-arrow-btn" @click="prevMonth" :disabled="prevMonthDisabled">
+                                    <button type="button" :class="[prefix('next')]" class="right-arrow-btn" @click="prevMonth" :disabled="prevMonthDisabled">
                                         <arrow width="10" fill="#000" direction="right" style="vertical-align: middle"></arrow>
                                     </button>
-                                    <button :class="[prefix('prev')]" class="left-arrow-btn" @click="nextMonth" :disabled="nextMonthDisabled">
+                                    <button type="button" :class="[prefix('prev')]" class="left-arrow-btn" @click="nextMonth" :disabled="nextMonthDisabled">
                                         <arrow width="10" fill="#000" direction="left" style="vertical-align: middle"></arrow>
                                     </button>
                                     <transition name="slidev">
