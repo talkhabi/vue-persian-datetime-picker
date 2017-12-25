@@ -5,6 +5,18 @@
   "author": "mohammad talkhabi",
   "license": "MIT",
   "main": "dist/vue-persian-datetime-picker.js",
+  "keywords": [
+    "vuejs",
+    "persian",
+    "jalali",
+    "datepicker",
+    "timepicker",
+    "datetime picker",
+    "vue datepicker",
+    "persian datepicker",
+    "jalali datepicker",
+    "shamsi datepicker"
+  ],
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
