@@ -100,7 +100,7 @@
 
                             <transition name="fade">
                                 <div v-if="steps.indexOf('m') != -1"
-                                     :class="[prefix('addon-list'), prefix('month-list'), {'can-close': (steps.length>1 && currentStep!='d') }]"
+                                     :class="[prefix('addon-list'), prefix('month-list'), {'can-close': steps.length>1 }]"
                                      v-show="currentStep == 'm'"
                                      ref="month">
                                     <div :class="[prefix('addon-list-content')]">
