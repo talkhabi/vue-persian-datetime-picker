@@ -479,9 +479,11 @@
                     let m = this.time.minute();
                     this.date.hour(h);
                     this.date.minute(m);
+                    this.selectedDate.hour(h);
+                    this.selectedDate.minute(m);
                 }
 
-                this.selectedDate = this.date.clone();
+                if(['year', 'month'].indexOf(this.type) !== -1) this.selectedDate = this.date.clone();
                 this.output = this.selectedDate.clone();
                 this.visible = false;
 
@@ -503,7 +505,7 @@
                 this.selectedDate = this.date.clone();
                 this.time = this.date.clone();
 
-                if(this.value !== '' && this.value.length !== 0){
+                if(this.value !== '' && this.value !== null && this.value.length !== 0){
                     this.output = this.selectedDate.clone();
                 }
             },
@@ -632,7 +634,7 @@
             },
             input(){
                 let input = false;
-                if(this.value !== '' && this.value.length !== 0){
+                if(this.value !== ''&& this.value !== null && this.value.length !== 0){
                     try {
                         input = utils.moment(this.value, this.selfFormat);
                     }catch (er){
@@ -678,7 +680,7 @@
                 return data;
             },
             years(){
-                if(!this.hasStep('y')) return [];
+                if(!this.hasStep('y') || this.currentStep !== 'y') return [];
                 let min = this.minDate ? this.minDate.jYear():1300;
                 let max = this.maxDate ? this.maxDate.jYear():1430;
                 let y = utils.getYearsList(min, max).reverse();

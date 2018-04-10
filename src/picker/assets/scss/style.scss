@@ -442,6 +442,7 @@
 			overflow: hidden;
 			position: relative;
 			direction: ltr;
+			transition: opacity 0.3s ease-in-out;
 		}
 		.counter-item{
 			height: inherit;
@@ -458,6 +459,7 @@
 		content: ':';
 		font-size: 70px;
 		transform: translate(50%, -50%);
+		transition: inherit;
 	}
 
 	.up-arrow-btn,
