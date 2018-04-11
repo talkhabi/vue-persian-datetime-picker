@@ -617,17 +617,20 @@
                 if(!this.editable) return;
                 let val = e.target.value;
 
-                this.output = '';
+                this.output = null;
                 if(val){
                     try {
                         this.output = utils.moment(val, this.selfFormat);
-                    }catch (er){
-                        this.output = '';
-                    }
+                        if (!this.output._isValid) this.output = null;
+                    } catch (er) {}
                 }
                 if(this.output){
                     this.updateDates(val);
                     this.submit();
+                } else  {
+                    this.$forceUpdate();
+                    this.$emit('input',  null);
+                    this.$emit('change', null);
                 }
             },
             wrapperClick(){
