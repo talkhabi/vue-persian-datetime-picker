@@ -516,6 +516,9 @@
 
                 if(this.value !== '' && this.value !== null && this.value.length !== 0){
                     this.output = this.selectedDate.clone();
+                } else {
+                    this.output = null;
+                    this.$forceUpdate();
                 }
             },
             goToday(){
@@ -621,7 +624,7 @@
                 if(val){
                     try {
                         this.output = utils.moment(val, this.selfFormat);
-                        if (!this.output._isValid) this.output = null;
+                        if (!this.output.isValid()) this.output = null;
                     } catch (er) {}
                 }
                 if(this.output){
