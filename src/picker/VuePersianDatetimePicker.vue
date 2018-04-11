@@ -93,7 +93,7 @@
                                              :class="[prefix('addon-list-item'), {selected: year.selected }]"
                                              :style="{color: year.selected?color:''}"
                                              @click="selectYear(year.value)"
-                                        >{{ year.value}}</div>
+                                        >{{ year.value }}</div>
                                     </div>
                                 </div>
                             </transition>
@@ -194,6 +194,15 @@
              * @example 1396/08/01 22:45 | 2017/07/07 20:45 | {unix} | 20:45
              */
             value: {type: [Number, String], 'default': ''},
+
+            /**
+             * Initial value of picker (if value is empty)
+             * @type Number String
+             * @default []
+             * @example 1370/01/01 22:45 | 2017/01/01 20:45 | {unix} | 20:45
+             * @version 1.0.9
+             */
+            initialValue: {type: [Number, String], 'default': ''},
 
             /**
              * Format for {value}
@@ -492,7 +501,7 @@
             },
             updateDates(d){
 
-                d = this.getMoment(d?d:this.value);
+                d = this.getMoment(d?d:(this.value || this.initialValue));
 
                 this.date = d.isValid() ? d : utils.moment();
 

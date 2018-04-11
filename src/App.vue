@@ -20,6 +20,8 @@
 
         <with-value></with-value>
 
+        <initial-value></initial-value>
+
         <different-input-an-output></different-input-an-output>
 
         <view-prop></view-prop>
@@ -93,6 +95,7 @@
     import TimeMinAndMax from './components/examples/TimeMinAndMax.vue';
     import PropsDocs from './components/PropsDocs.vue';
     import EventsDocs from './components/EventsDocs.vue';
+    import InitialValue from './components/examples/InitialValue.vue';
 
     export default {
         name: 'app',
@@ -122,6 +125,7 @@
             TimeMinAndMax,
             PropsDocs,
             EventsDocs,
+            InitialValue
         },
     }
 </script>
