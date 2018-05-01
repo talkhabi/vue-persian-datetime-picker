@@ -56,5 +56,31 @@
             &lt;/script&gt;
         </highlight-code>
 
+        <h1>You can also set default values:</h1>
+        <p>main.js</p>
+        <highlight-code lang="javascript" v-pre>
+            import VuePersianDatetimePicker from 'vue-persian-datetime-picker';
+            Vue.use(VuePersianDatetimePicker, {
+                name: 'custom-date-picker',
+                props: {
+                    inputFormat: 'YYYY-MM-DD HH:mm',
+                    format: 'jYYYY-jMM-jDD HH:mm',
+                    editable: false,
+                    inputClass: 'form-control my-custom-class-name',
+                    placeholder: 'Please select a date',
+                    altFormat: 'YYYY-MM-DD HH:mm',
+                    color: '#00acc1',
+                    autoSubmit: false,
+                    //...
+                    //... And whatever you want to set as default
+                    //...
+                }
+            });
+        </highlight-code>
+        <highlight-code lang="html" v-pre>
+            Then use in component
+            &lt;custom-date-picker v-model="date"&gt;&lt;/custom-date-picker&gt;
+        </highlight-code>
+
     </div>
 </template>

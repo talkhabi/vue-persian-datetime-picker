@@ -848,6 +848,21 @@
                 this.visible = val;
             }
         },
-        components: {Arrow, Btn, CalendarIcon, TimeIcon}
+        components: {Arrow, Btn, CalendarIcon, TimeIcon},
+        install(Vue, options) {
+
+            let component = this;
+            options = Vue.util.extend({
+                name: 'data-picker',
+                props: {}
+            }, options);
+
+            for (let k in options.props) {
+                if (component.props.hasOwnProperty(k)) {
+                    component.props[k].default = options.props[k];
+                }
+            }
+            Vue.component(options.name, component);
+        }
     }
 </script>
