@@ -44,6 +44,8 @@
 
         <picker-color></picker-color>
 
+        <append-to></append-to>
+
 
         <!--===== DateTime Picker =====-->
         <h1 class="text-center hr">Datetime Picker</h1>
@@ -99,6 +101,7 @@
     import EventsDocs from './components/EventsDocs.vue';
     import InitialValue from './components/examples/InitialValue.vue';
     import DisplayFormat from './components/examples/DisplayFormat.vue';
+    import AppendTo from './components/examples/AppendTo.vue'
 
     export default {
         name: 'app',
@@ -130,6 +133,7 @@
             EventsDocs,
             InitialValue,
             DisplayFormat,
+            AppendTo,
         },
     }
 </script>

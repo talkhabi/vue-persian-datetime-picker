@@ -175,7 +175,18 @@
                  * @default false
                  * @version 1.0.6
                  */
-                wrapperSubmit: false
+                wrapperSubmit: false,
+
+                /**
+                 * Place to append picker
+                 * @type String query selector
+                 * @default null
+                 * @desc If you want to append picker to another container like 'body',
+                 * pass the container as append-to="body",  append-to="#app",  append-to="#my-container"
+                 * @example 'body', '.main-container', '#app' ...
+                 * @version 1.1.1
+                 */
+                appendTo: {type: String, 'default': null},
             &rbrace;
         </highlight-code>
     </div>

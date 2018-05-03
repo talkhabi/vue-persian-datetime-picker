@@ -24,7 +24,7 @@
         </template>
 
         <transition name="fade-scale">
-            <div v-if="visible" :class="[prefix('wrapper')]" @click.self="wrapperClick" :data-type="type">
+            <div v-if="visible" :class="[prefix('wrapper')]" @click.self="wrapperClick" :data-type="type" ref="picker">
                 <div :class="[prefix('container')]">
                     <div :class="[prefix('content')]">
                         <div :class="[prefix('header')]" :style="{'background-color': color}">
@@ -369,6 +369,17 @@
              * @version 1.0.6
              */
             wrapperSubmit: {type: Boolean, 'default': false},
+
+            /**
+             * Place to append picker
+             * @type String query selector
+             * @default null
+             * @desc If you want to append picker to another container like 'body',
+             * pass the container as append-to="body",  append-to="#app",  append-to="#my-container"
+             * @example 'body', '.main-container', '#app' ...
+             * @version 1.1.1
+             */
+            appendTo: {type: String, 'default': null},
         },
         data() {
             return {
@@ -852,6 +863,16 @@
                     if(this.type === 'datetime' && this.view === 'day'){
                         this.goStep('d');
                     }
+                    this.$nextTick(() => {
+                        if (this.appendTo) {
+                            try {
+                                let container = document.querySelector(this.appendTo);
+                                container.appendChild(this.$refs.picker);
+                            } catch (er) {
+                                console.warn(`Cannot append picker to "${this.appendTo}"!`);
+                            }
+                        }
+                    });
                     this.checkScroll();
                 }else{
                     this.$emit('close', null);
