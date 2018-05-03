@@ -16,6 +16,8 @@
 
         <simple-format></simple-format>
 
+        <display-format></display-format>
+
         <min-and-max></min-and-max>
 
         <with-value></with-value>
@@ -96,6 +98,7 @@
     import PropsDocs from './components/PropsDocs.vue';
     import EventsDocs from './components/EventsDocs.vue';
     import InitialValue from './components/examples/InitialValue.vue';
+    import DisplayFormat from './components/examples/DisplayFormat.vue';
 
     export default {
         name: 'app',
@@ -125,7 +128,8 @@
             TimeMinAndMax,
             PropsDocs,
             EventsDocs,
-            InitialValue
+            InitialValue,
+            DisplayFormat,
         },
     }
 </script>

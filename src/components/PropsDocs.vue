@@ -22,6 +22,16 @@
                 inputFormat: 'jYYYY/jMM/jDD HH:mm',
 
                 /**
+                * Format only to display the date in the field
+                * @type String
+                * @default Null
+                * @example jYYYY/jMM/jDD HH:mm | YYYY/MM/DD HH:mm | x | unix | HH:mm
+                * @if empty {displayFormat} = {format}
+                * @see https://github.com/jalaali/moment-jalaali
+                */
+                displayFormat: {type: String, 'default': ''},
+
+                /**
                  * Format for output value
                  * @type String
                  * @default Null

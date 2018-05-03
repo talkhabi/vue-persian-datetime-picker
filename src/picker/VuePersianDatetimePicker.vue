@@ -13,7 +13,7 @@
                    :name="name"
                    :class="[inputClass, {'is-editable': editable}]"
                    :placeholder="placeholder"
-                   :value="outputValue"
+                   :value="displayValue"
                    @focus="focus"
                    @blur="setOutput">
             <input v-if="altName" type="hidden" :name="altName" :value="altFormatted"/>
@@ -213,6 +213,16 @@
              * @see https://github.com/jalaali/moment-jalaali
              */
             inputFormat: {type: String, 'default': ''},
+
+            /**
+             * Format only to display the date in the field
+             * @type String
+             * @default Null
+             * @example jYYYY/jMM/jDD HH:mm | YYYY/MM/DD HH:mm | x | unix | HH:mm
+             * @if empty {displayFormat} = {format}
+             * @see https://github.com/jalaali/moment-jalaali
+             */
+            displayFormat: {type: String, 'default': ''},
 
             /**
              * Format for output value
@@ -780,6 +790,9 @@
             },
             outputValue() {
                 return this.output ? this.output.clone().format(this.selfFormat):'';
+            },
+            displayValue() {
+                return this.output ? this.output.clone().format(this.displayFormat || this.selfFormat):'';
             }
         },
         created(){
