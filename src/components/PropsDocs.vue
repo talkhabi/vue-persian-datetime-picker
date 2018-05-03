@@ -12,6 +12,15 @@
                 value: "1396/05/05 22:50",
 
                 /**
+                 * Initial value of picker (if value is empty)
+                 * @type Number String
+                 * @default []
+                 * @example 1370/01/01 22:45 | 2017/01/01 20:45 | {unix} | 20:45
+                 * @version 1.0.9
+                 */
+                initialValue: '1380/01/01',
+
+                /**
                  * Format for {value}
                  * @type String
                  * @default Null
@@ -186,7 +195,7 @@
                  * @example 'body', '.main-container', '#app' ...
                  * @version 1.1.1
                  */
-                appendTo: {type: String, 'default': null},
+                appendTo: 'body',
             &rbrace;
         </highlight-code>
     </div>
