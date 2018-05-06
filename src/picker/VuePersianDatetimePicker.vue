@@ -860,9 +860,8 @@
             max(){this.setMinMax()},
             visible(val){
                 if(val){
-                    if(this.type === 'datetime' && this.view === 'day'){
-                        this.goStep('d');
-                    }
+                    if (this.type === 'datetime' && this.view === 'day') this.goStep('d');
+                    if (this.view !== 'day') this.goStep(this.shortCodes[this.view] || 'd');
                     this.$nextTick(() => {
                         if (this.appendTo) {
                             try {
