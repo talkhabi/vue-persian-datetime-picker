@@ -522,7 +522,7 @@
             },
             updateDates(d){
 
-                d = this.getMoment(d?d:(this.value || this.initialValue));
+                if (typeof d !== 'object') d = this.getMoment(d?d:(this.value || this.initialValue));
 
                 this.date = d.isValid() ? d : utils.moment();
 
@@ -644,12 +644,12 @@
                 this.output = null;
                 if(val){
                     try {
-                        this.output = utils.moment(val, this.selfFormat);
+                        this.output = utils.moment(val, this.displayFormat || this.selfFormat);
                         if (!this.output.isValid()) this.output = null;
                     } catch (er) {}
                 }
                 if(this.output){
-                    this.updateDates(val);
+                    this.updateDates(this.output.clone());
                     this.submit();
                 } else  {
                     this.$forceUpdate();
