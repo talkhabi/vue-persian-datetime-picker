@@ -23,7 +23,7 @@
     "export": "cross-env NODE_ENV=export webpack --progress --hide-modules"
   },
   "dependencies": {
-    "moment-jalaali": "^0.7.2"
+    "moment-jalaali": "^0.7.3"
   },
   "repository": {
     "type": "git",
