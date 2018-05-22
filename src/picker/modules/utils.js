@@ -66,7 +66,7 @@ function easeOutCuaic(t){t--;return t*t*t+1}
 
 function getMonthsList(minDate, maxDate, date){
     let list = [],
-        min = minDate ? minDate.clone().startOf('jMonth').unix():0,
+        min = minDate ? minDate.clone().startOf('jMonth').unix():-Infinity,
         max = maxDate ? maxDate.clone().endOf('jMonth').unix():Infinity;
     for(let i = 0; i < 12; i++){
         let m = date.clone().jMonth(i);

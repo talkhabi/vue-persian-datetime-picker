@@ -696,7 +696,7 @@
                 let m = utils.getWeekArray(this.date, 6);
                 let data = [];
                 let selected = false;
-                let min = this.minDate ? this.minDate.unix():0;
+                let min = this.minDate ? this.minDate.unix():-Infinity;
                 let max = this.maxDate ? this.maxDate.unix():Infinity;
                 m.forEach( w => {
                     let week = [];
