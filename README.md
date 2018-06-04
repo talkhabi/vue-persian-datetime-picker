@@ -8,7 +8,7 @@ See documentation and demo at [vue-persian-datetime-picker](https://talkhabi.git
 
 
 ## Installing
-###browser
+### browser
 ```html
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="https://cdn.jsdelivr.net/npm/moment"></script>
@@ -30,7 +30,7 @@ See documentation and demo at [vue-persian-datetime-picker](https://talkhabi.git
 </script>
 ```
 
-###npm
+### npm
 ```bash
 npm install vue-persian-datetime-picker --save
 ```
