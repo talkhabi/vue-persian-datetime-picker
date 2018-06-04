@@ -20,7 +20,9 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
-    "export": "cross-env NODE_ENV=export webpack --progress --hide-modules"
+    "export": "cross-env NODE_ENV=export webpack --progress --hide-modules",
+    "browser": "cross-env NODE_ENV=browser webpack --progress --hide-modules",
+    "buildAll": "npm run build && npm run export && npm run browser"
   },
   "dependencies": {
     "moment-jalaali": "^0.7.3"

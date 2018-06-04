@@ -144,3 +144,39 @@ if (process.env.NODE_ENV === 'export') {
         })
     ])
 }
+
+if (process.env.NODE_ENV === 'browser') {
+
+    module.exports.entry = './src/picker/VuePersianDatetimePicker.vue';
+    module.exports.output = {
+        path: path.resolve(__dirname, './dist'),
+        publicPath: '/dist/',
+        filename: 'vue-persian-datetime-picker-browser.js',
+        library: 'VuePersianDatetimePicker',
+        libraryExport: 'default',
+        libraryTarget: 'var'
+    };
+    module.exports.externals = {
+        'vue': 'vue',
+        'moment': 'moment',
+        'moment-jalaali': 'moment',
+    };
+    module.exports.devtool = '';
+    module.exports.plugins = (module.exports.plugins || []).concat([
+        new webpack.DefinePlugin({
+            'process.env': {
+                NODE_ENV: '"production"'
+            }
+        }),
+        new webpack.optimize.UglifyJsPlugin({
+            sourceMap: false,
+            mangle: true,
+            compress: {
+                warnings: false
+            }
+        }),
+        new webpack.LoaderOptionsPlugin({
+            minimize: true
+        })
+    ])
+}
