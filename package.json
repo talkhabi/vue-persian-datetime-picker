@@ -25,7 +25,8 @@
     "buildAll": "npm run build && npm run export && npm run browser"
   },
   "dependencies": {
-    "moment-jalaali": "^0.7.3"
+    "moment-jalaali": "^0.7.3",
+    "vue-awesome": "^3.0.5"
   },
   "repository": {
     "type": "git",
@@ -37,9 +38,6 @@
     "not ie <= 8"
   ],
   "devDependencies": {
-    "vue": "^2.4.4",
-    "highlight.js": "^9.12.0",
-    "vue-highlight.js": "^2.2.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.0",
@@ -47,8 +45,11 @@
     "cross-env": "^5.0.5",
     "css-loader": "^0.28.7",
     "file-loader": "^1.1.4",
+    "highlight.js": "^9.12.0",
     "node-sass": "^4.7.2",
     "sass-loader": "^6.0.6",
+    "vue": "^2.4.4",
+    "vue-highlight.js": "^2.2.0",
     "vue-loader": "^13.0.5",
     "vue-template-compiler": "^2.4.4",
     "webpack": "^3.6.0",

@@ -5131,6 +5131,10 @@ vm-browserify@0.0.4:
   dependencies:
     indexof "0.0.1"
 
+vue-awesome@^3.0.5:
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/vue-awesome/-/vue-awesome-3.0.5.tgz#27322e17c690d357306c8ecbcdf427db93826f44"
+
 vue-highlight.js@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/vue-highlight.js/-/vue-highlight.js-2.2.0.tgz#94575b26b164bf3d87de4a898b7d9ec0d6ef3214"
