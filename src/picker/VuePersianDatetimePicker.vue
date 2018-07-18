@@ -5,8 +5,8 @@
                    :class="[prefix('icon-btn')]"
                    @click.prevent.stop="visible=true"
                    :style="{'background-color': color}">
-                <time-icon v-if="type=='time'" width="16px" height="16px"></time-icon>
-                <calendar-icon v-else="" width="16px" height="16px"></calendar-icon>
+                <icon v-if="type=='time'" name="clock"/>
+                <icon v-else name="calendar-alt"/>
             </label>
             <input type="text"
                    :id="id"
@@ -177,8 +177,13 @@
     import utils from './modules/utils';
     import Arrow from './components/Arrow.vue'
     import Btn from './components/Btn.vue'
-    import CalendarIcon from './components/CalendarIcon.vue'
-    import TimeIcon from './components/TimeIcon.vue'
+    import Icon from 'vue-awesome/components/Icon'
+
+    /*
+     * Use Vue Awesome
+     */
+    import 'vue-awesome/icons/calendar-alt'
+    import 'vue-awesome/icons/clock'
 
     export default {
         moment: utils.moment,
@@ -881,7 +886,7 @@
                 this.visible = val;
             }
         },
-        components: {Arrow, Btn, CalendarIcon, TimeIcon},
+        components: {Arrow, Btn, Icon},
         install(Vue, options) {
 
             let component = this;
