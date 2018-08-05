@@ -17,8 +17,6 @@
 	display: table;
 	width: 100%;
 
-	border: solid 1px #bdbdbd;
-
 	.#{$prefix}icon-btn{
 		display: table-cell;
 		width: 1%;
@@ -29,11 +27,14 @@
 			vertical-align: middle;
 		}
 	}
-	input{
+	input {
 		display: table-cell;
-		border: none ;
-		border-top-right-radius: 0 ;
-		border-bottom-right-radius: 0 ;
+		border: 1px solid #dadada;
+		border-right: none;
+		border-top-right-radius: 0;
+		border-bottom-right-radius: 0;
+		line-height: 30px;
+		padding: 0 10px;
 	}
 }
 
@@ -80,8 +81,6 @@
 	width: $width;
 
 	background-color: #ffffff;
-	-webkit-box-shadow: 5px 22px 95px -14px rgba(0,0,0,1);
-	-moz-box-shadow: 5px 22px 95px -14px rgba(0,0,0,1);
 	box-shadow: 5px 22px 95px -14px rgba(0,0,0,1);
 	cursor: default;
 }
@@ -90,19 +89,9 @@
 	color: #ffffff;
 	padding: 10px 20px;
 	position: relative;
-	&.landscape {
-		height: 374px;
-		width: 165px;
-		float: left;
-	}
 }
 
-.#{$prefix}body {
-	position: relative;
-	.landscape {
-		float: left;
-	}
-}
+.#{$prefix}body {  position: relative;  }
 
 .#{$prefix}year-label {
 	margin-bottom: 2px;
@@ -142,10 +131,6 @@
 		line-height: inherit;
 	}
 
-	&.landscape {
-		line-height: 40px;
-		height: 80px;
-	}
 }
 
 .#{$prefix}week {
@@ -251,13 +236,6 @@
 		}
 	}
 
-	&.double {
-		width: 630px;
-	}
-
-	&.landscape {
-		float: left;
-	}
 }
 
 .#{$prefix}next {
@@ -392,15 +370,6 @@
 				background-color: transparent !important;
 			}
 		}
-	}
-
-	&.double {
-		width: 630px;
-	}
-	&.landscape {
-		margin-top: 0;
-		margin-left: 165px;
-		height: 374px;
 	}
 }
 

@@ -4,17 +4,6 @@
 .fade-enter, .fade-leave-active {
   opacity: 0
 }
-
-.datepicker-slide-enter-active, .datepicker-slide-leave-active {
-  	opacity: 1;
-	transform: translateY(0);
-	transition: all 0.3s ease;
-}
-.datepicker-slide-enter, .datepicker-slide-leave-active {
-  	opacity: 0;
-	transform: translateY(-15px);
-}
-
 .slidev-enter-active,
 .slidev-leave-active {
 	position: absolute;
@@ -35,7 +24,6 @@
 	.slidev-leave-to {  transform: translateX(-100%);  }
 	.slidev-enter    {  transform: translateX(100%);  }
 }
-
 
 .slideh-enter-active,
 .slideh-leave-active {
@@ -58,8 +46,6 @@
 	.slideh-enter    {  transform: translateY(100%);  }
 }
 
-
-
 .fade-transition {
 	opacity: 1;
 	transition: all 0.3s ease;
@@ -68,7 +54,6 @@
 .fade-enter, .fade-leave {
 	opacity: 0;
 }
-
 
 .fast-updating {
 	.slideh-enter-active,

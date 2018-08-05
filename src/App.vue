@@ -167,14 +167,20 @@
         }
     }
 
-    .p-datetime-picker-wrapper, input{
+    .vpd-wrapper, input{
         font-family: IRANSans, Tahoma, sans-serif;
         font-size: 12px;
     }
 
-    .p-datetime-picker-input-group{
+    .vpd-input-group{
         max-width: 250px;
+        input {
+            border-left: none;
+            border-right: solid 1px #dadada;
+            border-radius: 0;
+        }
     }
+    .form-control {  border-radius: 0;  }
 
     .card{
         margin-bottom: 30px;

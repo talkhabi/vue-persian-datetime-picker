@@ -1,34 +1,19 @@
 <template>
-    <svg class="datepicker-arrow"
-         perspectiveAspectRato="none"
+    <svg version="1.1"
          xmlns="http://www.w3.org/2000/svg"
+         viewBox="0 0 129 129"
          width="30" height="30"
-         viewBox="0.5 900.5 30 30"
-         enable-background="new 0.5 900.5 30 30"
-         :class=" direction + '-arrow'">
-        <path :fill="fill" d="M22.221 928.31l-10.679-12.81 10.679-12.809c.472-.567.395-1.408-.171-1.881-.565-.474-1.409-.396-1.881.17l-11.39 13.665c-.208.248-.31.552-.31.855 0 .305.103.608.31.855l11.391 13.664c.472.566 1.315.644 1.881.17.566-.473.643-1.312.17-1.879z"></path>
+         perspectiveAspectRato="none"
+         :style="{transform: 'rotate(' + ({up: 90, left: 0, right: 180, down: -90}[direction]) + 'deg)'}">
+        <path :fill="fill" d="m88.6,121.3c0.8,0.8 1.8,1.2 2.9,1.2s2.1-0.4 2.9-1.2c1.6-1.6 1.6-4.2 0-5.8l-51-51 51-51c1.6-1.6 1.6-4.2 0-5.8s-4.2-1.6-5.8,0l-54,53.9c-1.6,1.6-1.6,4.2 0,5.8l54,53.9z"></path>
     </svg>
 </template>
 
 <script>
     export default {
         props: {
-            fill: {
-                type: String,
-                default: '#a2a2a2'
-            },
-            direction: {
-                type: String,
-                default: 'up',
-            }
-        },
-        computed: {}
+            fill: {type: String, 'default': '#a2a2a2'},
+            direction: {type: String, 'default': 'up'}
+        }
     }
 </script>
-
-<style lang="scss" scoped="">
-    .up-arrow{  transform: rotate(90deg)  }
-    .left-arrow{  transform: rotate(0)  }
-    .right-arrow{  transform: rotate(180deg) }
-    .down-arrow{  transform: rotate(-90deg) }
-</style>

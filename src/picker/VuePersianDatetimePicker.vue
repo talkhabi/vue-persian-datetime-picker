@@ -632,7 +632,7 @@
                 }
             },
             prefix(c){
-                return 'p-datetime-picker-' + c;
+                return 'vpd-' + c;
             },
             hasStep(step){
                 return this.steps.indexOf(step) !== -1;

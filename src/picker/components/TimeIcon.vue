@@ -1,29 +1,18 @@
 <template>
     <svg version="1.1"
-         xmlns="http://www.w3.org/2000/svg"
-         xmlns:xlink="http://www.w3.org/1999/xlink"
-         x="0px" y="0px"
-         viewBox="0 0 60 60"
-         style="enable-background:new 0 0 276.338 276.338"
-         perspectiveAspectRato="none"
+         role="presentation"
+         width="16"
+         height="16"
          :fill="fill"
-         xml:space="preserve">
-	<g>
-        <path d="M30,0C13.458,0,0,13.458,0,30s13.458,30,30,30s30-13.458,30-30S46.542,0,30,0z M30,58C14.561,58,2,45.439,2,30
-		S14.561,2,30,2s28,12.561,28,28S45.439,58,30,58z"></path>
-        <path d="M30,6c-0.552,0-1,0.447-1,1v23H14c-0.552,0-1,0.447-1,1s0.448,1,1,1h16c0.552,0,1-0.447,1-1V7C31,6.447,30.552,6,30,6z"></path>
-	</g>
-</svg>
-
+         viewBox="0 0 512 512">
+        <path d="M256 8C119 8 8 119 8 256S119 504 256 504 504 393 504 256 393 8 256 8zM313.1 358.1L224.9 294C221.8 291.7 220 288.1 220 284.3V116C220 109.4 225.4 104 232 104H280C286.6 104 292 109.4 292 116V253.7L355.5 299.9C360.9 303.8 362 311.3 358.1 316.7L329.9 355.5C326 360.8 318.5 362 313.1 358.1z"></path>
+    </svg>
 </template>
 
 <script>
     export default {
         props: {
-            fill: {
-                type: String,
-                default: '#f9f9f9'
-            },
+            fill: {type: String, 'default': '#f9f9f9'}
         }
     }
 </script>
