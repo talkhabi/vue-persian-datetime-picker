@@ -196,6 +196,15 @@
                  * @version 1.1.1
                  */
                 appendTo: 'body',
+
+
+                /**
+                 * Disable or enable the datepicker
+                 * @type Boolean
+                 * @default false
+                 * @version 1.1.4
+                 */
+                disabled: false,
             &rbrace;
         </highlight-code>
     </div>

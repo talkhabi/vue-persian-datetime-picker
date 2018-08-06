@@ -1,6 +1,6 @@
 <template>
     <span>
-        <span v-if="!element" :class="[prefix('input-group')]">
+        <span v-if="!element" :class="[prefix('input-group'), {disabled: disabled}]">
             <label :for="id"
                    :class="[prefix('icon-btn')]"
                    @click.prevent.stop="visible=true"
@@ -14,6 +14,7 @@
                    :class="[inputClass, {'is-editable': editable}]"
                    :placeholder="placeholder"
                    :value="displayValue"
+                   :disabled="disabled"
                    @focus="focus"
                    @blur="setOutput">
             <input v-if="altName" type="hidden" :name="altName" :value="altFormatted"/>
@@ -380,6 +381,14 @@
              * @version 1.1.1
              */
             appendTo: {type: String, 'default': null},
+
+            /**
+             * Disable or enable the datepicker
+             * @type Boolean
+             * @default false
+             * @version 1.1.4
+             */
+            disabled: {type: Boolean, 'default': false},
         },
         data() {
             return {
@@ -860,6 +869,7 @@
             max(){this.setMinMax()},
             visible(val){
                 if(val){
+                    if (this.disabled) return this.visible = false;
                     if (this.type === 'datetime' && this.view === 'day') this.goStep('d');
                     if (this.view !== 'day') this.goStep(this.shortCodes[this.view] || 'd');
                     this.$nextTick(() => {

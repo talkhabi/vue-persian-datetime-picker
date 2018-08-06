@@ -36,6 +36,9 @@
 		line-height: 30px;
 		padding: 0 10px;
 	}
+	&.disabled {
+		label {  cursor: default;  }
+	}
 }
 
 .#{$prefix}wrapper{
