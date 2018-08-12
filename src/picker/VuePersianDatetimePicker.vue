@@ -3,10 +3,13 @@
         <span v-if="!element" :class="[prefix('input-group'), {disabled: disabled}]">
             <label :for="id"
                    :class="[prefix('icon-btn')]"
-                   @click.prevent.stop="visible=true"
-                   :style="{'background-color': color}">
-                <time-icon v-if="type=='time'" width="16px" height="16px"></time-icon>
-                <calendar-icon v-else="" width="16px" height="16px"></calendar-icon>
+                   :style="{'background-color': color}"
+                   @click.prevent.stop="visible=true">
+                <slot name="label">
+                    <time-icon v-if="type=='time'" width="16px" height="16px"></time-icon>
+                    <calendar-icon v-else="" width="16px" height="16px"></calendar-icon>
+                    <span v-if="label">{{ label }}</span>
+                </slot>
             </label>
             <input type="text"
                    :id="id"
@@ -400,6 +403,13 @@
              * @version 1.1.4
              */
             disable: {type: [Array, String, Function, RegExp]},
+
+            /**
+             * Label
+             * @type String
+             * @version 1.1.4
+             */
+            label: {type: String},
         },
         data() {
             return {

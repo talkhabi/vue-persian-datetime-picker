@@ -215,6 +215,13 @@
                  * @version 1.1.4
                  */
                 disable: '1397/02/02',
+
+                /**
+                 * Label for display
+                 * @type String
+                 * @version 1.1.4
+                 */
+                label: 'Date',
             &rbrace;
         </highlight-code>
     </div>

@@ -24,9 +24,19 @@
 		border-bottom-right-radius: 0;
 		line-height: 30px;
 		padding: 0 10px;
+		&:not(.is-editable) {  cursor: pointer;  }
+	}
+	label {
+		color: white;
+		white-space: nowrap;
+		svg + span {
+			display: inline-block;
+			margin-right: 4px;
+			vertical-align: middle;
+		}
 	}
 	&.disabled {
-		label {  cursor: default;  }
+		input, label {  cursor: default;  }
 	}
 }
 .#{$prefix}icon-btn{

@@ -50,6 +50,8 @@
 
         <append-to></append-to>
 
+        <with-label></with-label>
+
 
         <!--===== DateTime Picker =====-->
         <h1 class="text-center hr">Datetime Picker</h1>
@@ -108,6 +110,7 @@
     import AppendTo from './components/examples/AppendTo.vue';
     import DisablePicker from './components/examples/DisablePicker.vue';
     import DisableDates from './components/examples/DisableDates.vue';
+    import WithLabel from './components/examples/WithLabel.vue';
 
     export default {
         name: 'app',
@@ -142,6 +145,7 @@
             AppendTo,
             DisablePicker,
             DisableDates,
+            WithLabel,
         },
     }
 </script>
@@ -186,6 +190,10 @@
             border-left: none;
             border-right: solid 1px #dadada;
             border-radius: 0;
+        }
+        label svg + span {
+            margin-right: 0 !important;
+            margin-left: 4px;
         }
     }
     .form-control {  border-radius: 0;  }
