@@ -18,6 +18,10 @@
 
         <display-format></display-format>
 
+        <disable-picker></disable-picker>
+
+        <disable-dates></disable-dates>
+
         <min-and-max></min-and-max>
 
         <with-value></with-value>
@@ -101,7 +105,9 @@
     import EventsDocs from './components/EventsDocs.vue';
     import InitialValue from './components/examples/InitialValue.vue';
     import DisplayFormat from './components/examples/DisplayFormat.vue';
-    import AppendTo from './components/examples/AppendTo.vue'
+    import AppendTo from './components/examples/AppendTo.vue';
+    import DisablePicker from './components/examples/DisablePicker.vue';
+    import DisableDates from './components/examples/DisableDates.vue';
 
     export default {
         name: 'app',
@@ -134,6 +140,8 @@
             InitialValue,
             DisplayFormat,
             AppendTo,
+            DisablePicker,
+            DisableDates,
         },
     }
 </script>

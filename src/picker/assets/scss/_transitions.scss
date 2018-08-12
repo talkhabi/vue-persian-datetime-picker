@@ -4,6 +4,16 @@
 .fade-enter, .fade-leave-active {
   opacity: 0
 }
+.fade-scale-enter-active, .fade-scale-leave-active {
+	transition: opacity .5s
+}
+.fade-scale-enter, .fade-scale-leave-active {
+	opacity: 0;
+	.#{$prefix}content{
+		transform: scale(0.7, 0.7);
+		opacity: 0;
+	}
+}
 .slidev-enter-active,
 .slidev-leave-active {
 	position: absolute;

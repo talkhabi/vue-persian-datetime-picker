@@ -205,6 +205,16 @@
                  * @version 1.1.4
                  */
                 disabled: false,
+
+                /**
+                 * Disabling
+                 * @type Array, String, Function, RegExp
+                 * @default undefined
+                 * @desc disable some dates
+                 * @example ['1397/02/02', '1390/10/10'] - "1397/05/20" - /1397\/05\/(.*)/ ...
+                 * @version 1.1.4
+                 */
+                disable: '1397/02/02',
             &rbrace;
         </highlight-code>
     </div>
