@@ -217,6 +217,18 @@
     .card-title{
         text-align: center;
     }
+    .card-version {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: #417df4;
+        color: white;
+        padding: 10px 5px 0 0;
+        border-radius: 0 0 0 50px;
+        width: 50px;
+        height: 50px;
+        text-align: right;
+    }
 
     input.is-editable{
         direction: ltr;
