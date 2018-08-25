@@ -70,8 +70,9 @@
                                         <transition name="slidev" :class="directionClassDate">
                                             <div :key="date.jMonth()" >
                                                 <div v-for="m,i in month" class="clearfix">
-                                                    <div :class="[prefix('day'), {selected: day.selected, empty: day.date == null}]"
+                                                    <div :class="[prefix('day'), {selected: day.selected, empty: day.date == null}, day.attributes.class]"
                                                          v-for="day in m"
+                                                         v-bind="day.attributes"
                                                          @click="selectDay(day)"
                                                          :disabled="day.disabled">
                                                         <template v-if="day.date != null">
@@ -94,8 +95,9 @@
                                      ref="year">
                                     <div :class="[prefix('addon-list-content')]">
                                         <div v-for="year in years"
-                                             :class="[prefix('addon-list-item'), {selected: year.selected }]"
-                                             :style="{color: year.selected?color:''}"
+                                             v-bind="year.attributes"
+                                             :class="[prefix('addon-list-item'), {selected: year.selected }, year.attributes.class]"
+                                             :style="[{color: year.selected?color:''}, year.attributes.style]"
                                              :disabled="year.disabled"
                                              @click="selectYear(year)"
                                         >{{ year.value }}</div>
@@ -110,10 +112,11 @@
                                      ref="month">
                                     <div :class="[prefix('addon-list-content')]">
                                         <div v-for="month,i in months"
-                                             :class="[prefix('addon-list-item'), {selected: date.jMonth() == month.jMonth() }]"
+                                             v-bind="month.attributes"
                                              @click="selectMonth(month)"
+                                             :class="[prefix('addon-list-item'), {selected: date.jMonth() == month.jMonth() }, month.attributes.class]"
                                              :disabled="month.disabled"
-                                             :style="{color: date.jMonth() == month.jMonth()?color:''}"
+                                             :style="[{color: date.jMonth() == month.jMonth()?color:''}, month.attributes.style]"
                                         >{{ month.format('jMMMM') }}</div>
                                     </div>
                                 </div>
@@ -130,7 +133,7 @@
                                                 <arrow width="20" direction="up"></arrow>
                                             </btn>
                                             <div class="counter" :class="directionClassTime" @mousewheel.stop.prevent="wheelSetTime('h',$event)">
-                                                <div class="counter-item" v-for="item, i in time.format('HH').split('')">
+                                                <div class="counter-item" v-for="item, i in time.format('HH').split('')" v-bind="timeAttributes">
                                                     <transition name="slideh">
                                                         <span :key="item + '_' + i" :style="{transition: 'all ' + timeData.transitionSpeed + 'ms ease-in-out'}">{{ item }}</span>
                                                     </transition>
@@ -145,7 +148,7 @@
                                                 <arrow width="20" direction="up"></arrow>
                                             </btn>
                                             <div class="counter" :class="directionClassTime" @mousewheel.stop.prevent="wheelSetTime('m',$event)">
-                                                <div class="counter-item" v-for="item, i in time.format('mm').split('')">
+                                                <div class="counter-item" v-for="item, i in time.format('mm').split('')" v-bind="timeAttributes">
                                                     <transition name="slideh">
                                                         <span :key="item + '_' + i" :style="{transition: 'all ' + timeData.transitionSpeed + 'ms ease-in-out'}">{{ item }}</span>
                                                     </transition>
@@ -410,6 +413,14 @@
              * @version 1.1.4
              */
             label: {type: String},
+
+            /**
+             * Highlight items
+             * @type Function
+             * @desc This prop accepts only function that return an object of attributes.
+             * @version 1.1.5
+             */
+            highlight: {type: Function, 'default': null}
         },
         data() {
             return {
@@ -684,6 +695,17 @@
                     this.submit();
                 }
             },
+            applyDevFn(fn, k) {
+                let result = false;
+                let args = Array.prototype.splice.call(arguments, 2);
+                try {
+                    args.push({y: 'year', m: 'month', d: 'day', t: 'time'}[k]);
+                    result = fn.apply(null, args);
+                } catch (er) {
+                    console.error(er);
+                }
+                return result;
+            },
             checkDisable(item, value) {
                 let thisDisable = this.disable;
                 if (!thisDisable) return false;
@@ -702,14 +724,7 @@
                 let check = (date, dateFormatted) => {
                     let matches = false;
                     if (type === 'function') {
-                        let result = false;
-                        try {
-                            let keys = {y: 'year', m: 'month', d: 'day', t: 'time'};
-                            result = thisDisable(dateFormatted, date.clone(), keys[item]);
-                        } catch (er) {
-                            console.error(er);
-                        }
-                        return result;
+                        return this.applyDevFn(thisDisable, item, dateFormatted, date.clone());
                     } else if (Object.prototype.toString.call(thisDisable) === '[object Array]') {
                         let ii = thisDisable.length;
                         for (let i=0; i < ii; i++) {
@@ -723,18 +738,14 @@
                     return false;
                 };
 
-                switch (item) {
-                    case 'y':
-                        value = utils.moment(value, 'jYYYY');
-                        return check(value, value.format(this.selfFormat));
-                        break;
-                    case 'd':
-                    case 'm':
-                    case 't':
-                        return check(value, value.format(this.selfFormat));
-                        break;
-                    default:  return false; break;
-                }
+                if (item === 'y') value = utils.moment(value, 'jYYYY');
+                return check(value, value.format(this.selfFormat));
+            },
+            getHighlights(item, value) {
+                let highlight = this.highlight;
+                if (!highlight || typeof highlight !== 'function') return {};
+                if (item === 'y') value = utils.moment(value, 'jYYYY');
+                return this.applyDevFn(highlight, item, value.format(this.selfFormat), value.clone()) || {};
             },
             isLower(date) { return this.minDate && date.unix() < this.minDate.unix() },
             isMore(date) { return this.maxDate && date.unix() > this.maxDate.unix() }
@@ -786,7 +797,8 @@
                                 (this.minDate && m.clone().startOf('day').unix() < min) ||
                                 (this.maxDate && m.clone().endOf('day').unix() > max) ||
                                 (d && this.checkDisable('d', m))
-                            )
+                            ),
+                            attributes: (d ? this.getHighlights('d', m):{})
                         });
                         selected = sel;
                     });
@@ -804,7 +816,8 @@
                     let obj = {
                         value: item,
                         selected: false,
-                        disabled: this.checkDisable('y', item)
+                        disabled: this.checkDisable('y', item),
+                        attributes: this.getHighlights('y', item),
                     };
                     if(!selectedFound && cy === item){
                         obj.selected = true;
@@ -823,7 +836,8 @@
                     });
                     let months = utils.getMonthsList(this.minDate, this.maxDate, date);
                     months.forEach(m => {
-                        m.disabled = m.disabled || this.checkDisable('m', m)
+                        m.disabled = m.disabled || this.checkDisable('m', m);
+                        m.attributes = this.getHighlights('m', m);
                     });
                     return months;
                 }
@@ -902,6 +916,9 @@
             },
             isDisableTime() {
                 return (this.hasStep('t') && this.checkDisable('t', this.time));
+            },
+            timeAttributes() {
+                return this.hasStep('t') ? this.getHighlights('t', this.time):{};
             },
             canSubmit() {
                 if (!this.disable) return true;

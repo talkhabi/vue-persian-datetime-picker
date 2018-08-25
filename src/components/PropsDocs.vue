@@ -222,6 +222,14 @@
                  * @version 1.1.4
                  */
                 label: 'Date',
+
+                /**
+                 * Highlight items
+                 * @type Function
+                 * @desc This prop accepts only function that return an object of attributes.
+                 * @version 1.1.5
+                 */
+                highlight: () => ({ style: {'color: green'} })
             &rbrace;
         </highlight-code>
     </div>

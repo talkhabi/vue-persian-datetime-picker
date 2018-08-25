@@ -52,6 +52,8 @@
 
         <with-label></with-label>
 
+        <highlight></highlight>
+
 
         <!--===== DateTime Picker =====-->
         <h1 class="text-center hr">Datetime Picker</h1>
@@ -111,6 +113,7 @@
     import DisablePicker from './components/examples/DisablePicker.vue';
     import DisableDates from './components/examples/DisableDates.vue';
     import WithLabel from './components/examples/WithLabel.vue';
+    import Highlight from './components/examples/Highlight.vue';
 
     export default {
         name: 'app',
@@ -146,6 +149,7 @@
             DisablePicker,
             DisableDates,
             WithLabel,
+            Highlight
         },
     }
 </script>
