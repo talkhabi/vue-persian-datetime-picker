@@ -991,8 +991,9 @@
                         }
                     });
                     this.checkScroll();
+                    this.$emit('open', this)
                 }else{
-                    this.$emit('close', null);
+                    this.$emit('close', this);
                 }
             },
             show(val){
