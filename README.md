@@ -115,3 +115,59 @@ Then use in component
 ## License
 
 This project is licensed under the MIT License
+
+
+## Change log
+
+
+### 1.1.5 (2018-09-01)
+
+ * Added emit on open 
+ * Added feature to highlight items and dates
+
+### 1.1.4 (2018-08-12)
+
+ * Added label for display
+ * Added feature to disable some dates
+ * Added feature to disable or enable the datepicker
+ * Icons and css styles optimization
+ * Load component via script tag
+
+
+### 1.1.3 (2018-05-22)
+
+ * Fixed "min-date" bug
+
+### 1.1.2 (2018-05-12)
+
+ * Updated "moment-jalaali" version to 0.7.3
+ * Fixed "display-format" when is editable
+ * Reset "view" value
+
+### 1.1.1 (2018-05-03)
+
+  * Added "append-to"
+  * Added "display format"
+
+### 1.1.0 (2018-05-01)
+
+  * Added default settings feature
+  
+
+### 1.0.9 (2017-12-25)
+
+  * Clear input value
+  * Fixed editable input bug
+  * Added "Initial value"
+  * Package keywords
+  * Fixed css class name
+  * Fixed some other bugs
+
+### 1.0.7 (2017-12-14)
+
+  * Avoid submitting form
+  * Auto submit on wrapper click
+
+### 1.0.5 (2017-12-04)
+
+  * Fixed default value for "value"
