@@ -949,13 +949,14 @@
                         if (found) callback.call(el, e);
                     });
                 };
-
-                if(this.element && !this.editable){
-                    live(this.element, 'click', (e) => {
-                        this.focus(e);
-                    });
+                if (this.element && !this.editable) {
+                    live(this.element, 'click', this.focus);
                 }
-            })
+            });
+            document.body.addEventListener('keydown', e => {
+                e = e || event;
+                if (e.keyCode === 9 && this.visible) this.visible = false;
+            });
         },
         watch: {
             selectedDate(val, old){
