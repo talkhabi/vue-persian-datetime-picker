@@ -452,3 +452,18 @@
 		}
 	}
 }
+
+.responsive {
+	.#{$prefix}wrapper {
+		overflow: auto;
+		text-align: center;
+		.#{$prefix}container {
+			position: relative;
+			top: 0;
+			left: 0;
+			transform: none;
+			display: inline-block;
+			margin: 20px auto;
+		}
+	}
+}
