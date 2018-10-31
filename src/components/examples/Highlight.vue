@@ -159,62 +159,65 @@
 </template>
 
 <script>
-    import moment from 'moment-jalaali';
-    export default {
-        data() {
-            return {
-                tab: 'd',
-                buttons: {
-                    y: 'Year',
-                    m: 'Month',
-                    d: 'Date',
-                    t: 'Time',
-                    dt: 'DateTime',
-                }
-            }
-        },
-        methods: {
-            highlightDay(formatted, dateMoment, checkingFor) {
-                let attributes = {'title': 'Today is ' + formatted};
-                if (checkingFor === 'day' && formatted === '1397/12/28'){
-                    attributes['class'] = 'highlighted-1';
-                    attributes['title'] = 'جشن چهارشنبه سوری';
-                }
-                if (checkingFor === 'day' && formatted === '1397/12/29'){
-                    attributes['class'] = 'highlighted-2';
-                    attributes['title'] = 'روز ملی شدن صنعت نفت';
-                }
-                return attributes;
-            },
-            highlightYear(formatted, dateMoment, checkingFor) {
-                if (checkingFor === 'year' && formatted === '1396') return {
-                    'style': {'color': 'red !important'},
-                    'class': 'highlighted',
-                    'data-info': '1396',
-                };
-                return {}
-            },
-            highlightMonth(formatted, dateMoment, checkingFor) {
-                if (formatted === '05') return {
-                    'style': {'color': 'red !important'},
-                    'class': 'highlighted',
-                };
-                return {}
-            },
-            highlightTime(formatted, dateMoment, checkingFor) {
-                if (dateMoment.hour() === dateMoment.minutes()) return {
-                    'style': {'color': '#00BCD4 !important'}
-                };
-                return {}
-            },
-            highlightDatetime(formatted, dateMoment, checkingFor) {
-                if (checkingFor === 'time' && dateMoment.format('HH:mm') === '22:00')
-                    return {'style': {'color': '#ff9800 !important'}};
-                else if (checkingFor === 'day' && dateMoment.jDate() === 5)
-                    return {'class': 'highlighted-1'};
-                return {}
-            },
+    import moment from 'moment-jalaali'
+export default {
+      data () {
+        return {
+          tab: 'd',
+          buttons: {
+            y: 'Year',
+            m: 'Month',
+            d: 'Date',
+            t: 'Time',
+            dt: 'DateTime'
+          }
         }
+      },
+      methods: {
+        highlightDay (formatted, dateMoment, checkingFor) {
+          let attributes = {'title': 'Today is ' + formatted}
+          if (checkingFor === 'day' && formatted === '1397/12/28') {
+            attributes['class'] = 'highlighted-1'
+            attributes['title'] = 'جشن چهارشنبه سوری'
+          }
+          if (checkingFor === 'day' && formatted === '1397/12/29') {
+            attributes['class'] = 'highlighted-2'
+            attributes['title'] = 'روز ملی شدن صنعت نفت'
+          }
+          return attributes
+        },
+        highlightYear (formatted, dateMoment, checkingFor) {
+          if (checkingFor === 'year' && formatted === '1396') {
+            return {
+              'style': {'color': 'red !important'},
+              'class': 'highlighted',
+              'data-info': '1396'
+            }
+          }
+          return {}
+        },
+        highlightMonth (formatted, dateMoment, checkingFor) {
+          if (formatted === '05') {
+            return {
+              'style': {'color': 'red !important'},
+              'class': 'highlighted'
+            }
+          }
+          return {}
+        },
+        highlightTime (formatted, dateMoment, checkingFor) {
+          if (dateMoment.hour() === dateMoment.minutes()) {
+            return {
+              'style': {'color': '#00BCD4 !important'}
+            }
+          }
+          return {}
+        },
+        highlightDatetime (formatted, dateMoment, checkingFor) {
+          if (checkingFor === 'time' && dateMoment.format('HH:mm') === '22:00') { return {'style': {'color': '#ff9800 !important'}} } else if (checkingFor === 'day' && dateMoment.jDate() === 5) { return {'class': 'highlighted-1'} }
+          return {}
+        }
+      }
     }
 </script>
 <style lang="scss">

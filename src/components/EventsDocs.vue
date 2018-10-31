@@ -108,25 +108,24 @@
 </template>
 
 <script>
+    import moment from 'moment-jalaali'
 
-    import moment from 'moment-jalaali';
+export default {
 
-    export default {
-
-        data() {
-            return {
-                date: '',
-                date_1: '1396/05/03',
-                dateMoment: moment('1396/05/03', 'jYYYY/jMM/jDD')
-            }
-        },
-        methods: {
-            onOpen(picker) {
-                console.log('The datepicker is open');
-            },
-            onClose(picker) {
-                console.log('The datepicker was closed');
-            }
+      data () {
+        return {
+          date: '',
+          date_1: '1396/05/03',
+          dateMoment: moment('1396/05/03', 'jYYYY/jMM/jDD')
         }
+      },
+      methods: {
+        onOpen (picker) {
+          console.log('The datepicker is open')
+        },
+        onClose (picker) {
+          console.log('The datepicker was closed')
+        }
+      }
     }
 </script>

@@ -44,10 +44,10 @@
 
 <script>
     export default {
-        data() {
-            return {
-                date: '1396/05/03',
-            }
-        },
+      data () {
+        return {
+          date: '1396/05/03'
+        }
+      }
     }
 </script>

@@ -85,72 +85,71 @@
 </template>
 
 <script>
+    import InstallDocs from './components/InstallDocs.vue'
+import SimpleDate from './components/examples/SimpleDate.vue'
+import SimpleFormat from './components/examples/SimpleFormat.vue'
+import MinAndMax from './components/examples/MinAndMax.vue'
+import WithValue from './components/examples/WithValue.vue'
+import DifferentInputAnOutput from './components/examples/DifferentInputAnOutput.vue'
+import ViewProp from './components/examples/ViewProp.vue'
+import EditableInput from './components/examples/EditableInput.vue'
+import CustomInput from './components/examples/CustomInput.vue'
+import CustomInputAndEditable from './components/examples/CustomInputAndEditable.vue'
+import InputSettings from './components/examples/InputSettings.vue'
+import AltField from './components/examples/AltField.vue'
+import AutoSubmit from './components/examples/AutoSubmit.vue'
+import WrapperSubmit from './components/examples/WrapperSubmit.vue'
+import PickerColor from './components/examples/PickerColor.vue'
+import SimpleDatetime from './components/examples/SimpleDatetime.vue'
+import DatetimeMinAndMax from './components/examples/DatetimeMinAndMax.vue'
+import SimpleTime from './components/examples/SimpleTime.vue'
+import TimeMinAndMax from './components/examples/TimeMinAndMax.vue'
+import PropsDocs from './components/PropsDocs.vue'
+import EventsDocs from './components/EventsDocs.vue'
+import InitialValue from './components/examples/InitialValue.vue'
+import DisplayFormat from './components/examples/DisplayFormat.vue'
+import AppendTo from './components/examples/AppendTo.vue'
+import DisablePicker from './components/examples/DisablePicker.vue'
+import DisableDates from './components/examples/DisableDates.vue'
+import WithLabel from './components/examples/WithLabel.vue'
+import Highlight from './components/examples/Highlight.vue'
 
-    import InstallDocs from './components/InstallDocs.vue';
-    import SimpleDate from './components/examples/SimpleDate.vue';
-    import SimpleFormat from './components/examples/SimpleFormat.vue';
-    import MinAndMax from './components/examples/MinAndMax.vue';
-    import WithValue from './components/examples/WithValue.vue';
-    import DifferentInputAnOutput from './components/examples/DifferentInputAnOutput.vue';
-    import ViewProp from './components/examples/ViewProp.vue';
-    import EditableInput from './components/examples/EditableInput.vue';
-    import CustomInput from './components/examples/CustomInput.vue';
-    import CustomInputAndEditable from './components/examples/CustomInputAndEditable.vue';
-    import InputSettings from './components/examples/InputSettings.vue';
-    import AltField from './components/examples/AltField.vue';
-    import AutoSubmit from './components/examples/AutoSubmit.vue';
-    import WrapperSubmit from './components/examples/WrapperSubmit.vue';
-    import PickerColor from './components/examples/PickerColor.vue';
-    import SimpleDatetime from './components/examples/SimpleDatetime.vue';
-    import DatetimeMinAndMax from './components/examples/DatetimeMinAndMax.vue';
-    import SimpleTime from './components/examples/SimpleTime.vue';
-    import TimeMinAndMax from './components/examples/TimeMinAndMax.vue';
-    import PropsDocs from './components/PropsDocs.vue';
-    import EventsDocs from './components/EventsDocs.vue';
-    import InitialValue from './components/examples/InitialValue.vue';
-    import DisplayFormat from './components/examples/DisplayFormat.vue';
-    import AppendTo from './components/examples/AppendTo.vue';
-    import DisablePicker from './components/examples/DisablePicker.vue';
-    import DisableDates from './components/examples/DisableDates.vue';
-    import WithLabel from './components/examples/WithLabel.vue';
-    import Highlight from './components/examples/Highlight.vue';
-
-    export default {
-        name: 'app',
-        data() {
-            return {}
-        },
-        methods: {},
-        components: {
-            InstallDocs,
-            SimpleDate,
-            SimpleFormat,
-            MinAndMax,
-            WithValue,
-            DifferentInputAnOutput,
-            ViewProp,
-            EditableInput,
-            CustomInput,
-            CustomInputAndEditable,
-            InputSettings,
-            AltField,
-            AutoSubmit,
-            WrapperSubmit,
-            PickerColor,
-            SimpleDatetime,
-            DatetimeMinAndMax,
-            SimpleTime,
-            TimeMinAndMax,
-            PropsDocs,
-            EventsDocs,
-            InitialValue,
-            DisplayFormat,
-            AppendTo,
-            DisablePicker,
-            DisableDates,
-            WithLabel,
-            Highlight
-        },
+export default {
+      name: 'app',
+      data () {
+        return {}
+      },
+      methods: {},
+      components: {
+        InstallDocs,
+        SimpleDate,
+        SimpleFormat,
+        MinAndMax,
+        WithValue,
+        DifferentInputAnOutput,
+        ViewProp,
+        EditableInput,
+        CustomInput,
+        CustomInputAndEditable,
+        InputSettings,
+        AltField,
+        AutoSubmit,
+        WrapperSubmit,
+        PickerColor,
+        SimpleDatetime,
+        DatetimeMinAndMax,
+        SimpleTime,
+        TimeMinAndMax,
+        PropsDocs,
+        EventsDocs,
+        InitialValue,
+        DisplayFormat,
+        AppendTo,
+        DisablePicker,
+        DisableDates,
+        WithLabel,
+        Highlight
+      }
     }
 </script>
 

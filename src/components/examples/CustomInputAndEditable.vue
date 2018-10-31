@@ -60,11 +60,11 @@
 
 <script>
     export default {
-        data() {
-            return {
-                date: '',
-                show: false,
-            }
-        },
+      data () {
+        return {
+          date: '',
+          show: false
+        }
+      }
     }
 </script>

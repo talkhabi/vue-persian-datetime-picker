@@ -33,14 +33,14 @@
 
 <script>
     export default {
-        data() {
-            return {
-                date: '',
-                time: '',
-                datetime: '',
-                year: '',
-                month: '',
-            }
-        },
+      data () {
+        return {
+          date: '',
+          time: '',
+          datetime: '',
+          year: '',
+          month: ''
+        }
+      }
     }
 </script>

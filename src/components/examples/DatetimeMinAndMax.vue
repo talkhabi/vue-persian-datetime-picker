@@ -24,10 +24,10 @@
 
 <script>
     export default {
-        data() {
-            return {
-                datetime: '',
-            }
-        },
+      data () {
+        return {
+          datetime: ''
+        }
+      }
     }
 </script>

@@ -17,10 +17,10 @@
 
 <script>
     export default {
-        data() {
-            return {
-                disabled: true
-            }
-        },
+      data () {
+        return {
+          disabled: true
+        }
+      }
     }
 </script>

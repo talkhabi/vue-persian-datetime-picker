@@ -36,13 +36,12 @@
 </template>
 
 <script>
-
     export default {
-        data() {
-            return {
-                start: '',
-                end: '',
-            }
+      data () {
+        return {
+          start: '',
+          end: ''
         }
+      }
     }
 </script>

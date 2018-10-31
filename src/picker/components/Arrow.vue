@@ -14,21 +14,21 @@
     import 'vue-awesome/icons/arrow-right'
 
     export default {
-        components: {Icon},
-        props: {
-            fill: {
-                type: String,
-                default: '#a2a2a2'
-            },
-            direction: {
-                type: String,
-                default: 'up',
-            }
+      components: {Icon},
+      props: {
+        fill: {
+          type: String,
+          default: '#a2a2a2'
         },
-        computed: {
-          iconName () {
-            return `arrow-${this.direction}`
-          }
+        direction: {
+          type: String,
+          default: 'up'
         }
+      },
+      computed: {
+        iconName () {
+          return `arrow-${this.direction}`
+        }
+      }
     }
 </script>

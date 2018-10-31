@@ -46,12 +46,12 @@
 
 <script>
     export default {
-        data() {
-            return {
-                name: '',
-                tel: '',
-                birthday: ''
-            }
+      data () {
+        return {
+          name: '',
+          tel: '',
+          birthday: ''
         }
+      }
     }
 </script>

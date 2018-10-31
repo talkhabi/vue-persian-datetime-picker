@@ -168,28 +168,28 @@
 </template>
 
 <script>
-    import moment from 'moment-jalaali';
-    export default {
-        data() {
-            return {
-                tab: 'd',
-                buttons: {
-                    y: 'Year',
-                    m: 'Month',
-                    d: 'Date',
-                    t: 'Time',
-                    dt: 'DateTime',
-                }
-            }
-        },
-        methods: {
-            checkDate(formatted, dateMoment, checkingFor) {
-                return (
-                    formatted === '1397/04/03' ||
-                    dateMoment.jMonth() === 4  ||  // means "mordad"
-                    dateMoment.locale('en').format('dddd') === 'Friday'
-                )
-            },
+    import moment from 'moment-jalaali'
+export default {
+      data () {
+        return {
+          tab: 'd',
+          buttons: {
+            y: 'Year',
+            m: 'Month',
+            d: 'Date',
+            t: 'Time',
+            dt: 'DateTime'
+          }
         }
+      },
+      methods: {
+        checkDate (formatted, dateMoment, checkingFor) {
+          return (
+            formatted === '1397/04/03' ||
+                    dateMoment.jMonth() === 4 || // means "mordad"
+                    dateMoment.locale('en').format('dddd') === 'Friday'
+          )
+        }
+      }
     }
 </script>

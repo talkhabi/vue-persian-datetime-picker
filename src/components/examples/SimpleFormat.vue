@@ -39,16 +39,15 @@
 </template>
 
 <script>
-
     import moment from 'moment-jalaali'
 
     export default {
 
-        data() {
-            return {
-                date: '',
-                moment: moment
-            }
-        },
+      data () {
+        return {
+          date: '',
+          moment: moment
+        }
+      }
     }
 </script>

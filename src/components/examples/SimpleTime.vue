@@ -14,10 +14,10 @@
 
 <script>
     export default {
-        data() {
-            return {
-                time: '',
-            }
-        },
+      data () {
+        return {
+          time: ''
+        }
+      }
     }
 </script>
