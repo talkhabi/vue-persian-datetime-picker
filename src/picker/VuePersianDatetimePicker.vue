@@ -182,9 +182,8 @@
 </template>
 
 <script>
-    import './assets/scss/style.scss'
     import utils from './modules/utils'
-import Arrow from './components/Arrow.vue'
+    import Arrow from './components/Arrow.vue'
     import Btn from './components/Btn.vue'
     import Icon from 'vue-awesome/components/Icon'
 
