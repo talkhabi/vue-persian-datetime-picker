@@ -13,12 +13,12 @@
 }
 
 
-.#{$prefix}input-group {
-    border: solid 1px #bdbdbd;
+.#{$vpd-prefix}input-group {
+    border: $vpd-input-border;
     display: table;
     width: 100%;
 
-    .#{$prefix}icon-btn {
+    .#{$vpd-prefix}icon-btn {
         display: table-cell;
         width: 1%;
         cursor: pointer;
@@ -44,7 +44,7 @@
     }
 }
 
-.#{$prefix}wrapper {
+.#{$vpd-prefix}wrapper {
     position: fixed;
     top: 0;
     left: 0;
@@ -62,13 +62,13 @@
 
 .fade-scale-enter, .fade-scale-leave-active {
     opacity: 0;
-    .#{$prefix}content{
+    .#{$vpd-prefix}content{
         transform: scale(0.7, 0.7);
         opacity: 0;
     }
 }
 
-.#{$prefix}container {
+.#{$vpd-prefix}container {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -79,12 +79,12 @@
     -ms-user-select: none;
 }
 
-.#{$prefix}content {
+.#{$vpd-prefix}content {
     opacity: 1;
     transition: all .4s cubic-bezier(0.25, 0.1, 0.17, 1.84);
     text-align: right;
     direction: rtl;
-    width: $width;
+    width: $vpd-width;
 
     background-color: #ffffff;
     -webkit-box-shadow: 5px 22px 95px -14px rgba(0,0,0,1);
@@ -93,7 +93,7 @@
     cursor: default;
 }
 
-.#{$prefix}header {
+.#{$vpd-prefix}header {
     color: #ffffff;
     padding: 10px 20px;
     position: relative;
@@ -104,14 +104,14 @@
     }
 }
 
-.#{$prefix}body {
+.#{$vpd-prefix}body {
     position: relative;
     .landscape {
         float: left;
     }
 }
 
-.#{$prefix}year-label {
+.#{$vpd-prefix}year-label {
     margin-bottom: 2px;
     position: relative;
     height: 24px;
@@ -136,7 +136,7 @@
     }
 }
 
-.#{$prefix}date {
+.#{$vpd-prefix}date {
     position: relative;
     font-size: 28px;
     line-height: 40px;
@@ -156,7 +156,7 @@
 
 }
 
-.#{$prefix}week {
+.#{$vpd-prefix}week {
     font-size: 12px;
     padding: 0 14px;
     line-height: 20px;
@@ -165,24 +165,24 @@
     height: 20px;
 }
 
-.#{$prefix}weekday {
+.#{$vpd-prefix}weekday {
     float: right;
-    width: $day-size;
+    width: $vpd-day-size;
     text-align: center;
 }
 
-.#{$prefix}days {
+.#{$vpd-prefix}days {
     padding: 0 18px;
     position: relative;
     overflow: hidden;
     transition: height 300ms cubic-bezier(0.75, 0.02, 0.27, 0.99);
 }
 
-.#{$prefix}day {
-    width: $day-size;
-    height: $day-size;
+.#{$vpd-prefix}day {
+    width: $vpd-day-size;
+    height: $vpd-day-size;
     float: right;
-    line-height: $day-size;
+    line-height: $vpd-day-size;
     position: relative;
 
     &:not(.empty) {
@@ -195,11 +195,11 @@
         cursor: default;
         color: darken(#ffffff, 20%);
 
-        .#{$prefix}day-effect {
+        .#{$vpd-prefix}day-effect {
             background-color: transparent;
         }
 
-        .#{$prefix}day-text {
+        .#{$vpd-prefix}day-text {
             color: darken(#ffffff, 20%);
         }
     }
@@ -207,7 +207,7 @@
     &:not([disabled]) {
         &:hover {
             color: #ffffff;
-            .#{$prefix}day-effect {
+            .#{$vpd-prefix}day-effect {
                 transform: scale(1);
                 opacity: 0.6;
             }
@@ -215,7 +215,7 @@
 
         &.selected {
             color: #ffffff;
-            .#{$prefix}day-effect {
+            .#{$vpd-prefix}day-effect {
                 transform: scale(1);
                 opacity: 1;
             }
@@ -223,10 +223,10 @@
     }
 }
 
-.#{$prefix}day-effect {
+.#{$vpd-prefix}day-effect {
     position: absolute;
-    width: $day-size - 4px;
-    height: $day-size - 4px;
+    width: $vpd-day-size - 4px;
+    height: $vpd-day-size - 4px;
     border-radius: 50%;
     top: 2px;
     left: 2px;
@@ -235,15 +235,15 @@
     transition: all 450ms ease;
 }
 
-.#{$prefix}day-text {
+.#{$vpd-prefix}day-text {
     position: relative;
 }
 
-.#{$prefix}controls {
+.#{$vpd-prefix}controls {
     position: relative;
     z-index: 2;
-    height: $month-label-height;
-    line-height: $month-label-height;
+    height: $vpd-month-label-height;
+    line-height: $vpd-month-label-height;
     text-align: center;
 
     button {
@@ -268,45 +268,45 @@
     }
 }
 
-.#{$prefix}next {
-    width: $month-label-height;
-    height: $month-label-height;
-    line-height: $month-label-height;
+.#{$vpd-prefix}next {
+    width: $vpd-month-label-height;
+    height: $vpd-month-label-height;
+    line-height: $vpd-month-label-height;
     float: right;
 }
 
-.#{$prefix}next,
-.#{$prefix}prev {
-    width: $month-label-height;
-    height: $month-label-height;
-    line-height: $month-label-height;
+.#{$vpd-prefix}next,
+.#{$vpd-prefix}prev {
+    width: $vpd-month-label-height;
+    height: $vpd-month-label-height;
+    line-height: $vpd-month-label-height;
     float: left;
 }
 
-.#{$prefix}next {  float: right;  }
-.#{$prefix}prev {  float: left;  }
+.#{$vpd-prefix}next {  float: right;  }
+.#{$vpd-prefix}prev {  float: left;  }
 
-.#{$prefix}arrow {
+.#{$vpd-prefix}arrow {
     width: 11px;
     height: 11px;
 }
 
-.#{$prefix}month {
+.#{$vpd-prefix}month {
     position: relative;
     overflow: hidden;
 }
 
-.#{$prefix}month-label {
+.#{$vpd-prefix}month-label {
     position: absolute;
     top: 0;
-    left: $month-label-height;
-    right: $month-label-height;
+    left: $vpd-month-label-height;
+    right: $vpd-month-label-height;
     overflow: hidden;
     width: 90px;
     margin-left: auto;
     margin-right: auto;
-    line-height: $month-label-height;
-    height: $month-label-height;
+    line-height: $vpd-month-label-height;
+    height: $vpd-month-label-height;
     text-align: center;
     cursor: pointer;
     > span {
@@ -326,7 +326,7 @@
     }
 }
 
-.#{$prefix}actions {
+.#{$vpd-prefix}actions {
     text-align: right;
     padding: 8px;
     button {
@@ -352,9 +352,9 @@
     }
 }
 
-.#{$prefix}addon-list-content {  direction: rtl;  }
+.#{$vpd-prefix}addon-list-content {  direction: rtl;  }
 
-.#{$prefix}addon-list-item {
+.#{$vpd-prefix}addon-list-item {
     width: (1/3)*100%;
     text-align: center;
     font-size: 14px;
@@ -374,7 +374,7 @@
     }
 }
 
-.#{$prefix}addon-list {
+.#{$vpd-prefix}addon-list {
     width: 100%;
     background-color: #ffffff;
     position: absolute;
@@ -385,9 +385,9 @@
     border-bottom: solid 1px #eee;
     direction: ltr;
 
-    .#{$prefix}addon-list-content {
+    .#{$vpd-prefix}addon-list-content {
         direction: rtl;
-        .#{$prefix}addon-list-item {
+        .#{$vpd-prefix}addon-list-item {
             width: (1/3)*100%;
             text-align: center;
             font-size: 14px;
@@ -407,10 +407,10 @@
         }
     }
 
-    &.#{$prefix}month-list{
+    &.#{$vpd-prefix}month-list{
         padding-top: 15px;
         &.can-close{ padding-top: 30px; }
-        .#{$prefix}addon-list-item {
+        .#{$vpd-prefix}addon-list-item {
             font-weight: 300;
             height: 54px;
             line-height: 46px;
@@ -447,23 +447,23 @@
     background-color: rgba(0,0,0,0.1);
 }
 
-.#{$prefix}month-list {
+.#{$vpd-prefix}month-list {
     padding-top: 15px;
     &.can-close { padding-top: 30px; }
-    .#{$prefix}addon-list-item {
+    .#{$vpd-prefix}addon-list-item {
         font-weight: 300;
         height: 54px;
         line-height: 46px;
     }
 }
 
-.#{$prefix}addon-list-item[disabled] {
+.#{$vpd-prefix}addon-list-item[disabled] {
     opacity: 0.3;
     cursor: default !important;
     background-color: transparent !important;
 }
 
-.#{$prefix}close-addon {
+.#{$vpd-prefix}close-addon {
     position: absolute;
     top: 4px;
     left: 4px;
@@ -478,11 +478,11 @@
     background-color: rgba(0,0,0,0.1);
 }
 
-.#{$prefix}time {
+.#{$vpd-prefix}time {
     user-select: none;
 
-    .#{$prefix}time-h,
-    .#{$prefix}time-m {
+    .#{$vpd-prefix}time-h,
+    .#{$vpd-prefix}time-m {
         position: relative;
         margin-top: 70px;
         float: left;
@@ -509,7 +509,7 @@
         }
     }
 
-    .#{$prefix}time-h:after {
+    .#{$vpd-prefix}time-h:after {
         position: absolute;
         top: 50%;
         right: 0;
@@ -530,7 +530,7 @@
     &.disabled .counter-item { opacity: 0.5; }
 }
 
-.#{$prefix}prev-step {
+.#{$vpd-prefix}prev-step {
     position: absolute;
     top: 0;
     left: 0;
@@ -543,19 +543,19 @@
 }
 
 [data-type="time"] {
-    .#{$prefix}time {
-        .#{$prefix}time-m,
-        .#{$prefix}time-h {
+    .#{$vpd-prefix}time {
+        .#{$vpd-prefix}time-m,
+        .#{$vpd-prefix}time-h {
             margin-top: 40px;
         }
     }
 }
 
 .responsive {
-    .#{$prefix}wrapper {
+    .#{$vpd-prefix}wrapper {
         overflow: auto;
         text-align: center;
-        .#{$prefix}container {
+        .#{$vpd-prefix}container {
             position: relative;
             top: 0;
             left: 0;
