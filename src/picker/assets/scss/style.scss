@@ -14,7 +14,7 @@
 
 
 .#{$vpd-prefix}input-group {
-    border: $vpd-input-border;
+    border: none;
     display: table;
     width: 100%;
 
@@ -28,7 +28,7 @@
     }
     input {
         display: table-cell;
-        border: none ;
+        border: $vpd-input-border;
         border-top-right-radius: 0 ;
         border-bottom-right-radius: 0 ;
         line-height: 30px;
