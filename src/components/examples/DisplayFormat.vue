@@ -1,5 +1,5 @@
 <template>
-    <card title="Format only for display">
+    <card title="Format only for display" version="1.1.1">
         
         <div style="max-width: 250px">
             <input type="text" v-model="name" placeholder="Name" class="form-control mb-2">
@@ -29,7 +29,6 @@
                 &lt;/date-picker&gt;
             </highlight-code>
             <highlight-code lang="javascript">
-                // @version 1.1.1
                 data() {
                     return {
                         user: {

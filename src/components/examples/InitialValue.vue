@@ -1,5 +1,5 @@
 <template>
-    <card title="With initial value for start if 'value' is empty">
+    <card title="With initial value for start if 'value' is empty" version="1.0.9">
 
         <date-picker v-model="date" initial-value="1370/01/01"></date-picker>
         <br/>
@@ -28,7 +28,6 @@
                 &lt;date-picker v-model="month" type="month" initial-value="05"&gt;&lt;/date-picker&gt;
             </highlight-code>
             <highlight-code lang="javascript" v-pre>
-                // @version 1.0.9
                 data() {
                     return {
                         date: '',

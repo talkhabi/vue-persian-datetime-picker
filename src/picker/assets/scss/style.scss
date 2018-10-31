@@ -2,8 +2,8 @@
 @import 'transitions';
 
 
-.clearfix{
-    &:after, &:before{
+.clearfix {
+    &:after, &:before {
         content: " ";
         display: table;
     }
@@ -13,32 +13,38 @@
 }
 
 
-.#{$prefix}input-group{
+.#{$prefix}input-group {
+    border: solid 1px #bdbdbd;
     display: table;
     width: 100%;
 
-    border: solid 1px #bdbdbd;
-
-    .#{$prefix}icon-btn{
+    .#{$prefix}icon-btn {
         display: table-cell;
         width: 1%;
         cursor: pointer;
         padding: 0 10px;
         vertical-align: middle;
         color: #ffffff;
-        > svg{
-            vertical-align: middle;
-        }
     }
-    input{
+    input {
         display: table-cell;
         border: none ;
         border-top-right-radius: 0 ;
         border-bottom-right-radius: 0 ;
+        line-height: 30px;
+        padding: 0 10px;
+        &:not(.is-editable) {  cursor: pointer;  }
+    }
+    label {
+        color: white;
+        white-space: nowrap;
+    }
+    &.disabled {
+        input, label {  cursor: default;  }
     }
 }
 
-.#{$prefix}wrapper{
+.#{$prefix}wrapper {
     position: fixed;
     top: 0;
     left: 0;
@@ -53,6 +59,7 @@
 .fade-scale-enter-active, .fade-scale-leave-active {
     transition: opacity .5s
 }
+
 .fade-scale-enter, .fade-scale-leave-active {
     opacity: 0;
     .#{$prefix}content{
@@ -61,7 +68,7 @@
     }
 }
 
-.#{$prefix}container{
+.#{$prefix}container {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -73,7 +80,6 @@
 }
 
 .#{$prefix}content {
-
     opacity: 1;
     transition: all .4s cubic-bezier(0.25, 0.1, 0.17, 1.84);
     text-align: right;
@@ -123,7 +129,7 @@
         border-style: solid;
         border-radius: 2px;
         transition: all 0.1s ease-out;
-        &:not(:hover){
+        &:not(:hover) {
             border-color: transparent !important;
             color: inherit !important;
         }
@@ -147,6 +153,7 @@
         line-height: 40px;
         height: 80px;
     }
+
 }
 
 .#{$prefix}week {
@@ -178,7 +185,7 @@
     line-height: $day-size;
     position: relative;
 
-    &:not(.empty){
+    &:not(.empty) {
         cursor: pointer;
         transition: color 450ms ease;
         text-align: center;
@@ -197,7 +204,7 @@
         }
     }
 
-    &:not([disabled]){
+    &:not([disabled]) {
         &:hover {
             color: #ffffff;
             .#{$prefix}day-effect {
@@ -246,7 +253,7 @@
         user-select: none;
         outline: none;
         cursor: pointer;
-        &[disabled]{
+        &[disabled] {
             opacity: 0.3;
             cursor: default;
         }
@@ -268,12 +275,16 @@
     float: right;
 }
 
+.#{$prefix}next,
 .#{$prefix}prev {
     width: $month-label-height;
     height: $month-label-height;
     line-height: $month-label-height;
     float: left;
 }
+
+.#{$prefix}next {  float: right;  }
+.#{$prefix}prev {  float: left;  }
 
 .#{$prefix}arrow {
     width: 11px;
@@ -308,7 +319,7 @@
         border-radius: 2px;
         transition: all 0.1s ease-out;
         white-space: nowrap;
-        &:not(:hover){
+        &:not(:hover) {
             border-color: transparent !important;
             color: inherit !important;
         }
@@ -332,13 +343,34 @@
         line-height: 36px;
         height: 36px;
         transition: all 0.3s ease;
-        &:hover {
-            background-color: darken(#ffffff, 5%);
-        }
-        &[disabled]{
+
+        &:hover { background-color: darken(#ffffff, 5%); }
+        &[disabled] {
             opacity: 0.6;
             cursor: default;
         }
+    }
+}
+
+.#{$prefix}addon-list-content {  direction: rtl;  }
+
+.#{$prefix}addon-list-item {
+    width: (1/3)*100%;
+    text-align: center;
+    font-size: 14px;
+    height: 44px;
+    line-height: 36px;
+    transition: all 0.3s ease;
+    color: #8a8a8a;
+    cursor: pointer;
+    float: right;
+    border: solid 4px #fff;
+    &.selected, &:hover {
+        background-color: #f9f9f9;
+    }
+    &.selected {
+        font-size: 17px;
+        background-color: #f5f5f5;
     }
 }
 
@@ -366,9 +398,8 @@
             cursor: pointer;
             float: right;
             border: solid 4px #fff;
-            &.selected, &:hover {
-                background-color: #f9f9f9;
-            }
+
+            &.selected, &:hover { background-color: #f9f9f9; }
             &.selected {
                 font-size: 17px;
                 background-color: #f5f5f5;
@@ -378,16 +409,13 @@
 
     &.#{$prefix}month-list{
         padding-top: 15px;
-        &.can-close{
-            padding-top: 30px;
-        }
+        &.can-close{ padding-top: 30px; }
         .#{$prefix}addon-list-item {
             font-weight: 300;
             height: 54px;
             line-height: 46px;
-            &.selected, &:hover {  }
 
-            &[disabled]{
+            &[disabled] {
                 opacity: 0.3;
                 cursor: default !important;
                 background-color: transparent !important;
@@ -395,9 +423,8 @@
         }
     }
 
-    &.double {
-        width: 630px;
-    }
+    &.double { width: 630px; }
+
     &.landscape {
         margin-top: 0;
         margin-left: 165px;
@@ -405,7 +432,7 @@
     }
 }
 
-.close-addon{
+.close-addon {
     position: absolute;
     top: 4px;
     left: 4px;
@@ -420,11 +447,39 @@
     background-color: rgba(0,0,0,0.1);
 }
 
-.#{$prefix}time{
+.#{$prefix}month-list {
+    padding-top: 15px;
+    &.can-close { padding-top: 30px; }
+    .#{$prefix}addon-list-item {
+        font-weight: 300;
+        height: 54px;
+        line-height: 46px;
+    }
+}
 
+.#{$prefix}addon-list-item[disabled] {
+    opacity: 0.3;
+    cursor: default !important;
+    background-color: transparent !important;
+}
+
+.#{$prefix}close-addon {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    z-index: 2;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    color: #444;
+    font-family: sans-serif;
+    text-align: center;
+    cursor: pointer;
+    background-color: rgba(0,0,0,0.1);
+}
+
+.#{$prefix}time {
     user-select: none;
-    -moz-user-select: none;
-    -webkit-user-select: none;
 
     .#{$prefix}time-h,
     .#{$prefix}time-m {
@@ -436,7 +491,7 @@
         text-align: center;
         color: #a2a2a2;
         font-family: sans-serif;
-        .counter{
+        .counter {
             font-size: 90px;
             height: 100px;
             line-height: 100px;
@@ -445,7 +500,7 @@
             direction: ltr;
             transition: opacity 0.3s ease-in-out;
         }
-        .counter-item{
+        .counter-item {
             height: inherit;
             width: 51px;
             display: inline-block;
@@ -453,7 +508,8 @@
             position: relative;
         }
     }
-    .#{$prefix}time-h:after{
+
+    .#{$prefix}time-h:after {
         position: absolute;
         top: 50%;
         right: 0;
@@ -464,16 +520,17 @@
     }
 
     .up-arrow-btn,
-    .down-arrow-btn{
+    .down-arrow-btn {
         display: block;
         cursor: pointer;
         outline: none;
         height: 34px;
-        &:active svg path{  }
     }
+
+    &.disabled .counter-item { opacity: 0.5; }
 }
 
-.#{$prefix}prev-step{
+.#{$prefix}prev-step {
     position: absolute;
     top: 0;
     left: 0;
@@ -482,16 +539,30 @@
     text-align: center;
     padding: 9px;
     cursor: pointer;
-    &:hover{
-        background-color: rgba(0,0,0,0.2);
-    }
+    &:hover{ background-color: rgba(0,0,0,0.2); }
 }
 
-[data-type="time"]{
+[data-type="time"] {
     .#{$prefix}time {
         .#{$prefix}time-m,
-        .#{$prefix}time-h{
+        .#{$prefix}time-h {
             margin-top: 40px;
         }
     }
 }
+
+.responsive {
+    .#{$prefix}wrapper {
+        overflow: auto;
+        text-align: center;
+        .#{$prefix}container {
+            position: relative;
+            top: 0;
+            left: 0;
+            transform: none;
+            display: inline-block;
+            margin: 20px auto;
+        }
+    }
+}
+

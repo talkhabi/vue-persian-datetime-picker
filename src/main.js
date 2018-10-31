@@ -15,7 +15,7 @@ import 'highlight.js/styles/github.css';
  */
 Vue.use({
     install(Vue, options) {
-        Vue.prototype.$prefix = 'p-datetime-picker-';
+        Vue.prototype.$prefix = 'vpd-'; //shorted to reduce the css size
     }
 });
 

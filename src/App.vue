@@ -18,6 +18,10 @@
 
         <display-format></display-format>
 
+        <disable-picker></disable-picker>
+
+        <disable-dates></disable-dates>
+
         <min-and-max></min-and-max>
 
         <with-value></with-value>
@@ -45,6 +49,10 @@
         <picker-color></picker-color>
 
         <append-to></append-to>
+
+        <with-label></with-label>
+
+        <highlight></highlight>
 
 
         <!--===== DateTime Picker =====-->
@@ -101,7 +109,11 @@
     import EventsDocs from './components/EventsDocs.vue';
     import InitialValue from './components/examples/InitialValue.vue';
     import DisplayFormat from './components/examples/DisplayFormat.vue';
-    import AppendTo from './components/examples/AppendTo.vue'
+    import AppendTo from './components/examples/AppendTo.vue';
+    import DisablePicker from './components/examples/DisablePicker.vue';
+    import DisableDates from './components/examples/DisableDates.vue';
+    import WithLabel from './components/examples/WithLabel.vue';
+    import Highlight from './components/examples/Highlight.vue';
 
     export default {
         name: 'app',
@@ -134,6 +146,10 @@
             InitialValue,
             DisplayFormat,
             AppendTo,
+            DisablePicker,
+            DisableDates,
+            WithLabel,
+            Highlight
         },
     }
 </script>
@@ -167,14 +183,24 @@
         }
     }
 
-    .p-datetime-picker-wrapper, input{
+    .vpd-wrapper, input{
         font-family: IRANSans, Tahoma, sans-serif;
         font-size: 12px;
     }
 
-    .p-datetime-picker-input-group{
+    .vpd-input-group{
         max-width: 250px;
+        input {
+            border-left: none;
+            border-right: solid 1px #dadada;
+            border-radius: 0;
+        }
+        label svg + span {
+            margin-right: 0 !important;
+            margin-left: 4px;
+        }
     }
+    .form-control {  border-radius: 0;  }
 
     .card{
         margin-bottom: 30px;
@@ -202,6 +228,18 @@
 
     .card-title{
         text-align: center;
+    }
+    .card-version {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: #417df4;
+        color: white;
+        padding: 10px 5px 0 0;
+        border-radius: 0 0 0 50px;
+        width: 50px;
+        height: 50px;
+        text-align: right;
     }
 
     input.is-editable{

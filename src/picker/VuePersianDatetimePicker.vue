@@ -1,12 +1,17 @@
 <template>
     <span>
-        <span v-if="!element" :class="[prefix('input-group')]">
+        <span v-if="!element" :class="[prefix('input-group'), {disabled: disabled}]">
             <label :for="id"
                    :class="[prefix('icon-btn')]"
                    @click.prevent.stop="visible=true"
                    :style="{'background-color': color}">
                 <icon v-if="type=='time'" name="clock"/>
                 <icon v-else name="calendar-alt"/>
+                <slot name="label">
+                    <time-icon v-if="type=='time'" width="16px" height="16px"></time-icon>
+                    <calendar-icon v-else="" width="16px" height="16px"></calendar-icon>
+                    <span v-if="label">{{ label }}</span>
+                </slot>
             </label>
             <input type="text"
                    :id="id"
@@ -14,6 +19,7 @@
                    :class="[inputClass, {'is-editable': editable}]"
                    :placeholder="placeholder"
                    :value="displayValue"
+                   :disabled="disabled"
                    @focus="focus"
                    @blur="setOutput">
             <input v-if="altName" type="hidden" :name="altName" :value="altFormatted"/>
@@ -66,8 +72,9 @@
                                         <transition name="slidev" :class="directionClassDate">
                                             <div :key="date.jMonth()" >
                                                 <div v-for="m,i in month" class="clearfix">
-                                                    <div :class="[prefix('day'), {selected: day.selected, empty: day.date == null}]"
+                                                    <div :class="[prefix('day'), {selected: day.selected, empty: day.date == null}, day.attributes.class]"
                                                          v-for="day in m"
+                                                         v-bind="day.attributes"
                                                          @click="selectDay(day)"
                                                          :disabled="day.disabled">
                                                         <template v-if="day.date != null">
@@ -90,9 +97,11 @@
                                      ref="year">
                                     <div :class="[prefix('addon-list-content')]">
                                         <div v-for="year in years"
-                                             :class="[prefix('addon-list-item'), {selected: year.selected }]"
-                                             :style="{color: year.selected?color:''}"
-                                             @click="selectYear(year.value)"
+                                             v-bind="year.attributes"
+                                             :class="[prefix('addon-list-item'), {selected: year.selected }, year.attributes.class]"
+                                             :style="[{color: year.selected?color:''}, year.attributes.style]"
+                                             :disabled="year.disabled"
+                                             @click="selectYear(year)"
                                         >{{ year.value }}</div>
                                     </div>
                                 </div>
@@ -105,10 +114,11 @@
                                      ref="month">
                                     <div :class="[prefix('addon-list-content')]">
                                         <div v-for="month,i in months"
-                                             :class="[prefix('addon-list-item'), {selected: date.jMonth() == month.jMonth() }]"
+                                             v-bind="month.attributes"
                                              @click="selectMonth(month)"
+                                             :class="[prefix('addon-list-item'), {selected: date.jMonth() == month.jMonth() }, month.attributes.class]"
                                              :disabled="month.disabled"
-                                             :style="{color: date.jMonth() == month.jMonth()?color:''}"
+                                             :style="[{color: date.jMonth() == month.jMonth()?color:''}, month.attributes.style]"
                                         >{{ month.format('jMMMM') }}</div>
                                     </div>
                                 </div>
@@ -116,7 +126,7 @@
 
                             <transition name="fade">
                                 <div v-if="steps.indexOf('t') != -1"
-                                     :class="[prefix('addon-list'), prefix('time')]"
+                                     :class="[prefix('addon-list'), prefix('time'), {disabled: isDisableTime}]"
                                      v-show="currentStep == 't'"
                                      ref="time">
                                     <div :class="[prefix('addon-list-content')]">
@@ -125,7 +135,7 @@
                                                 <arrow width="20" direction="up"></arrow>
                                             </btn>
                                             <div class="counter" :class="directionClassTime" @mousewheel.stop.prevent="wheelSetTime('h',$event)">
-                                                <div class="counter-item" v-for="item, i in time.format('HH').split('')">
+                                                <div class="counter-item" v-for="item, i in time.format('HH').split('')" v-bind="timeAttributes">
                                                     <transition name="slideh">
                                                         <span :key="item + '_' + i" :style="{transition: 'all ' + timeData.transitionSpeed + 'ms ease-in-out'}">{{ item }}</span>
                                                     </transition>
@@ -140,7 +150,7 @@
                                                 <arrow width="20" direction="up"></arrow>
                                             </btn>
                                             <div class="counter" :class="directionClassTime" @mousewheel.stop.prevent="wheelSetTime('m',$event)">
-                                                <div class="counter-item" v-for="item, i in time.format('mm').split('')">
+                                                <div class="counter-item" v-for="item, i in time.format('mm').split('')" v-bind="timeAttributes">
                                                     <transition name="slideh">
                                                         <span :key="item + '_' + i" :style="{transition: 'all ' + timeData.transitionSpeed + 'ms ease-in-out'}">{{ item }}</span>
                                                     </transition>
@@ -155,11 +165,11 @@
                             </transition>
 
                             <transition name="fade">
-                                <span class="close-addon" v-if="steps.length > 1 && (currentStep != 'd')" @click="goStep('d')">x</span>
+                                <span :class="[prefix('close-addon')]" v-if="steps.length > 1 && (currentStep != 'd')" @click="goStep('d')">x</span>
                             </transition>
 
                             <div :class="[prefix('actions')]">
-                                <button type="button" @click="submit()" :style="{'color': color}">تایید</button>
+                                <button type="button" @click="submit()" :disabled="!canSubmit" :style="{'color': color}">تایید</button>
                                 <button type="button" @click="visible=false" :style="{'color': color}">انصراف</button>
                                 <button type="button" @click="goToday()" :style="{'color': color}" v-if="canGoToday">اکنون</button>
                             </div>
@@ -385,6 +395,39 @@
              * @version 1.1.1
              */
             appendTo: {type: String, 'default': null},
+
+            /**
+             * Disable or enable the datepicker
+             * @type Boolean
+             * @default false
+             * @version 1.1.4
+             */
+            disabled: {type: Boolean, 'default': false},
+
+            /**
+             * Disabling
+             * @type Array, String, Function, RegExp
+             * @default undefined
+             * @desc disable some dates
+             * @example ['1397/02/02', '1390/10/10'] - "1397/05/20" - /1397\/05\/(.*)/ ...
+             * @version 1.1.4
+             */
+            disable: {type: [Array, String, Function, RegExp]},
+
+            /**
+             * Label
+             * @type String
+             * @version 1.1.4
+             */
+            label: {type: String},
+
+            /**
+             * Highlight items
+             * @type Function
+             * @desc This prop accepts only function that return an object of attributes.
+             * @version 1.1.5
+             */
+            highlight: {type: Function, 'default': null}
         },
         data() {
             return {
@@ -454,16 +497,15 @@
                 if(!day.date || day.disabled) return;
                 let d = utils.moment(day.date);
                 let s = this.selectedDate;
-                d.hour(s.hour());
-                d.minute(s.minute());
-                d.second(s.second());
+                d.set({hour: s.hour(), minute: s.minute(), second: 0});
                 this.date = d.clone();
                 this.selectedDate = d.clone();
                 this.time = d.clone();
                 this.nextStep();
             },
             selectYear(year){
-                this.date.jYear(year);
+                if(year.disabled) return;
+                this.date.jYear(year.value);
                 this.nextStep();
             },
             selectMonth(month){
@@ -475,25 +517,18 @@
 
                 let  time = this.time.clone();
 
-                if(k === 'h'){
-                    let h = this.time.hour() + v;
-                    this.time = time.hour(h);
-                }else{
-                    let m = this.time.minute() + v;
-                    this.time = time.minute(m);
-                }
-
+                time.add({[k]: v});
                 if(this.type !== 'time'){
-                    this.time.jYear(this.date.jYear()).jMonth(this.date.jMonth()).jDate(this.date.jDate());
+                    let date = this.date.clone();
+                    time.set({year: date.year(), month: date.month(), date: date.date()});
+                    date.set({hour: time.hour(), minute: time.minute()});
+                    this.date = date;
                 }
 
-                if(this.minDate && this.time.unix() < this.minDate.unix()){
-                    this.time = this.minDate.clone();
-                }
+                if(this.isLower(time)) time = this.minDate.clone();
+                if(this.isMore(time)) time = this.maxDate.clone();
 
-                if(this.maxDate && this.time.unix() > this.maxDate.unix()){
-                    this.time = this.maxDate.clone();
-                }
+                this.time = time;
 
                 let now = new Date().getTime(), def = now - this.timeData.lastUpdate;
                 if(20 < def && def < 300) this.timeData.transitionSpeed = def;
@@ -510,12 +545,9 @@
             },
             submit(){
                 if(this.hasStep('t')){
-                    let h = this.time.hour();
-                    let m = this.time.minute();
-                    this.date.hour(h);
-                    this.date.minute(m);
-                    this.selectedDate.hour(h);
-                    this.selectedDate.minute(m);
+                    let t = {hour: this.time.hour(), minute: this.time.minute()};
+                    this.date.set(t);
+                    this.selectedDate.set(t);
                 }
 
                 if(['year', 'month'].indexOf(this.type) !== -1) this.selectedDate = this.date.clone();
@@ -531,9 +563,11 @@
 
                 this.date = d.isValid() ? d : utils.moment();
 
-                if(this.minDate && this.date.unix() < this.minDate.unix()){
+                if (!this.hasStep('t')) this.date.set({hour: 0, minute: 0, second: 0});
+
+                if (this.isLower(this.date)) {
                     this.date = this.minDate.clone();
-                }else if(this.maxDate && this.date.unix() > this.maxDate.unix()){
+                } else if (this.isMore(this.date)) {
                     this.date = this.maxDate.clone();
                 }
 
@@ -549,6 +583,7 @@
             },
             goToday(){
                 let now = utils.moment();
+                if (!this.hasStep('t')) now.set({hour: 0, minute: 0, second: 0});
                 this.date = now.clone();
                 this.time = now.clone();
                 this.selectedDate = now.clone();
@@ -579,8 +614,7 @@
             },
             setView(){
                 let s = this.shortCodes[this.view];
-                if(this.steps.indexOf(s) !== -1)
-                    this.goStep(s);
+                if(this.hasStep(s)) this.goStep(s);
             },
             setDirection(prop, val, old){
                 if(typeof old.unix === 'function'){
@@ -637,7 +671,7 @@
                 }
             },
             prefix(c){
-                return 'p-datetime-picker-' + c;
+                return 'vpd-' + c;
             },
             hasStep(step){
                 return this.steps.indexOf(step) !== -1;
@@ -664,10 +698,64 @@
             },
             wrapperClick(){
                 this.visible = false;
-                if(this.wrapperSubmit){
+                if(this.wrapperSubmit && this.canSubmit){
                     this.submit();
                 }
-            }
+            },
+            applyDevFn(fn, k) {
+                let result = false;
+                let args = Array.prototype.splice.call(arguments, 2);
+                try {
+                    args.push({y: 'year', m: 'month', d: 'day', t: 'time'}[k]);
+                    result = fn.apply(null, args);
+                } catch (er) {
+                    console.error(er);
+                }
+                return result;
+            },
+            checkDisable(item, value) {
+                let thisDisable = this.disable;
+                if (!thisDisable) return false;
+                let type = typeof thisDisable;
+
+                let checkString = (filter, str, date) => {
+                    if (filter instanceof RegExp) return filter.test(str);
+                    if (filter === str) return true;
+                    if (item === 'd') {
+                        let length = filter.length;
+                        return (str.substr(0, length) === filter || date.clone().locale('en').format('dddd') === filter);
+                    }
+                    return false;
+                };
+
+                let check = (date, dateFormatted) => {
+                    let matches = false;
+                    if (type === 'function') {
+                        return this.applyDevFn(thisDisable, item, dateFormatted, date.clone());
+                    } else if (Object.prototype.toString.call(thisDisable) === '[object Array]') {
+                        let ii = thisDisable.length;
+                        for (let i=0; i < ii; i++) {
+                            matches = checkString(thisDisable[i], dateFormatted, date);
+                            if (matches) break;
+                        }
+                        return matches;
+                    } else if (type === 'string' || (thisDisable instanceof RegExp)) {
+                        return checkString(thisDisable, dateFormatted, date);
+                    }
+                    return false;
+                };
+
+                if (item === 'y') value = utils.moment(value, 'jYYYY');
+                return check(value, value.format(this.selfFormat));
+            },
+            getHighlights(item, value) {
+                let highlight = this.highlight;
+                if (!highlight || typeof highlight !== 'function') return {};
+                if (item === 'y') value = utils.moment(value, 'jYYYY');
+                return this.applyDevFn(highlight, item, value.format(this.selfFormat), value.clone()) || {};
+            },
+            isLower(date) { return this.minDate && date.unix() < this.minDate.unix() },
+            isMore(date) { return this.maxDate && date.unix() > this.maxDate.unix() }
         },
         computed: {
             id(){
@@ -698,11 +786,11 @@
             },
             month(){
                 if(!this.hasStep('d')) return [];
-                let m = utils.getWeekArray(this.date, 6);
+                let m = utils.getWeekArray(this.date.clone().set({hour: 0, minute: 0, second: 0}), 6);
                 let data = [];
                 let selected = false;
-                let min = this.minDate ? this.minDate.unix():-Infinity;
-                let max = this.maxDate ? this.maxDate.unix():Infinity;
+                let min = this.minDate ? this.minDate.clone().startOf('day').unix():-Infinity;
+                let max = this.maxDate ? this.maxDate.clone().endOf('day').unix():Infinity;
                 m.forEach( w => {
                     let week = [];
                     w.forEach( d => {
@@ -712,7 +800,12 @@
                             date: d,
                             formatted: d === null ? '' : m.jDate(),
                             selected: sel,
-                            disabled: (m.startOf('jDay').unix() < min || m.startOf('jDay').unix() > max)
+                            disabled: (
+                                (this.minDate && m.clone().startOf('day').unix() < min) ||
+                                (this.maxDate && m.clone().endOf('day').unix() > max) ||
+                                (d && this.checkDisable('d', m))
+                            ),
+                            attributes: (d ? this.getHighlights('d', m):{})
                         });
                         selected = sel;
                     });
@@ -727,7 +820,12 @@
                 let y = utils.getYearsList(min, max).reverse();
                 let years = [], selectedFound = false, cy = this.date.jYear();
                 y.forEach( item => {
-                    let obj = { value : item, selected: false };
+                    let obj = {
+                        value: item,
+                        selected: false,
+                        disabled: this.checkDisable('y', item),
+                        attributes: this.getHighlights('y', item),
+                    };
                     if(!selectedFound && cy === item){
                         obj.selected = true;
                         selectedFound = true;
@@ -737,7 +835,20 @@
                 return years;
             },
             months(){
-                return this.hasStep('m') ? utils.getMonthsList(this.minDate, this.maxDate, this.date):[];
+                if (this.hasStep('m')) {
+                    let date = this.date.clone().jDate(1).set({
+                        hour: 0,
+                        minute: 0,
+                        second: 0
+                    });
+                    let months = utils.getMonthsList(this.minDate, this.maxDate, date);
+                    months.forEach(m => {
+                        m.disabled = m.disabled || this.checkDisable('m', m);
+                        m.attributes = this.getHighlights('m', m);
+                    });
+                    return months;
+                }
+                return [];
             },
             prevMonthDisabled(){
                 return (
@@ -809,7 +920,20 @@
             },
             displayValue() {
                 return this.output ? this.output.clone().format(this.displayFormat || this.selfFormat):'';
-            }
+            },
+            isDisableTime() {
+                return (this.hasStep('t') && this.checkDisable('t', this.time));
+            },
+            timeAttributes() {
+                return this.hasStep('t') ? this.getHighlights('t', this.time):{};
+            },
+            canSubmit() {
+                if (!this.disable) return true;
+                let can = true;
+                if (this.hasStep('t')) can = !this.isDisableTime;
+                if (can && this.type !== 'time') can = !this.checkDisable('d', this.date);
+                return can;
+            },
         },
         created(){
             this.setMinMax();
@@ -832,13 +956,14 @@
                         if (found) callback.call(el, e);
                     });
                 };
-
-                if(this.element && !this.editable){
-                    live(this.element, 'click', (e) => {
-                        this.focus(e);
-                    });
+                if (this.element && !this.editable) {
+                    live(this.element, 'click', this.focus);
                 }
-            })
+            });
+            document.body.addEventListener('keydown', e => {
+                e = e || event;
+                if (e.keyCode === 9 && this.visible) this.visible = false;
+            });
         },
         watch: {
             selectedDate(val, old){
@@ -847,13 +972,8 @@
             date(val, old){
                 this.setDirection('directionClassDate', val, old);
                 this.checkScroll();
-
-                if(this.minDate && this.date.unix() < this.minDate.unix()){
-                    this.date = this.minDate.clone();
-                }
-                if(this.maxDate && this.date.unix() > this.maxDate.unix()){
-                    this.date = this.maxDate.clone();
-                }
+                if(this.isLower(this.date)) this.date = this.minDate.clone();
+                if(this.isMore(this.date)) this.date = this.maxDate.clone();
             },
             time(val, old){
                 this.setDirection('directionClassTime', val, old);
@@ -865,6 +985,7 @@
             max(){this.setMinMax()},
             visible(val){
                 if(val){
+                    if (this.disabled) return this.visible = false;
                     if (this.type === 'datetime' && this.view === 'day') this.goStep('d');
                     if (this.view !== 'day') this.goStep(this.shortCodes[this.view] || 'd');
                     this.$nextTick(() => {
@@ -878,8 +999,9 @@
                         }
                     });
                     this.checkScroll();
+                    this.$emit('open', this)
                 }else{
-                    this.$emit('close', null);
+                    this.$emit('close', this);
                 }
             },
             show(val){

@@ -73,23 +73,20 @@
             </template>
         </card>
 
-        <card title="@close">
-            <date-picker value="1396/05/02" format="jYYYY/jMM/jDD" @input="date=$event"></date-picker>
-            <code class="code">{{ date }}</code>
+        <card title="open/close" version="1.1.5">
+            <date-picker @open="onOpen" @close="onClose"></date-picker>
 
             <template slot="code">
                 <highlight-code lang="html" v-pre>
-                    &lt;date-picker v-model="date" @close="onClose"&gt;&lt;/date-picker&gt;
+                    &lt;date-picker @open="onOpen" @close="onClose"&gt;&lt;/date-picker&gt;
                 </highlight-code>
                 <highlight-code lang="javascript" v-pre>
                     export default {
-                        data(){
-                            return {
-                                date: '1396/05/03',
-                            }
-                        },
                         methods: {
-                            onClose(){
+                            onOpen(picker) {
+                                console.log('The datepicker is open');
+                            },
+                            onClose(picker){
                                 console.log('The datepicker was closed');
                             }
                         }
@@ -121,6 +118,14 @@
                 date: '',
                 date_1: '1396/05/03',
                 dateMoment: moment('1396/05/03', 'jYYYY/jMM/jDD')
+            }
+        },
+        methods: {
+            onOpen(picker) {
+                console.log('The datepicker is open');
+            },
+            onClose(picker) {
+                console.log('The datepicker was closed');
             }
         }
     }

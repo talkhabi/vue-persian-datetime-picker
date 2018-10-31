@@ -196,6 +196,40 @@
                  * @version 1.1.1
                  */
                 appendTo: 'body',
+
+
+                /**
+                 * Disable or enable the datepicker
+                 * @type Boolean
+                 * @default false
+                 * @version 1.1.4
+                 */
+                disabled: false,
+
+                /**
+                 * Disabling
+                 * @type Array, String, Function, RegExp
+                 * @default undefined
+                 * @desc disable some dates
+                 * @example ['1397/02/02', '1390/10/10'] - "1397/05/20" - /1397\/05\/(.*)/ ...
+                 * @version 1.1.4
+                 */
+                disable: '1397/02/02',
+
+                /**
+                 * Label for display
+                 * @type String
+                 * @version 1.1.4
+                 */
+                label: 'Date',
+
+                /**
+                 * Highlight items
+                 * @type Function
+                 * @desc This prop accepts only function that return an object of attributes.
+                 * @version 1.1.5
+                 */
+                highlight: () => ({ style: {'color: green'} })
             &rbrace;
         </highlight-code>
     </div>
