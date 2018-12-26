@@ -21,6 +21,11 @@
                    @focus="focus"
                    @blur="setOutput">
             <input v-if="altName" type="hidden" :name="altName" :value="altFormatted"/>
+
+            <i v-if="clearable && !disabled && displayValue"
+               :class="[prefix('clear-btn')]"
+               @click="clearValue"
+            >x</i>
         </span>
 
         <template v-else="">
@@ -422,7 +427,15 @@
              * @desc This prop accepts only function that return an object of attributes.
              * @version 1.1.5
              */
-            highlight: {type: Function, 'default': null}
+            highlight: {type: Function, 'default': null},
+
+            /**
+             * Show clear button
+             * @type Boolean
+             * @default false
+             * @version 1.1.6
+             */
+            clearable: {type: Boolean, 'default': false}
         },
         data() {
             return {
@@ -746,7 +759,12 @@
                 return this.applyDevFn(highlight, item, value.format(this.selfFormat), value.clone()) || {};
             },
             isLower(date) { return this.minDate && date.unix() < this.minDate.unix() },
-            isMore(date) { return this.maxDate && date.unix() > this.maxDate.unix() }
+            isMore(date) { return this.maxDate && date.unix() > this.maxDate.unix() },
+            clearValue() {
+                if (this.disabled) return;
+                this.$emit('input', '');
+                this.$emit('change', null);
+            }
         },
         computed: {
             id(){

@@ -16,6 +16,7 @@
 .#{$prefix}input-group{
 	display: table;
 	width: 100%;
+	position: relative;
 	input {
 		display: table-cell;
 		border: 1px solid #dadada;
@@ -37,6 +38,19 @@
 	}
 	&.disabled {
 		input, label {  cursor: default;  }
+	}
+	.#{$prefix}clear-btn {
+		position: absolute;
+		left: 0;
+		top: 0;
+		line-height: 32px;
+		width: 30px;
+		cursor: pointer;
+		text-align: center;
+		font-style: normal;
+		font-family: monospace, sans-serif;
+		opacity: 0.4;
+		&:hover {  opacity: 0.7;  }
 	}
 }
 .#{$prefix}icon-btn{
