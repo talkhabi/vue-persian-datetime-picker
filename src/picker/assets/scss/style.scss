@@ -453,7 +453,7 @@
 	}
 }
 
-.responsive {
+@media screen and (max-height: 460px) {
 	.#{$prefix}wrapper {
 		overflow: auto;
 		text-align: center;
