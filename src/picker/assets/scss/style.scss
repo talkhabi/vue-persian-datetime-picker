@@ -12,7 +12,6 @@
 	}
 }
 
-
 .#{$prefix}input-group{
 	display: table;
 	width: 100%;
@@ -53,6 +52,7 @@
 		&:hover {  opacity: 0.7;  }
 	}
 }
+
 .#{$prefix}icon-btn{
 	display: table-cell;
 	width: 1%;
@@ -466,6 +466,23 @@
 		}
 	}
 }
+
+.#{$prefix}is-inline {
+	position: static;
+	background-color: transparent;
+	height: auto;
+	width: auto;
+	display: block;
+	margin-top: 2px;
+	.#{$prefix}container {
+		position: static;
+		transform: none;
+	}
+	.#{$prefix}content {
+		box-shadow: 0 0 1px -1px black;
+	}
+}
+
 
 @media screen and (max-height: 460px) {
 	.#{$prefix}wrapper {

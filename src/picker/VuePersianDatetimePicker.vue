@@ -33,7 +33,7 @@
         </template>
 
         <transition name="fade-scale">
-            <div v-if="visible" :class="[prefix('wrapper')]" @click.self="wrapperClick" :data-type="type" ref="picker">
+            <div v-if="visible" :class="[prefix('wrapper'), inline ? prefix('is-inline'):'']" @click.self="wrapperClick" :data-type="type" ref="picker">
                 <div :class="[prefix('container')]">
                     <div :class="[prefix('content')]">
                         <div :class="[prefix('header')]" :style="{'background-color': color}">
@@ -173,7 +173,7 @@
 
                             <div :class="[prefix('actions')]">
                                 <button type="button" @click="submit()" :disabled="!canSubmit" :style="{'color': color}">تایید</button>
-                                <button type="button" @click="visible=false" :style="{'color': color}">انصراف</button>
+                                <button v-if="!inline" type="button" @click="visible=false" :style="{'color': color}">انصراف</button>
                                 <button type="button" @click="goToday()" :style="{'color': color}" v-if="canGoToday">اکنون</button>
                             </div>
                         </div>
@@ -435,7 +435,16 @@
              * @default false
              * @version 1.1.6
              */
-            clearable: {type: Boolean, 'default': false}
+            clearable: {type: Boolean, 'default': false},
+
+
+            /**
+             * Inline mode
+             * @type Boolean
+             * @default false
+             * @version 1.1.6
+             */
+            inline: {type: Boolean, 'default': false},
         },
         data() {
             return {
@@ -471,7 +480,7 @@
         methods: {
             nextStep(){
                 if(this.steps.length <= this.step + 1){
-                    return this.autoSubmit ? this.submit():'';
+                    return (this.autoSubmit || this.inline) ? this.submit():'';
                 }else{
                     this.step++;
                     this.goStep(this.step);
@@ -976,6 +985,21 @@
             value: {handler: 'updateDates', immediate: true},
             min:   {handler: 'setMinMax',   immediate: true},
             max:   {handler: 'setMinMax',   immediate: true},
+            inline: {
+                handler(val) {
+                    if(!this.disabled) this.visible = !!val;
+                },
+                immediate: true
+            },
+            disabled: {
+                handler(val) {
+                    if(val)
+                        this.visible = false;
+                    else if (this.inline)
+                        this.visible = true;
+                },
+                immediate: true
+            },
             selectedDate(val, old){
                 this.setDirection('directionClass', val, old);
             },
@@ -994,7 +1018,7 @@
                     if (this.type === 'datetime' && this.view === 'day') this.goStep('d');
                     if (this.view !== 'day') this.goStep(this.shortCodes[this.view] || 'd');
                     this.$nextTick(() => {
-                        if (this.appendTo) {
+                        if (!this.inline && this.appendTo) {
                             try {
                                 let container = document.querySelector(this.appendTo);
                                 container.appendChild(this.$refs.picker);
@@ -1005,7 +1029,8 @@
                     });
                     this.checkScroll();
                     this.$emit('open', this)
-                }else{
+                } else {
+                    if (this.inline && !this.disabled) return this.visible = true;
                     this.$emit('close', this);
                 }
             },
