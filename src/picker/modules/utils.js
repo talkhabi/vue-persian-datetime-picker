@@ -1,6 +1,6 @@
 
 import moment from 'moment-jalaali';
-
+import 'moment/locale/fa.js';
 moment.loadPersian({dialect: 'persian-modern'});
 
 
