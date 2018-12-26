@@ -618,15 +618,10 @@
                 }
             },
             setMinMax(){
-
                 let min = this.getMoment(this.min),
                     max = this.getMoment(this.max);
-                if(this.min &&  min.isValid()){
-                    this.minDate = min;
-                }
-                if(this.max && max.isValid()){
-                    this.maxDate = max;
-                }
+                this.minDate = this.min && min.isValid() ? min:false;
+                this.maxDate = this.max && max.isValid() ? max:false;
             },
             getMoment(date){
                 let d;
