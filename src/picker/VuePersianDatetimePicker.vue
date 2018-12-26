@@ -181,15 +181,17 @@
 
 <script>
 
-    import './assets/scss/style.scss'
+    import './assets/scss/style.scss';
     import utils from './modules/utils';
-    import Arrow from './components/Arrow.vue'
-    import Btn from './components/Btn.vue'
-    import CalendarIcon from './components/CalendarIcon.vue'
-    import TimeIcon from './components/TimeIcon.vue'
+    import Arrow from './components/Arrow.vue';
+    import Btn from './components/Btn.vue';
+    import CalendarIcon from './components/CalendarIcon.vue';
+    import TimeIcon from './components/TimeIcon.vue';
+
+    const moment = utils.moment;
 
     export default {
-        moment: utils.moment,
+        moment: moment,
         model: {
             prop: 'value',
             event: 'input'
@@ -424,7 +426,7 @@
         },
         data() {
             return {
-                now: utils.moment(),
+                now: moment(),
                 date: {},
                 selectedDate: {},
                 visible: false,
@@ -450,6 +452,7 @@
                 minDate: false,
                 maxDate: false,
                 output: '',
+                updateNowInterval: null,
             }
         },
         methods: {
@@ -488,7 +491,7 @@
             prevMonth() {this.date = this.date.clone().add(-1, 'jMonth')},
             selectDay(day){
                 if(!day.date || day.disabled) return;
-                let d = utils.moment(day.date);
+                let d = moment(day.date);
                 let s = this.selectedDate;
                 d.set({hour: s.hour(), minute: s.minute(), second: 0});
                 this.date = d.clone();
@@ -554,7 +557,7 @@
 
                 if (typeof d !== 'object') d = this.getMoment(d?d:(this.value || this.initialValue));
 
-                this.date = d.isValid() ? d : utils.moment();
+                this.date = d.isValid() ? d : moment();
 
                 if (!this.hasStep('t')) this.date.set({hour: 0, minute: 0, second: 0});
 
@@ -575,7 +578,7 @@
                 }
             },
             goToday(){
-                let now = utils.moment();
+                let now = moment();
                 if (!this.hasStep('t')) now.set({hour: 0, minute: 0, second: 0});
                 this.date = now.clone();
                 this.time = now.clone();
@@ -628,13 +631,13 @@
             getMoment(date){
                 let d;
                 if(this.selfInputFormat === 'x' || this.selfInputFormat === 'unix'){
-                    d = utils.moment(date.toString().length === 10 ? date*1000 : date*1);
+                    d = moment(date.toString().length === 10 ? date*1000 : date*1);
                 }else{
 
                     try {
                         if(date){
-                            let a = utils.moment(date, this.selfInputFormat);
-                            let b = utils.moment(date, this.selfFormat);
+                            let a = moment(date, this.selfInputFormat);
+                            let b = moment(date, this.selfFormat);
 
                             if(this.type === 'month'){
                                 a.year(new Date().getFullYear());
@@ -646,10 +649,10 @@
                                 d = a.clone();
                             }
                         }else{
-                            d = utils.moment();
+                            d = moment();
                         }
                     }catch (er){
-                        d = utils.moment();
+                        d = moment();
                     }
                 }
                 return d;
@@ -676,7 +679,7 @@
                 this.output = null;
                 if(val){
                     try {
-                        this.output = utils.moment(val, this.displayFormat || this.selfFormat);
+                        this.output = moment(val, this.displayFormat || this.selfFormat);
                         if (!this.output.isValid()) this.output = null;
                     } catch (er) {}
                 }
@@ -738,13 +741,13 @@
                     return false;
                 };
 
-                if (item === 'y') value = utils.moment(value, 'jYYYY');
+                if (item === 'y') value = moment(value, 'jYYYY');
                 return check(value, value.format(this.selfFormat));
             },
             getHighlights(item, value) {
                 let highlight = this.highlight;
                 if (!highlight || typeof highlight !== 'function') return {};
-                if (item === 'y') value = utils.moment(value, 'jYYYY');
+                if (item === 'y') value = moment(value, 'jYYYY');
                 return this.applyDevFn(highlight, item, value.format(this.selfFormat), value.clone()) || {};
             },
             isLower(date) { return this.minDate && date.unix() < this.minDate.unix() },
@@ -758,7 +761,7 @@
                 let input = false;
                 if(this.value !== ''&& this.value !== null && this.value.length !== 0){
                     try {
-                        input = utils.moment(this.value, this.selfFormat);
+                        input = moment(this.value, this.selfFormat);
                     }catch (er){
                         input = false;
                     }
@@ -788,7 +791,7 @@
                     let week = [];
                     w.forEach( d => {
                         let sel = (d === null || selected)? false:!this.selectedDate.diff(d, 'days');
-                        let m = utils.moment(d);
+                        let m = moment(d);
                         week.push({
                             date: d,
                             formatted: d === null ? '' : m.jDate(),
@@ -929,12 +932,8 @@
             },
         },
         created(){
-            this.setMinMax();
-            this.updateDates();
-            this.setType();
-            this.setView();
-            setInterval(() => {
-                this.now = utils.moment();
+            this.updateNowInterval = setInterval(() => {
+                this.now = moment();
             }, 1000);
         },
         mounted(){
@@ -959,6 +958,11 @@
             });
         },
         watch: {
+            type:  {handler: 'setType',     immediate: true},
+            view:  {handler: 'setView',     immediate: true},
+            value: {handler: 'updateDates', immediate: true},
+            min:   {handler: 'setMinMax',   immediate: true},
+            max:   {handler: 'setMinMax',   immediate: true},
             selectedDate(val, old){
                 this.setDirection('directionClass', val, old);
             },
@@ -971,11 +975,6 @@
             time(val, old){
                 this.setDirection('directionClassTime', val, old);
             },
-            type(){this.setType()},
-            view(){this.setView()},
-            value(){this.updateDates()},
-            min(){this.setMinMax()},
-            max(){this.setMinMax()},
             visible(val){
                 if(val){
                     if (this.disabled) return this.visible = false;
@@ -1002,6 +1001,9 @@
             }
         },
         components: {Arrow, Btn, CalendarIcon, TimeIcon},
+        beforeDestroy() {
+            window.clearInterval(this.updateNowInterval);
+        },
         install(Vue, options) {
 
             let component = this;
