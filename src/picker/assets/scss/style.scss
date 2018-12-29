@@ -483,6 +483,12 @@
 	}
 }
 
+.#{$prefix}no-footer {
+	.#{$prefix}addon-list {
+		bottom: 0;
+		border-bottom: none;
+	}
+}
 
 @media screen and (max-height: 460px) {
 	.#{$prefix}wrapper {

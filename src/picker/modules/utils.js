@@ -1,9 +1,9 @@
 
 import moment from 'moment-jalaali';
 import fa from './moment.locale.fa';
-moment.defineLocale('fa', fa);
-moment.loadPersian({dialect: 'persian-modern'});
 
+moment.updateLocale('fa', fa);
+moment.loadPersian({dialect: 'persian-modern'});
 
 
 function addWeek(weekArray, week) {

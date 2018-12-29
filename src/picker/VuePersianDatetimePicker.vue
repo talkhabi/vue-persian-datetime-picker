@@ -33,7 +33,15 @@
         </template>
 
         <transition name="fade-scale">
-            <div v-if="visible" :class="[prefix('wrapper'), inline ? prefix('is-inline'):'']" @click.self="wrapperClick" :data-type="type" ref="picker">
+            <div v-if="visible"
+                 :class="[
+                     prefix('wrapper'),
+                     inline ? prefix('is-inline'):'',
+                     autoSubmit && !hasStep('t') ? prefix('no-footer'):''
+                 ]"
+                 :data-type="type"
+                 @click.self="wrapperClick"
+                 ref="picker">
                 <div :class="[prefix('container')]">
                     <div :class="[prefix('content')]">
                         <div :class="[prefix('header')]" :style="{'background-color': color}">
@@ -170,8 +178,10 @@
                             <transition name="fade">
                                 <span :class="[prefix('close-addon')]" v-if="steps.length > 1 && (currentStep != 'd')" @click="goStep('d')">x</span>
                             </transition>
-                            <br v-if="autoSubmit">
-                            <div :class="[prefix('actions')]" v-if="!autoSubmit">
+
+                            <br v-if="autoSubmit && !hasStep('t')">
+
+                            <div :class="[prefix('actions')]" v-else>
                                 <button type="button" @click="submit()" :disabled="!canSubmit" :style="{'color': color}">تایید</button>
                                 <button v-if="!inline" type="button" @click="visible=false" :style="{'color': color}">انصراف</button>
                                 <button type="button" @click="goToday()" :style="{'color': color}" v-if="canGoToday">اکنون</button>
@@ -614,8 +624,8 @@
                 this.selectedDate = this.date.clone();
                 this.time = this.date.clone();
 
-                if (this.type=='time' && this.roundMinute) {
-                    let x = (this.jumpMinute - (this.time.minute() % this.jumpMinute)) % this.jumpMinute
+                if (this.type === 'time' && this.roundMinute) {
+                    let x = (this.jumpMinute - (this.time.minute() % this.jumpMinute)) % this.jumpMinute;
                     this.time.add({['m']: x})
                 }
 
@@ -1045,7 +1055,7 @@
                     if (this.type === 'datetime' && this.view === 'day') this.goStep('d');
                     if (this.view !== 'day') this.goStep(this.shortCodes[this.view] || 'd');
                     this.$nextTick(() => {
-                        if (!this.inline && this.appendTo) {
+                        if (this.appendTo) {
                             try {
                                 let container = document.querySelector(this.appendTo);
                                 container.appendChild(this.$refs.picker);
