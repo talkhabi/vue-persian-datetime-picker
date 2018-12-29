@@ -149,7 +149,7 @@
                                             </btn>
                                         </div>
                                         <div :class="[prefix('time-m'), classFastCounter]">
-                                            <btn class="up-arrow-btn" @update="setTime(1, 'm')" @fastUpdate="fastUpdateCounter">
+                                            <btn class="up-arrow-btn" @update="setTime(jumpMinute, 'm')" @fastUpdate="fastUpdateCounter">
                                                 <arrow width="20" direction="up"></arrow>
                                             </btn>
                                             <div class="counter" :class="directionClassTime" @mousewheel.stop.prevent="wheelSetTime('m',$event)">
@@ -159,7 +159,7 @@
                                                     </transition>
                                                 </div>
                                             </div>
-                                            <btn class="down-arrow-btn" @update="setTime(-1, 'm')" @fastUpdate="fastUpdateCounter">
+                                            <btn class="down-arrow-btn" @update="setTime(-jumpMinute, 'm')" @fastUpdate="fastUpdateCounter">
                                                 <arrow width="20" direction="down"></arrow>
                                             </btn>
                                         </div>
@@ -170,8 +170,8 @@
                             <transition name="fade">
                                 <span :class="[prefix('close-addon')]" v-if="steps.length > 1 && (currentStep != 'd')" @click="goStep('d')">x</span>
                             </transition>
-
-                            <div :class="[prefix('actions')]">
+                            <br v-if="autoSubmit">
+                            <div :class="[prefix('actions')]" v-if="!autoSubmit">
                                 <button type="button" @click="submit()" :disabled="!canSubmit" :style="{'color': color}">تایید</button>
                                 <button v-if="!inline" type="button" @click="visible=false" :style="{'color': color}">انصراف</button>
                                 <button type="button" @click="goToday()" :style="{'color': color}" v-if="canGoToday">اکنون</button>
@@ -429,6 +429,10 @@
              */
             highlight: {type: Function, 'default': null},
 
+            jumpMinute: {type: Number, default: 1},
+
+            roundMinute: {type: Boolean, default: false}
+
             /**
              * Show clear button
              * @type Boolean
@@ -535,7 +539,13 @@
 
                 let  time = this.time.clone();
 
-                time.add({[k]: v});
+                if (this.type=='time' && k=='m' && this.roundMinute) {
+                    let x = v - (time.minute() % v)
+                    time.add({[k]: x})
+                } else {
+                    time.add({[k]: v})
+                }
+
                 if(this.type !== 'time'){
                     let date = this.date.clone();
                     time.set({year: date.year(), month: date.month(), date: date.date()});
@@ -591,6 +601,11 @@
 
                 this.selectedDate = this.date.clone();
                 this.time = this.date.clone();
+
+                if (this.type=='time' && this.roundMinute) {
+                    let x = (this.jumpMinute - (this.time.minute() % this.jumpMinute)) % this.jumpMinute
+                    this.time.add({['m']: x})
+                }
 
                 if(this.value !== '' && this.value !== null && this.value.length !== 0){
                     this.output = this.selectedDate.clone();
