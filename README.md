@@ -119,7 +119,15 @@ This project is licensed under the MIT License
 
 ## Change log
 
+### 1.1.6 (2018-12-29)
 
+ * Added jumpMinute and roundMinute to time-picker `<date-picker :jumpMinute="5" :roundMinute="true"></date-picker>`
+ * Added clear button `<date-picker :clearable="true"></date-picker>`
+ * Added inline mode `<date-picker :inline="true"></date-picker>`
+ * Fixed `tab` key press problem
+ * Fixed responsive mode
+ * Fixed watching to `min-max` changes
+ 
 ### 1.1.5 (2018-09-01)
 
  * Added emit on open 

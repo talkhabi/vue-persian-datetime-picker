@@ -4,6 +4,11 @@
         <date-picker append-to="body"></date-picker>
 
         <p class="mt-3">With this option you can specify where to append the picker</p>
+        <h5 class="mt-3 text-danger">
+            This will also work in <b>inline</b> mode!
+            <br>
+            So be careful when using this options together.
+        </h5>
 
         <template slot="code">
             <highlight-code lang="html" v-pre>

@@ -239,7 +239,6 @@
                  */
                 clearable: false,
 
-
                 /**
                  * Inline mode
                  * @type Boolean
@@ -247,6 +246,23 @@
                  * @version 1.1.6
                  */
                 inline: false,
+
+                /**
+                 * Change minutes by step
+                 * @type Number
+                 * @default 1
+                 * @version: 1.1.6
+                 */
+                jumpMinute: 15,
+
+                /**
+                 * Round minutes when jumpMinute is grater than 1
+                 * @example when jumpMinute = 15 thin will result: 13:00, 13:15, 13:30, 13:45 ...
+                 * @type Boolean
+                 * @default false
+                 * @version: 1.1.6
+                 */
+                roundMinute: true,
             &rbrace;
         </highlight-code>
     </div>
