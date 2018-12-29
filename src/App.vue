@@ -68,6 +68,8 @@
 
         <simple-time></simple-time>
 
+        <advance-time></advance-time>
+
         <time-min-and-max></time-min-and-max>
 
         <!--============ Events ===========-->
@@ -104,6 +106,7 @@
     import SimpleDatetime from './components/examples/SimpleDatetime.vue';
     import DatetimeMinAndMax from './components/examples/DatetimeMinAndMax.vue';
     import SimpleTime from './components/examples/SimpleTime.vue';
+    import AdvanceTime from './components/examples/AdvanceTime.vue';
     import TimeMinAndMax from './components/examples/TimeMinAndMax.vue';
     import PropsDocs from './components/PropsDocs.vue';
     import EventsDocs from './components/EventsDocs.vue';
@@ -140,6 +143,7 @@
             SimpleDatetime,
             DatetimeMinAndMax,
             SimpleTime,
+            AdvanceTime,
             TimeMinAndMax,
             PropsDocs,
             EventsDocs,
