@@ -229,7 +229,24 @@
                  * @desc This prop accepts only function that return an object of attributes.
                  * @version 1.1.5
                  */
-                highlight: () => ({ style: {'color: green'} })
+                highlight: () => ({ style: {'color: green'} }),
+
+                /**
+                 * Show clear button
+                 * @type Boolean
+                 * @default false
+                 * @version 1.1.6
+                 */
+                clearable: false,
+
+
+                /**
+                 * Inline mode
+                 * @type Boolean
+                 * @default false
+                 * @version 1.1.6
+                 */
+                inline: false,
             &rbrace;
         </highlight-code>
     </div>

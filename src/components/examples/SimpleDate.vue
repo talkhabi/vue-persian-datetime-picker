@@ -1,7 +1,7 @@
 <template>
     <card title="Simple example">
 
-        <date-picker v-model="date"></date-picker>
+        <date-picker v-model="date" :clearable="true"></date-picker>
         <br/>
         <date-picker v-model="datetime" type="datetime"></date-picker>
         <br/>
@@ -13,7 +13,7 @@
 
         <template slot="code">
             <highlight-code lang="html" v-pre>
-                &lt;date-picker v-model="date"&gt;&lt;/date-picker&gt;
+                &lt;date-picker v-model="date" :clearable="true"&gt;&lt;/date-picker&gt;
             </highlight-code>
             <highlight-code lang="html" v-pre>
                 &lt;date-picker v-model="datetime" type="datetime"&gt;&lt;/date-picker&gt;

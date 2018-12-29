@@ -199,6 +199,10 @@
             margin-right: 0 !important;
             margin-left: 4px;
         }
+        > i {
+            left: auto !important;
+            right: 0;
+        }
     }
     .form-control {  border-radius: 0;  }
 
