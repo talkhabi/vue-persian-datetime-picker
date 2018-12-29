@@ -429,9 +429,22 @@
              */
             highlight: {type: Function, 'default': null},
 
-            jumpMinute: {type: Number, default: 1},
+            /**
+             * Change minutes by step
+             * @type Number
+             * @default 1
+             * @version: 1.1.6
+             */
+            jumpMinute: {type: Number, 'default': 1},
 
-            roundMinute: {type: Boolean, default: false}
+            /**
+             * Round minutes when jumpMinute is grater than 1
+             * @example when jumpMinute = 15 thin will result: 13:00, 13:15, 13:30, 13:45 ...
+             * @type Boolean
+             * @default false
+             * @version: 1.1.6
+             */
+            roundMinute: {type: Boolean, 'default': false},
 
             /**
              * Show clear button
@@ -440,7 +453,6 @@
              * @version 1.1.6
              */
             clearable: {type: Boolean, 'default': false},
-
 
             /**
              * Inline mode
@@ -539,8 +551,8 @@
 
                 let  time = this.time.clone();
 
-                if (this.type=='time' && k=='m' && this.roundMinute) {
-                    let x = v - (time.minute() % v)
+                if (this.type === 'time' && k === 'm' && this.roundMinute) {
+                    let x = v - (time.minute() % v);
                     time.add({[k]: x})
                 } else {
                     time.add({[k]: v})
@@ -569,7 +581,7 @@
 
             },
             wheelSetTime(k, e){
-                this.setTime(e.wheelDeltaY > 0 ? 1:-1, k);
+                this.setTime(e.wheelDeltaY > 0 ? this.jumpMinute:-this.jumpMinute, k);
             },
             submit(){
                 if(this.hasStep('t')){
