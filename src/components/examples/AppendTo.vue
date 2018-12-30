@@ -7,7 +7,7 @@
         <h5 class="mt-3 text-danger">
             This will also work in <b>inline</b> mode!
             <br>
-            So be careful when using this options together.
+            So be careful when using these options together.
         </h5>
 
         <template slot="code">
