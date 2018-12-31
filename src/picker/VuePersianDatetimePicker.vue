@@ -609,7 +609,8 @@
             },
             updateDates(d){
 
-                if (typeof d !== 'object') d = this.getMoment(d?d:(this.value || this.initialValue));
+                if (null === d || typeof d !== 'object')
+                    d = this.getMoment(d ? d : (this.value || this.initialValue));
 
                 this.date = d.isValid() ? d : moment();
 
