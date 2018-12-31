@@ -119,9 +119,13 @@ This project is licensed under the MIT License
 
 ## Change log
 
+### 1.1.7 (2018-12-31)
+
+ * Fixed [critical error](https://github.com/talkhabi/vue-persian-datetime-picker/issues/39)
+
 ### 1.1.6 (2018-12-29)
 
- * Added jumpMinute and roundMinute to time-picker `<date-picker :jumpMinute="5" :roundMinute="true"></date-picker>`
+ * Added jumpMinute and roundMinute to time-picker `<date-picker type="time" :jumpMinute="5" :roundMinute="true"></date-picker>`
  * Added clear button `<date-picker :clearable="true"></date-picker>`
  * Added inline mode `<date-picker :inline="true"></date-picker>`
  * Fixed `tab` key press problem
