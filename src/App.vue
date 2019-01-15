@@ -18,6 +18,8 @@
 
         <display-format></display-format>
 
+        <gregorian></gregorian>
+
         <disable-picker></disable-picker>
 
         <disable-dates></disable-dates>
@@ -117,6 +119,7 @@
     import DisableDates from './components/examples/DisableDates.vue';
     import WithLabel from './components/examples/WithLabel.vue';
     import Highlight from './components/examples/Highlight.vue';
+    import Gregorian from './components/examples/Gregorian.vue';
 
     export default {
         name: 'app',
@@ -153,7 +156,8 @@
             DisablePicker,
             DisableDates,
             WithLabel,
-            Highlight
+            Highlight,
+            Gregorian,
         },
     }
 </script>

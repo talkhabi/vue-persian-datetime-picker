@@ -269,7 +269,7 @@
 	left: $month-label-height;
 	right: $month-label-height;
 	overflow: hidden;
-	width: 90px;
+	width: 95px;
 	margin-left: auto;
 	margin-right: auto;
 	line-height: $month-label-height;
@@ -352,15 +352,14 @@
 	bottom: 52px;
 	border-bottom: solid 1px #eee;
 	direction: ltr;
+	&.can-close{
+		padding-top: 30px;
+	}
 }
 
 .#{$prefix}month-list{
 	padding-top: 15px;
-	&.can-close{
-		padding-top: 30px;
-	}
 	.#{$prefix}addon-list-item {
-		font-weight: 300;
 		height: 54px;
 		line-height: 46px;
 		&.selected, &:hover {  }
@@ -502,5 +501,52 @@
 			display: inline-block;
 			margin: 20px auto;
 		}
+	}
+}
+
+.#{$prefix}locales {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+	position: absolute;
+	left: 14px;
+	top: 12px;
+	line-height: 24px;
+	width: 30px;
+	text-align: center;
+	opacity: 0.7;
+	li {
+		cursor: pointer;
+		text-transform: uppercase;
+		&.active {
+			display: none;
+		}
+	}
+}
+
+.#{$prefix}dir-ltr {
+
+	.#{$prefix}content,
+	.#{$prefix}actions,
+	.#{$prefix}addon-list-content {
+		direction: ltr;
+	}
+
+	.#{$prefix}content,
+	.#{$prefix}actions {
+		text-align: left;
+		font-family: sans-serif;
+	}
+	.#{$prefix}month-label {  font-size: 90%  }
+
+	.#{$prefix}addon-list-item,
+	.#{$prefix}weekday,
+	.#{$prefix}day {
+		float: left;
+	}
+
+	.#{$prefix}locales {
+		left: auto;
+		right: 14px;
 	}
 }

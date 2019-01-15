@@ -14,8 +14,8 @@
 		opacity: 0;
 	}
 }
-.slidev-enter-active,
-.slidev-leave-active {
+.slideX-enter-active,
+.slideX-leave-active {
 	position: absolute;
 	top: 0;
 	bottom: 0;
@@ -25,18 +25,18 @@
 	transform: translateX(0);
 	transition: all .3s ease-out;
 }
-.slidev-leave-to , .slidev-enter{  opacity: 0;  }
+.slideX-leave-to , .slideX-enter{  opacity: 0;  }
 .direction-next{
-	.slidev-leave-to {  transform: translateX(100%);  }
-	.slidev-enter    {  transform: translateX(-100%);  }
+	.slideX-leave-to {  transform: translateX(-100%);  }
+	.slideX-enter    {  transform: translateX(100%);  }
 }
 .direction-prev{
-	.slidev-leave-to {  transform: translateX(-100%);  }
-	.slidev-enter    {  transform: translateX(100%);  }
+	.slideX-leave-to {  transform: translateX(100%);  }
+	.slideX-enter    {  transform: translateX(-100%);  }
 }
 
-.slideh-enter-active,
-.slideh-leave-active {
+.slideY-enter-active,
+.slideY-leave-active {
 	position: absolute;
 	top: 0;
 	bottom: 0;
@@ -46,14 +46,14 @@
 	transform: translateY(0);
 	transition: all .3s ease-in-out;
 }
-.slideh-leave-to , .slideh-enter{  opacity: 0;  }
+.slideY-leave-to , .slideY-enter{  opacity: 0;  }
 .direction-next{
-	.slideh-leave-to {  transform: translateY(100%);  }
-	.slideh-enter    {  transform: translateY(-100%);  }
+	.slideY-leave-to {  transform: translateY(100%);  }
+	.slideY-enter    {  transform: translateY(-100%);  }
 }
 .direction-prev{
-	.slideh-leave-to {  transform: translateY(-100%);  }
-	.slideh-enter    {  transform: translateY(100%);  }
+	.slideY-leave-to {  transform: translateY(-100%);  }
+	.slideY-enter    {  transform: translateY(100%);  }
 }
 
 .fade-transition {
@@ -66,16 +66,16 @@
 }
 
 .fast-updating {
-	.slideh-enter-active,
-	.slideh-leave-active {
+	.slideY-enter-active,
+	.slideY-leave-active {
 		transition: all 170ms ease-in-out;
 	}
 	.direction-next{
-		.slideh-leave-to {  transform: translateY(45%);  }
-		.slideh-enter    {  transform: translateY(-5%);  }
+		.slideY-leave-to {  transform: translateY(45%);  }
+		.slideY-enter    {  transform: translateY(-5%);  }
 	}
 	.direction-prev{
-		.slideh-leave-to {  transform: translateY(-45%);  }
-		.slideh-enter    {  transform: translateY(5%);  }
+		.slideY-leave-to {  transform: translateY(-45%);  }
+		.slideY-enter    {  transform: translateY(5%);  }
 	}
 }
