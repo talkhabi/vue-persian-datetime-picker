@@ -106,6 +106,8 @@ Then use in component
 <custom-date-picker v-model="date"></custom-date-picker>
 ```
 
+## [Click to see full documentation and demo](https://talkhabi.github.io/vue-persian-datetime-picker)
+
 ## Built With
 * [Vue.js](https://vuejs.org/) - The Progressive JavaScript Framework.
 * [Moment.js](https://momentjs.com/) - Parse, validate, manipulate, and display dates and times in JavaScript.
