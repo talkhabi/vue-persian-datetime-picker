@@ -1,7 +1,5 @@
 <template>
     <div>
-        <h5 class="text-center">A vue plugin to select jalali date and time</h5>
-        <hr>
         <h2>Installation:</h2>
 
         <highlight-code lang="bash" v-pre>
@@ -56,7 +54,7 @@
             &lt;/script&gt;
         </highlight-code>
 
-        <h1>You can also set default values:</h1>
+        <h1>Global configuration:</h1>
         <p>main.js</p>
         <highlight-code lang="javascript" v-pre>
             import VuePersianDatetimePicker from 'vue-persian-datetime-picker';

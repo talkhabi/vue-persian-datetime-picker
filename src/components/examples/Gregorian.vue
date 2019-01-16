@@ -3,7 +3,7 @@
 
         <date-picker locale="en"></date-picker>
         <br/>
-        <date-picker locale="en,fa"></date-picker>
+        <date-picker locale="en,fa" format="YYYY/M/D"></date-picker>
         <br/>
         <date-picker locale="fa,en"></date-picker>
 
@@ -12,7 +12,7 @@
                 &lt;date-picker locale="en"&gt;&lt;/date-picker&gt;
             </highlight-code>
             <highlight-code lang="html" v-pre>
-                &lt;date-picker locale="en,fa"&gt;&lt;/date-picker&gt;
+                &lt;date-picker locale="en,fa" format="YYYY/M/D"&gt;&lt;/date-picker&gt;
             </highlight-code>
             <highlight-code lang="html" v-pre>
                 &lt;date-picker locale="fa,en"&gt;&lt;/date-picker&gt;
