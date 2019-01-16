@@ -25,193 +25,111 @@ function easeOutCuaic(t) {
     return t * t * t + 1
 }
 
-/**
- * @description Recursive object extending
- * @author Viacheslav Lotsmanov <lotsmanov89@gmail.com>
- * @license MIT
- *
- * The MIT License (MIT)
- *
- * Copyright (c) 2013-2018 Viacheslav Lotsmanov
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of
- * this software and associated documentation files (the "Software"), to deal in
- * the Software without restriction, including without limitation the rights to
- * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
- * the Software, and to permit persons to whom the Software is furnished to do so,
- * subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
- * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
- * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
- * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
- * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- */
+let toString = Object.prototype.toString,
+    hasOwnProperty = Object.prototype.hasOwnProperty;
+const tools = {
 
+    isFunction: function( obj ) {
+        return toString.call(obj) === "[object Function]";
+    },
+    isArray: function( obj ) {
+        return toString.call(obj) === "[object Array]";
+    },
 
-function isSpecificValue(val) {
-    return (
-        val instanceof Buffer
-        || val instanceof Date
-        || val instanceof RegExp
-    ) ? true : false;
-}
-
-function cloneSpecificValue(val) {
-    if (val instanceof Buffer) {
-        var x = Buffer.alloc
-            ? Buffer.alloc(val.length)
-            : new Buffer(val.length);
-        val.copy(x);
-        return x;
-    } else if (val instanceof Date) {
-        return new Date(val.getTime());
-    } else if (val instanceof RegExp) {
-        return new RegExp(val);
-    } else {
-        throw new Error('Unexpected situation');
-    }
-}
-
-/**
- * Recursive cloning array.
- */
-function deepCloneArray(arr) {
-    var clone = [];
-    arr.forEach(function (item, index) {
-        if (typeof item === 'object' && item !== null) {
-            if (Array.isArray(item)) {
-                clone[index] = deepCloneArray(item);
-            } else if (isSpecificValue(item)) {
-                clone[index] = cloneSpecificValue(item);
-            } else {
-                clone[index] = deepExtend({}, item);
-            }
-        } else {
-            clone[index] = item;
-        }
-    });
-    return clone;
-}
-
-function safeGetProperty(object, property) {
-    return property === '__proto__' ? undefined : object[property];
-}
-
-/**
- * Extening object that entered in first argument.
- *
- * Returns extended object or false if have no target object or incorrect type.
- *
- * If you wish to clone source object (without modify it), just use empty new
- * object as first argument, like this:
- *   deepExtend({}, yourObj_1, [yourObj_N]);
- */
-var deepExtend = function (/*obj_1, [obj_2], [obj_N]*/) {
-    if (arguments.length < 1 || typeof arguments[0] !== 'object') {
-        return false;
-    }
-
-    if (arguments.length < 2) {
-        return arguments[0];
-    }
-
-    var target = arguments[0];
-
-    // convert arguments to array and cut off target object
-    var args = Array.prototype.slice.call(arguments, 1);
-
-    var val, src;
-
-    args.forEach(function (obj) {
-        // skip argument if isn't an object, is null, or is an array
-        if (typeof obj !== 'object' || obj === null || Array.isArray(obj)) {
-            return;
+    isPlainObject: function( obj ) {
+        // Must be an Object.
+        // Because of IE, we also have to check the presence of the constructor property.
+        // Make sure that DOM nodes and window objects don't pass through, as well
+        if ( !obj || toString.call(obj) !== "[object Object]" || obj.nodeType || obj.setInterval ) {
+            return false;
         }
 
-        Object.keys(obj).forEach(function (key) {
-            src = safeGetProperty(target, key); // source value
-            val = safeGetProperty(obj, key); // new value
+        // Not own constructor property must be Object
+        if ( obj.constructor
+            && !hasOwnProperty.call(obj, "constructor")
+            && !hasOwnProperty.call(obj.constructor.prototype, "isPrototypeOf") ) {
+            return false;
+        }
 
-            // recursion prevention
-            if (val === target) {
-                return;
+        // Own properties are enumerated firstly, so to speed up,
+        // if last one is own, then all properties are own.
 
-                /**
-                 * if new value isn't object then just overwrite by new value
-                 * instead of extending.
-                 */
-            } else if (typeof val !== 'object' || val === null) {
-                target[key] = val;
-                return;
+        var key;
+        for ( key in obj ) {}
 
-                // just clone arrays (and recursive clone objects inside)
-            } else if (Array.isArray(val)) {
-                target[key] = deepCloneArray(val);
-                return;
-
-                // custom cloning and overwrite for specific objects
-            } else if (isSpecificValue(val)) {
-                target[key] = cloneSpecificValue(val);
-                return;
-
-                // overwrite by new value if source isn't object or array
-            } else if (typeof src !== 'object' || src === null || Array.isArray(src)) {
-                target[key] = deepExtend({}, val);
-                return;
-
-                // source value and new value is objects both, extending...
-            } else {
-                target[key] = deepExtend(src, val);
-                return;
-            }
-        });
-    });
-
-    return target;
+        return key === undefined || hasOwnProperty.call( obj, key );
+    }
 };
 
+/*
+ * jQuery extend function
+ * https://gist.github.com/bentsai/3150936
+ */
+const extend = function() {
+    var options, name, src, copy, copyIsArray, clone,
+        target = arguments[0] || {},
+        i = 1,
+        length = arguments.length,
+        deep = false;
 
-const clone = function(obj) {
-    let copy;
-
-    // Handle the 3 simple types, and null or undefined
-    if (null === obj || "object" !== typeof obj) return obj;
-
-    // Handle Date
-    if (obj instanceof Date) {
-        copy = new Date();
-        copy.setTime(obj.getTime());
-        return copy;
+    // Handle a deep copy situation
+    if ( typeof target === "boolean" ) {
+        deep = target;
+        target = arguments[1] || {};
+        // skip the boolean and the target
+        i = 2;
     }
 
-    // Handle Array
-    if (obj instanceof Array) {
-        copy = [];
-        for (let i = 0, len = obj.length; i < len; i++) {
-            copy[i] = clone(obj[i]);
+    // Handle case when target is a string or something (possible in deep copy)
+    if ( typeof target !== "object" && !tools.isFunction(target) ) {
+        target = {};
+    }
+
+    // extend jQuery itself if only one argument is passed
+    if ( length === i ) {
+        target = this;
+        --i;
+    }
+
+    for ( ; i < length; i++ ) {
+        // Only deal with non-null/undefined values
+        if ( (options = arguments[ i ]) !== null ) {
+            // Extend the base object
+            for ( name in options ) {
+                src = target[ name ];
+                copy = options[ name ];
+
+                // Prevent never-ending loop
+                if ( target === copy ) {
+                    continue;
+                }
+
+                // Recurse if we're merging plain objects or arrays
+                if ( deep && copy && ( tools.isPlainObject(copy) || (copyIsArray = tools.isArray(copy)) ) ) {
+                    if ( copyIsArray ) {
+                        copyIsArray = false;
+                        clone = src && tools.isArray(src) ? src : [];
+
+                    } else {
+                        clone = src && tools.isPlainObject(src) ? src : {};
+                    }
+
+                    // Never move original objects, clone them
+                    target[ name ] = extend( deep, clone, copy );
+
+                    // Don't bring in undefined values
+                } else if ( copy !== undefined ) {
+                    target[ name ] = copy;
+                }
+            }
         }
-        return copy;
     }
 
-    // Handle Object
-    if (obj instanceof Object) {
-        copy = {};
-        for (let attr in obj) {
-            if (obj.hasOwnProperty(attr)) copy[attr] = clone(obj[attr]);
-        }
-        return copy;
-    }
-
-    throw new Error("Unable to copy obj! Its type isn't supported.");
+    // Return the modified object
+    return target;
 };
 
 export default  {
     scrollTo,
-    clone,
-    extend: deepExtend,
+    extend,
 };

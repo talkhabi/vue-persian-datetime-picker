@@ -82,7 +82,7 @@ const Core = function (defaultLocaleName) {
 
         options       = options[localeName] || {};
         locale.name   = localeName;
-        locale.config = utils.extend(config, options);
+        locale.config = utils.extend(true, config, options);
 
         xDaysInMonth = moment[methods.daysInMonth];
 

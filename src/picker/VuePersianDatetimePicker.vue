@@ -1074,7 +1074,7 @@
                 return can;
             },
             weekDays() {
-                let names = [...(this.core.moment().localeData().weekdaysMin())];
+                let names = JSON.parse(JSON.stringify(this.core.moment().localeData().weekdaysMin()));
                 let dow   = this.core.locale.config.dow;
                 while (dow > 0) {
                     names.push(names.shift());
