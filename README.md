@@ -119,6 +119,13 @@ This project is licensed under the MIT License
 
 ## Change log
 
+### 2.0.0 (2019-01-16)
+
+ * Added gregorian support `<date-picker :locale="en"></date-picker>`
+ * Added locale configuration support 
+ * Improved css transitions
+ * Fixed min-max in time picker
+
 ### 1.1.7 (2018-12-31)
 
  * Fixed [critical error](https://github.com/talkhabi/vue-persian-datetime-picker/issues/39)

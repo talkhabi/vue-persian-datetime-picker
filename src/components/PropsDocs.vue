@@ -263,6 +263,40 @@
                  * @version: 1.1.6
                  */
                 roundMinute: true,
+
+
+                /**
+                 * Locales config ("fa" for jalali and "en" for gregorian)
+                 * @type String
+                 * @default fa
+                 * @example fa | en | fa,en | en,fa
+                 * @supported fa,en
+                 * @version 2.0.0
+                 */
+                locale: 'fa',
+
+                /**
+                 * Locale configuration
+                 * @type Object
+                 * @default {}
+                 * @version 2.0.0
+                 * @example
+                 * {
+                 *  fa: {
+                 *      dow: 6,             --first day of week
+                 *      dir: 'rtl',         --language direction
+                 *      lang: {
+                 *           submit:    "تایید",
+                 *           cancel:    "انصراف",
+                 *           now:       "اکنون",
+                 *           nextMonth: "ماه بعد",
+                 *           prevMonth: "ماه قبل",
+                 *      }
+                 *  },
+                 *  en: { ... }
+                 * }
+                 */
+                localeConfig: {},
             &rbrace;
         </highlight-code>
     </div>
