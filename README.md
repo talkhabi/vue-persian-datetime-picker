@@ -106,7 +106,7 @@ Then use in component
 <custom-date-picker v-model="date"></custom-date-picker>
 ```
 
-## [Click to see full documentation and demo](https://talkhabi.github.io/vue-persian-datetime-picker)
+### [Click to see full documentation and demo](https://talkhabi.github.io/vue-persian-datetime-picker)
 
 ## Built With
 * [Vue.js](https://vuejs.org/) - The Progressive JavaScript Framework.
@@ -123,7 +123,7 @@ This project is licensed under the MIT License
 
 ### 2.0.0 (2019-01-16)
 
- * Added gregorian support `<date-picker :locale="en"></date-picker>`
+ * Added gregorian support `<date-picker locale="en"></date-picker>`
  * Added locale configuration support 
  * Improved css transitions
  * Fixed min-max in time picker
