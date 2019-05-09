@@ -662,17 +662,23 @@
                 this.setTime(e.wheelDeltaY > 0 ? this.jumpMinute:-this.jumpMinute, k);
             },
             submit(){
-                if(this.hasStep('t')){
+
+                if (this.step < this.steps.length - 1)
+                    return this.nextStep();
+
+                if (this.hasStep('t')) {
                     let t = {hour: this.time.hour(), minute: this.time.minute()};
                     this.date = this.date.set(t).clone();
                     this.selectedDate = this.selectedDate.set(t).clone();
                 }
 
-                if(['year', 'month'].indexOf(this.type) !== -1) this.selectedDate = this.date.clone();
+                if (['year', 'month'].indexOf(this.type) !== -1)
+                    this.selectedDate = this.date.clone();
+                
                 this.output = this.selectedDate.clone();
                 this.visible = false;
 
-                this.$emit('input',  this.outputValue);
+                this.$emit('input', this.outputValue);
                 this.$emit('change', this.selectedDate.clone());
             },
             updateDates(d){
