@@ -935,7 +935,7 @@
                 m.forEach( w => {
                     let week = [];
                     w.forEach( d => {
-                        let sel = (d === null || selected)? false:!this.selectedDate.diff(d, 'days');
+                        let sel = (d === null || selected) ? false:Math.abs(this.selectedDate.diff(d, 'hours')) < 20;
                         let m = this.core.moment(d);
                         week.push({
                             date: d,
