@@ -121,6 +121,11 @@ This project is licensed under the MIT License
 
 ## Change log
 
+### 2.0.1 (2019-05-11)
+
+ * Fixed [#53](https://github.com/talkhabi/vue-persian-datetime-picker/issues/53)
+ * Show the next step on submit button click, instead of submitting immediately [#41](https://github.com/talkhabi/vue-persian-datetime-picker/issues/41)
+
 ### 2.0.0 (2019-01-16)
 
  * Added gregorian support `<date-picker locale="en"></date-picker>`
