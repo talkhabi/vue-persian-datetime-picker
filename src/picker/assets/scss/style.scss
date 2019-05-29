@@ -243,15 +243,15 @@
 	}
 }
 
-.#{$prefix}next,
-.#{$prefix}prev {
+.#{$prefix}right-arrow,
+.#{$prefix}left-arrow {
 	width: $month-label-height;
 	height: $month-label-height;
 	line-height: $month-label-height;
 }
-.#{$prefix}next {  float: right;  }
+.#{$prefix}right-arrow {  float: right;  }
 
-.#{$prefix}prev {  float: left;  }
+.#{$prefix}left-arrow {  float: left;  }
 
 .#{$prefix}arrow {
 	width: 11px;

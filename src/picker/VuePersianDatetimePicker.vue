@@ -47,7 +47,7 @@
                     <div :class="[prefix('content')]">
                         <div :class="[prefix('header')]" :style="{'background-color': color}">
                             <div v-if="type == 'date' || type == 'datetime'"
-                                 :class="[prefix('year-label'), directionClass]"
+                                 :class="[prefix('year-label'), verticalDirectionClass]"
                                  @click="goStep('y')">
                                 <transition name="slideY">
                                     <span :key="selectedDate.xYear()">
@@ -55,7 +55,7 @@
                                     </span>
                                 </transition>
                             </div>
-                            <div :class="[prefix('date'), directionClass]" :style="{'font-size': type=='datetime'? '22px':''}">
+                            <div :class="[prefix('date'), verticalDirectionClass]" :style="{'font-size': type=='datetime'? '22px':''}">
                                 <transition name="slideY">
                                     <span :key="formattedDate">{{ formattedDate }}</span>
                                 </transition>
@@ -69,19 +69,19 @@
                         </div>
                         <div :class="[prefix('body')]">
                             <template v-if="steps.indexOf('d') != -1">
-                                <div :class="[prefix('controls'), directionClassDate]">
+                                <div :class="[prefix('controls'), horizontalDirectionClass]">
                                     <button type="button"
-                                            :class="[prefix('next')]"
-                                            :title="lang.nextMonth"
-                                            :disabled="nextMonthDisabled"
-                                            @click="nextMonth">
+                                            :class="[prefix('right-arrow')]"
+                                            :title="localeData.config.dir === 'ltr' ? lang.nextMonth : lang.prevMonth"
+                                            :disabled="localeData.config.dir === 'ltr' ? nextMonthDisabled : prevMonthDisabled"
+                                            @click="localeData.config.dir === 'ltr' ? nextMonth() : prevMonth()">
                                         <arrow width="10" fill="#000" direction="right" style="vertical-align: middle"></arrow>
                                     </button>
                                     <button type="button"
-                                            :class="[prefix('prev')]"
-                                            :title="lang.prevMonth"
-                                            :disabled="prevMonthDisabled"
-                                            @click="prevMonth">
+                                            :class="[prefix('left-arrow')]"
+                                            :title="localeData.config.dir === 'ltr' ? lang.prevMonth : lang.nextMonth"
+                                            :disabled="localeData.config.dir === 'ltr' ? prevMonthDisabled : nextMonthDisabled"
+                                            @click="localeData.config.dir === 'ltr' ? prevMonth() : nextMonth()">
                                         <arrow width="10" fill="#000" direction="left" style="vertical-align: middle"></arrow>
                                     </button>
                                     <transition name="slideX">
@@ -90,12 +90,12 @@
                                         </div>
                                     </transition>
                                 </div>
-                                <div class="clearfix" :class="[prefix('month'), directionClassDate]">
+                                <div class="clearfix" :class="[prefix('month'), horizontalDirectionClass]">
                                     <div class="clearfix" :class="[prefix('week')]">
                                         <div v-for="day in weekDays" :class="[prefix('weekday')]">{{ day }}</div>
                                     </div>
                                     <div :class="[prefix('days')]" :style="{height: (month.length * 40) + 'px' }">
-                                        <transition name="slideX" :class="directionClassDate">
+                                        <transition name="slideX" :class="horizontalDirectionClass">
                                             <div :key="date.xMonth()" >
                                                 <div v-for="m,i in month" class="clearfix">
                                                     <div :class="[prefix('day'), {selected: day.selected, empty: day.date == null}, day.attributes.class]"
@@ -160,7 +160,7 @@
                                             <btn class="up-arrow-btn" @update="setTime(1, 'h')" @fastUpdate="fastUpdateCounter">
                                                 <arrow width="20" direction="up"></arrow>
                                             </btn>
-                                            <div class="counter" :class="directionClassTime" @mousewheel.stop.prevent="wheelSetTime('h',$event)">
+                                            <div class="counter" :class="verticalDirectionClass" @mousewheel.stop.prevent="wheelSetTime('h',$event)">
                                                 <div class="counter-item" v-for="item, i in time.format('HH').split('')" v-bind="timeAttributes">
                                                     <transition name="slideY">
                                                         <span :key="item + '_' + i" :style="{transition: 'all ' + timeData.transitionSpeed + 'ms ease-in-out'}">{{ item }}</span>
@@ -175,7 +175,7 @@
                                             <btn class="up-arrow-btn" @update="setTime(jumpMinute, 'm')" @fastUpdate="fastUpdateCounter">
                                                 <arrow width="20" direction="up"></arrow>
                                             </btn>
-                                            <div class="counter" :class="directionClassTime" @mousewheel.stop.prevent="wheelSetTime('m',$event)">
+                                            <div class="counter" :class="verticalDirectionClass" @mousewheel.stop.prevent="wheelSetTime('m',$event)">
                                                 <div class="counter-item" v-for="item, i in time.format('mm').split('')" v-bind="timeAttributes">
                                                     <transition name="slideY">
                                                         <span :key="item + '_' + i" :style="{transition: 'all ' + timeData.transitionSpeed + 'ms ease-in-out'}">{{ item }}</span>
@@ -541,9 +541,8 @@
                 date: {},
                 selectedDate: {},
                 visible: false,
-                directionClass: '',
-                directionClassDate: '',
-                directionClassTime: '',
+                horizontalDirectionClass: '',
+                verticalDirectionClass: '',
                 classFastCounter: '',
                 steps: ['y', 'm', 'd', 't'],
                 step: 0,
@@ -746,9 +745,20 @@
                 let s = this.shortCodes[this.view];
                 if(this.hasStep(s)) this.goStep(s);
             },
-            setDirection(prop, val, old){
-                if(typeof old.unix === 'function'){
-                    this[prop] = val.unix() > old.unix() ? 'direction-next':'direction-prev';
+            setHorizontalDirection(val, old) {
+                if (typeof old.unix === 'function') {
+                    const isLtr = this.localeData.config.dir === 'ltr';
+                    if (val.unix() > old.unix()) {
+                        this.horizontalDirectionClass = isLtr ? 'direction-right' : 'direction-left';
+                    }
+                    else {
+                        this.horizontalDirectionClass = isLtr ? 'direction-left' : 'direction-right';
+                    }
+                }
+            },
+            setVerticalDirection(val, old) {
+                if (typeof old.unix === 'function') {
+                    this.verticalDirectionClass = val.unix() > old.unix() ? 'direction-up' : 'direction-down';
                 }
             },
             setMinMax(){
@@ -1139,17 +1149,17 @@
                 },
                 immediate: true
             },
-            selectedDate(val, old){
-                this.setDirection('directionClass', val, old);
+            selectedDate(val, old) {
+                this.setHorizontalDirection(val, old);
             },
-            date(val, old){
-                this.setDirection('directionClassDate', val, old);
+            date(val, old) {
+                this.setHorizontalDirection(val, old);
                 this.checkScroll();
                 if(this.isLower(this.date)) this.date = this.minDate.clone();
                 if(this.isMore(this.date)) this.date = this.maxDate.clone();
             },
-            time(val, old){
-                this.setDirection('directionClassTime', val, old);
+            time(val, old) {
+                this.setVerticalDirection(val, old);
             },
             visible(val){
                 if(val){
