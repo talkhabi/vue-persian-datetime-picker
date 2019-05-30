@@ -79,3 +79,14 @@
 		.slideY-enter    {  transform: translateY(5%);  }
 	}
 }
+
+.#{$prefix}dir-rtl {
+	.direction-next {
+		.slideX-leave-to {  transform: translateX(100%);  }
+		.slideX-enter    {  transform: translateX(-100%);  }
+	}
+	.direction-prev {
+		.slideX-leave-to {  transform: translateX(-100%);  }
+		.slideX-enter    {  transform: translateX(100%);  }
+	}
+}

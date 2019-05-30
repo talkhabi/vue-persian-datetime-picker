@@ -550,3 +550,14 @@
 		right: 14px;
 	}
 }
+
+.#{$prefix}dir-rtl {
+
+	.#{$prefix}next,
+	.#{$prefix}prev {
+		transform: rotateY(180deg);
+	}
+	
+	.#{$prefix}next {  float: left  }
+	.#{$prefix}prev {  float: right  }
+}
