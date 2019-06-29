@@ -285,13 +285,14 @@
          *  fa: {
          *      dow: 6,             --first day of week
          *      dir: 'rtl',         --language direction
+         *      displayFormat: 'jYYYY/jMM/jDD',  --or null
          *      lang: {
-         *           label:     "شمسی",
-         *           submit:    "تایید",
-         *           cancel:    "انصراف",
-         *           now:       "اکنون",
-         *           nextMonth: "ماه بعد",
-         *           prevMonth: "ماه قبل",
+         *           label:     'شمسی',
+         *           submit:    'تایید',
+         *           cancel:    'انصراف',
+         *           now:       'اکنون',
+         *           nextMonth: 'ماه بعد',
+         *           prevMonth: 'ماه قبل',
          *      }
          *  },
          *  en: { ... }

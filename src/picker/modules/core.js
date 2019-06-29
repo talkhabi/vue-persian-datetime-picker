@@ -36,6 +36,7 @@ const localesConfig = {
   fa: {
     dow: 6,
     dir: 'rtl',
+    displayFormat: null,
     lang: {
       label: 'شمسی',
       submit: 'تایید',
@@ -48,6 +49,7 @@ const localesConfig = {
   en: {
     dow: 0,
     dir: 'ltr',
+    displayFormat: null,
     lang: {
       label: 'میلادی',
       submit: 'Select',

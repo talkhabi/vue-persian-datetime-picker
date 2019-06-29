@@ -1001,7 +1001,10 @@ export default {
     displayValue() {
       if (!this.output) return ''
       let output = this.output.clone()
-      let format = this.displayFormat || this.selfFormat
+      let format =
+        this.localeData.config.displayFormat ||
+        this.displayFormat ||
+        this.selfFormat
       if (/j\w/.test(format)) output.locale('fa')
       return output.format(format)
     },
@@ -1398,7 +1401,9 @@ export default {
         try {
           this.output = this.core.moment(
             val,
-            this.displayFormat || this.selfFormat
+            this.localeData.config.displayFormat ||
+              this.displayFormat ||
+              this.selfFormat
           )
           if (!this.output.isValid()) this.output = null
         } catch (er) {
