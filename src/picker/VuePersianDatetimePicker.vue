@@ -1118,7 +1118,10 @@ export default {
       deep: true,
       immediate: true
     },
-    'localeData.name': 'setMinMax'
+    'localeData.name'() {
+      this.$emit('localeChange', this.localeData)
+      this.setMinMax()
+    }
   },
   created() {
     this.updateNowInterval = setInterval(() => {
