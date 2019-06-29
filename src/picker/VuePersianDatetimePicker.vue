@@ -1,5 +1,10 @@
 <template>
-  <span>
+  <span
+    :class="prefix('main')"
+    :data-type="type"
+    :data-locale="localeData.name"
+    :data-locale-dir="localeData.config.dir"
+  >
     <span
       v-if="!element"
       :class="[prefix('input-group'), { disabled: disabled }]"
@@ -93,7 +98,10 @@
                   :class="{ active: localeItem === localeData.name }"
                   @click="setLocale(localeItem)"
                 >
-                  {{ localeItem }}
+                  {{
+                    core.localesConfig[localeItem].lang.label ||
+                      localeItem.toUpperCase()
+                  }}
                 </li>
               </ul>
             </div>
@@ -706,6 +714,7 @@ export default {
      *      dow: 6,             --first day of week
      *      dir: 'rtl',         --language direction
      *      lang: {
+     *           label:     "شمسی",
      *           submit:    "تایید",
      *           cancel:    "انصراف",
      *           now:       "اکنون",
@@ -1099,10 +1108,12 @@ export default {
       immediate: true
     },
     localeConfig: {
-      handler() {
+      handler(config) {
+        this.core.setLocalesConfig(config)
         this.setLocale(this.locales[0])
       },
-      deep: true
+      deep: true,
+      immediate: true
     },
     'localeData.name': 'setMinMax'
   },

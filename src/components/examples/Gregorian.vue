@@ -37,6 +37,7 @@
             dow: 6,     //  first day of week
             dir: "rtl",
             lang: {
+              label:     "شمسی",
               submit:    "تایید",
               cancel:    "انصراف",
               now:       "اکنون",
@@ -48,6 +49,7 @@
             dow: 0,
             dir: "ltr",
             lang: {
+              label:     "میلادی",
               submit:    "Select",
               cancel:    "Cancel",
               now:       "Now",

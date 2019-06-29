@@ -37,6 +37,7 @@ const localesConfig = {
     dow: 6,
     dir: 'rtl',
     lang: {
+      label: 'شمسی',
       submit: 'تایید',
       cancel: 'انصراف',
       now: 'اکنون',
@@ -48,6 +49,7 @@ const localesConfig = {
     dow: 0,
     dir: 'ltr',
     lang: {
+      label: 'میلادی',
       submit: 'Select',
       cancel: 'Cancel',
       now: 'Now',
@@ -63,6 +65,8 @@ const Core = function(defaultLocaleName) {
   const Instance = {
     moment: moment,
     locale: { name: 'fa', config: {} },
+    localesConfig: {},
+    setLocalesConfig: null,
     changeLocale: null,
     getWeekArray: null,
     getYearsList: null,
@@ -125,6 +129,11 @@ const Core = function(defaultLocaleName) {
       addMethods(date)
       return date
     }
+  }
+
+  Instance.setLocalesConfig = function(config) {
+    let defaults = JSON.parse(JSON.stringify(localesConfig))
+    this.localesConfig = utils.extend(true, defaults, config)
   }
 
   Instance.getWeekArray = function getWeekArray(d) {

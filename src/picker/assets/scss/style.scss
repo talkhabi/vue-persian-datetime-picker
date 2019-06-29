@@ -565,13 +565,11 @@
   left: 14px;
   top: 12px;
   line-height: 24px;
-  width: 30px;
   text-align: center;
   opacity: 0.7;
 
   li {
     cursor: pointer;
-    text-transform: uppercase;
 
     &.active {
       display: none;

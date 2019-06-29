@@ -286,6 +286,7 @@
          *      dow: 6,             --first day of week
          *      dir: 'rtl',         --language direction
          *      lang: {
+         *           label:     "شمسی",
          *           submit:    "تایید",
          *           cancel:    "انصراف",
          *           now:       "اکنون",

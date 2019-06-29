@@ -252,3 +252,7 @@ input.is-editable {
     border-color: darken($green, 8%);
   }
 }
+
+[data-locale-dir="ltr"] ul.vpd-locales {
+  font-family: IRANSans, sans-serif;
+}
