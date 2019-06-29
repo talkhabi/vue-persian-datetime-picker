@@ -1,563 +1,624 @@
 @import 'variables';
 @import 'transitions';
 
+.clearfix {
+  &:after, &:before {
+    content: " ";
+    display: table;
+  }
 
-.clearfix{
-	&:after, &:before{
-		content: " ";
-		display: table;
-	}
-	&:after {
-		clear: both;
-	}
+  &:after {
+    clear: both;
+  }
 }
 
-.#{$prefix}input-group{
-	display: table;
-	width: 100%;
-	position: relative;
-	input {
-		display: table-cell;
-		border: 1px solid #dadada;
-		border-right: none;
-		border-top-right-radius: 0;
-		border-bottom-right-radius: 0;
-		line-height: 30px;
-		padding: 0 10px;
-		&:not(.is-editable) {  cursor: pointer;  }
-	}
-	label {
-		color: white;
-		white-space: nowrap;
-		svg + span {
-			display: inline-block;
-			margin-right: 4px;
-			vertical-align: middle;
-		}
-	}
-	&.disabled {
-		input, label {  cursor: default;  }
-	}
-	.#{$prefix}clear-btn {
-		position: absolute;
-		left: 0;
-		top: 0;
-		line-height: 32px;
-		width: 30px;
-		cursor: pointer;
-		text-align: center;
-		font-style: normal;
-		font-family: monospace, sans-serif;
-		opacity: 0.4;
-		&:hover {  opacity: 0.7;  }
-	}
+.#{$prefix}input-group {
+  display: table;
+  width: 100%;
+  position: relative;
+
+  input {
+    display: table-cell;
+    border: 1px solid #dadada;
+    border-right: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    line-height: 30px;
+    padding: 0 10px;
+
+    &:not(.is-editable) {
+      cursor: pointer;
+    }
+  }
+
+  label {
+    color: white;
+    white-space: nowrap;
+
+    svg + span {
+      display: inline-block;
+      margin-right: 4px;
+      vertical-align: middle;
+    }
+  }
+
+  &.disabled {
+    input, label {
+      cursor: default;
+    }
+  }
+
+  .#{$prefix}clear-btn {
+    position: absolute;
+    left: 0;
+    top: 0;
+    line-height: 32px;
+    width: 30px;
+    cursor: pointer;
+    text-align: center;
+    font-style: normal;
+    font-family: monospace, sans-serif;
+    opacity: 0.4;
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
 }
 
-.#{$prefix}icon-btn{
-	display: table-cell;
-	width: 1%;
-	cursor: pointer;
-	padding: 0 10px;
-	vertical-align: middle;
-	> svg{
-		vertical-align: middle;
-	}
+.#{$prefix}icon-btn {
+  display: table-cell;
+  width: 1%;
+  cursor: pointer;
+  padding: 0 10px;
+  vertical-align: middle;
+
+  > svg {
+    vertical-align: middle;
+  }
 }
 
-.#{$prefix}wrapper{
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	width: 100%;
-	height: 100%;
-	background-color: rgba(0,0,0, 0.5);
-	z-index: 9999;
+.#{$prefix}wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
 }
 
-.#{$prefix}container{
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	user-select: none;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
+.#{$prefix}container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 .#{$prefix}content {
-	opacity: 1;
-	transition: all .4s cubic-bezier(0.25, 0.1, 0.17, 1.84);
-	text-align: right;
-	direction: rtl;
-	width: $width;
-	background-color: #ffffff;
-	box-shadow: 5px 22px 95px -14px rgba(0,0,0,1);
-	cursor: default;
+  opacity: 1;
+  transition: all .4s cubic-bezier(0.25, 0.1, 0.17, 1.84);
+  text-align: right;
+  direction: rtl;
+  width: $width;
+  background-color: #ffffff;
+  box-shadow: 5px 22px 95px -14px rgba(0, 0, 0, 1);
+  cursor: default;
 }
 
 .#{$prefix}header {
-	color: #ffffff;
-	padding: 10px 20px;
-	position: relative;
+  color: #ffffff;
+  padding: 10px 20px;
+  position: relative;
 }
 
-.#{$prefix}body {  position: relative;  }
+.#{$prefix}body {
+  position: relative;
+}
 
 .#{$prefix}year-label {
-	margin-bottom: 2px;
-	position: relative;
-	height: 24px;
-	opacity: 0.7;
-	overflow: hidden;
-	cursor: pointer;
-	font-size: 16px;
-	> span {
-		display: inline-block;
-		padding: 0 10px;
-		line-height: 22px;
-		height: 22px;
-		border-width: 1px;
-		border-style: solid;
-		border-radius: 2px;
-		transition: all 0.1s ease-out;
-		&:not(:hover){
-			border-color: transparent !important;
-			color: inherit !important;
-		}
-	}
+  margin-bottom: 2px;
+  position: relative;
+  height: 24px;
+  opacity: 0.7;
+  overflow: hidden;
+  cursor: pointer;
+  font-size: 16px;
+
+  > span {
+    display: inline-block;
+    padding: 0 10px;
+    line-height: 22px;
+    height: 22px;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 2px;
+    transition: all 0.1s ease-out;
+
+    &:not(:hover) {
+      border-color: transparent !important;
+      color: inherit !important;
+    }
+  }
 }
 
 .#{$prefix}date {
-	position: relative;
-	font-size: 28px;
-	line-height: 40px;
-	height: 40px;
-	overflow: hidden;
-	span {
-		display: block;
-		height: inherit;
-		line-height: inherit;
-	}
+  position: relative;
+  font-size: 28px;
+  line-height: 40px;
+  height: 40px;
+  overflow: hidden;
+
+  span {
+    display: block;
+    height: inherit;
+    line-height: inherit;
+  }
 }
 
 .#{$prefix}week {
-	font-size: 12px;
-	padding: 0 14px;
-	line-height: 20px;
-	color: #b9b9b9;
-	margin-bottom: 10px;
-	height: 20px;
+  font-size: 12px;
+  padding: 0 14px;
+  line-height: 20px;
+  color: #b9b9b9;
+  margin-bottom: 10px;
+  height: 20px;
 }
 
 .#{$prefix}weekday {
-	float: right;
-	width: $day-size;
-	text-align: center;
+  float: right;
+  width: $day-size;
+  text-align: center;
 }
 
 .#{$prefix}days {
-	padding: 0 18px;
-	position: relative;
-	overflow: hidden;
-	transition: height 300ms cubic-bezier(0.75, 0.02, 0.27, 0.99);
+  padding: 0 18px;
+  position: relative;
+  overflow: hidden;
+  transition: height 300ms cubic-bezier(0.75, 0.02, 0.27, 0.99);
 }
 
 .#{$prefix}day {
-	width: $day-size;
-	height: $day-size;
-	float: right;
-	line-height: $day-size;
-	position: relative;
+  width: $day-size;
+  height: $day-size;
+  float: right;
+  line-height: $day-size;
+  position: relative;
 
-	&:not(.empty){
-		cursor: pointer;
-		transition: color 450ms ease;
-		text-align: center;
-	}
+  &:not(.empty) {
+    cursor: pointer;
+    transition: color 450ms ease;
+    text-align: center;
+  }
 
-	&[disabled] {
-		cursor: default;
-		color: darken(#ffffff, 20%);
-		.#{$prefix}day-effect {
-			background-color: transparent;
-		}
-		.#{$prefix}day-text {
-			color: darken(#ffffff, 20%);
-		}
-	}
+  &[disabled] {
+    cursor: default;
+    color: darken(#ffffff, 20%);
 
-	&:not([disabled]){
-		&:hover {
-			color: #ffffff;
-			.#{$prefix}day-effect {
-				transform: scale(1);
-				opacity: 0.6;
-			}
-		}
-		&.selected {
-			color: #ffffff;
-			.#{$prefix}day-effect {
-				transform: scale(1);
-				opacity: 1;
-			}
-		}
-	}
+    .#{$prefix}day-effect {
+      background-color: transparent;
+    }
+
+    .#{$prefix}day-text {
+      color: darken(#ffffff, 20%);
+    }
+  }
+
+  &:not([disabled]) {
+    &:hover {
+      color: #ffffff;
+
+      .#{$prefix}day-effect {
+        transform: scale(1);
+        opacity: 0.6;
+      }
+    }
+
+    &.selected {
+      color: #ffffff;
+
+      .#{$prefix}day-effect {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+  }
 }
 
 .#{$prefix}day-effect {
-	position: absolute;
-	width: $day-size - 4px;
-	height: $day-size - 4px;
-	border-radius: 50%;
-	top: 2px;
-	left: 2px;
-	transform: scale(0);
-	opacity: 0;
-	transition: all 450ms ease;
+  position: absolute;
+  width: $day-size - 4px;
+  height: $day-size - 4px;
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+  transform: scale(0);
+  opacity: 0;
+  transition: all 450ms ease;
 }
 
 .#{$prefix}day-text {
-	position: relative;
+  position: relative;
 }
 
 .#{$prefix}controls {
-	position: relative;
-	z-index: 2;
-	height: $month-label-height;
-	line-height: $month-label-height;
-	text-align: center;
-	button {
-		position: relative;
-		background-color: transparent;
-		border: none;
-		user-select: none;
-		outline: none;
-		cursor: pointer;
-		&[disabled]{
-			opacity: 0.3;
-			cursor: default;
-		}
-	}
+  position: relative;
+  z-index: 2;
+  height: $month-label-height;
+  line-height: $month-label-height;
+  text-align: center;
+
+  button {
+    position: relative;
+    background-color: transparent;
+    border: none;
+    user-select: none;
+    outline: none;
+    cursor: pointer;
+
+    &[disabled] {
+      opacity: 0.3;
+      cursor: default;
+    }
+  }
 }
 
 .#{$prefix}next,
 .#{$prefix}prev {
-	width: $month-label-height;
-	height: $month-label-height;
-	line-height: $month-label-height;
+  width: $month-label-height;
+  height: $month-label-height;
+  line-height: $month-label-height;
 }
-.#{$prefix}next {  float: right;  }
 
-.#{$prefix}prev {  float: left;  }
+.#{$prefix}next {
+  float: right;
+}
+
+.#{$prefix}prev {
+  float: left;
+}
 
 .#{$prefix}arrow {
-	width: 11px;
-	height: 11px;
+  width: 11px;
+  height: 11px;
 }
 
 .#{$prefix}month {
-	position: relative;
-	overflow: hidden;
+  position: relative;
+  overflow: hidden;
 }
 
 .#{$prefix}month-label {
-	position: absolute;
-	top: 0;
-	left: $month-label-height;
-	right: $month-label-height;
-	overflow: hidden;
-	width: 95px;
-	margin-left: auto;
-	margin-right: auto;
-	line-height: $month-label-height;
-	height: $month-label-height;
-	text-align: center;
-	cursor: pointer;
-	> span {
-		display: inline-block;
-		padding: 0 5px;
-		line-height: 26px;
-		height: 26px;
-		border-width: 1px;
-		border-style: solid;
-		border-radius: 2px;
-		transition: all 0.1s ease-out;
-		white-space: nowrap;
-		&:not(:hover){
-				border-color: transparent !important;
-				color: inherit !important;
-		}
-	}
+  position: absolute;
+  top: 0;
+  left: $month-label-height;
+  right: $month-label-height;
+  overflow: hidden;
+  width: 95px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: $month-label-height;
+  height: $month-label-height;
+  text-align: center;
+  cursor: pointer;
+
+  > span {
+    display: inline-block;
+    padding: 0 5px;
+    line-height: 26px;
+    height: 26px;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 2px;
+    transition: all 0.1s ease-out;
+    white-space: nowrap;
+
+    &:not(:hover) {
+      border-color: transparent !important;
+      color: inherit !important;
+    }
+  }
 }
 
 .#{$prefix}actions {
-	text-align: right;
-	padding: 8px;
-	button {
-		border: none;
-		background-color: transparent;
-		display: inline-block;
-		cursor: pointer;
-		outline: none;
-		font-size: 14px;
-		text-transform: uppercase;
-		min-width: 88px;
-		text-align: center;
-		-webkit-appearance: none;
-		line-height: 36px;
-		height: 36px;
-		transition: all 0.3s ease;
-		&:hover {
-			background-color: darken(#ffffff, 5%);
-		}
-		&[disabled]{
-			opacity: 0.6;
-			cursor: default;
-		}
-	}
+  text-align: right;
+  padding: 8px;
+
+  button {
+    border: none;
+    background-color: transparent;
+    display: inline-block;
+    cursor: pointer;
+    outline: none;
+    font-size: 14px;
+    text-transform: uppercase;
+    min-width: 88px;
+    text-align: center;
+    -webkit-appearance: none;
+    line-height: 36px;
+    height: 36px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: darken(#ffffff, 5%);
+    }
+
+    &[disabled] {
+      opacity: 0.6;
+      cursor: default;
+    }
+  }
 }
 
-.#{$prefix}addon-list-content {  direction: rtl;  }
+.#{$prefix}addon-list-content {
+  direction: rtl;
+}
 
 .#{$prefix}addon-list-item {
-	width: (1/3)*100%;
-	text-align: center;
-	font-size: 14px;
-	height: 44px;
-	line-height: 36px;
-	transition: all 0.3s ease;
-	color: #8a8a8a;
-	cursor: pointer;
-	float: right;
-	border: solid 4px #fff;
-	&.selected, &:hover {
-		background-color: #f9f9f9;
-	}
-	&.selected {
-		font-size: 17px;
-		background-color: #f5f5f5;
-	}
+  width: (1/3)*100%;
+  text-align: center;
+  font-size: 14px;
+  height: 44px;
+  line-height: 36px;
+  transition: all 0.3s ease;
+  color: #8a8a8a;
+  cursor: pointer;
+  float: right;
+  border: solid 4px #fff;
+
+  &.selected, &:hover {
+    background-color: #f9f9f9;
+  }
+
+  &.selected {
+    font-size: 17px;
+    background-color: #f5f5f5;
+  }
 }
 
 .#{$prefix}addon-list {
-	width: 100%;
-	background-color: #ffffff;
-	position: absolute;
-	z-index: 2;
-	overflow: auto;
-	top: 0;
-	bottom: 52px;
-	border-bottom: solid 1px #eee;
-	direction: ltr;
-	&.can-close{
-		padding-top: 30px;
-	}
+  width: 100%;
+  background-color: #ffffff;
+  position: absolute;
+  z-index: 2;
+  overflow: auto;
+  top: 0;
+  bottom: 52px;
+  border-bottom: solid 1px #eee;
+  direction: ltr;
+
+  &.can-close {
+    padding-top: 30px;
+  }
 }
 
-.#{$prefix}month-list{
-	padding-top: 15px;
-	.#{$prefix}addon-list-item {
-		height: 54px;
-		line-height: 46px;
-		&.selected, &:hover {  }
-	}
+.#{$prefix}month-list {
+  padding-top: 15px;
+
+  .#{$prefix}addon-list-item {
+    height: 54px;
+    line-height: 46px;
+
+    &.selected, &:hover {
+    }
+  }
 }
 
-.#{$prefix}addon-list-item[disabled]{
-	opacity: 0.3;
-	cursor: default !important;
-	background-color: transparent !important;
+.#{$prefix}addon-list-item[disabled] {
+  opacity: 0.3;
+  cursor: default !important;
+  background-color: transparent !important;
 }
 
-.#{$prefix}close-addon{
-	position: absolute;
-	top: 4px;
-	left: 4px;
-	z-index: 2;
-	width: 30px;
-	height: 30px;
-	line-height: 30px;
-	color: #444;
-	font-family: sans-serif;
-	text-align: center;
-	cursor: pointer;
-	background-color: rgba(0,0,0,0.1);
+.#{$prefix}close-addon {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  z-index: 2;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  color: #444;
+  font-family: sans-serif;
+  text-align: center;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
-.#{$prefix}time{
+.#{$prefix}time {
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
 
-	user-select: none;
-	-moz-user-select: none;
-	-webkit-user-select: none;
+  .#{$prefix}time-h,
+  .#{$prefix}time-m {
+    position: relative;
+    margin-top: 70px;
+    float: left;
+    width: 50%;
+    height: 100%;
+    text-align: center;
+    color: #a2a2a2;
+    font-family: sans-serif;
 
-	.#{$prefix}time-h,
-	.#{$prefix}time-m {
-		position: relative;
-		margin-top: 70px;
-		float: left;
-		width: 50%;
-		height: 100%;
-		text-align: center;
-		color: #a2a2a2;
-		font-family: sans-serif;
-		.counter{
-			font-size: 90px;
-			height: 100px;
-			line-height: 100px;
-			overflow: hidden;
-			position: relative;
-			direction: ltr;
-			transition: opacity 0.3s ease-in-out;
-		}
-		.counter-item{
-			height: inherit;
-			width: 51px;
-			display: inline-block;
-			vertical-align: text-top;
-			position: relative;
-		}
-	}
-	.#{$prefix}time-h:after{
-		position: absolute;
-		top: 50%;
-		right: 0;
-		content: ':';
-		font-size: 70px;
-		transform: translate(50%, -50%);
-		transition: inherit;
-	}
+    .counter {
+      font-size: 90px;
+      height: 100px;
+      line-height: 100px;
+      overflow: hidden;
+      position: relative;
+      direction: ltr;
+      transition: opacity 0.3s ease-in-out;
+    }
 
-	.up-arrow-btn,
-	.down-arrow-btn{
-		display: block;
-		cursor: pointer;
-		outline: none;
-		height: 34px;
-		&:active svg path{  }
-	}
-	&.disabled .counter-item {
-		opacity: 0.5;
-	}
+    .counter-item {
+      height: inherit;
+      width: 51px;
+      display: inline-block;
+      vertical-align: text-top;
+      position: relative;
+    }
+  }
+
+  .#{$prefix}time-h:after {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    content: ':';
+    font-size: 70px;
+    transform: translate(50%, -50%);
+    transition: inherit;
+  }
+
+  .up-arrow-btn,
+  .down-arrow-btn {
+    display: block;
+    cursor: pointer;
+    outline: none;
+    height: 34px;
+
+    &:active svg path {
+    }
+  }
+
+  &.disabled .counter-item {
+    opacity: 0.5;
+  }
 }
 
-.#{$prefix}prev-step{
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 30px;
-	height: 30px;
-	text-align: center;
-	padding: 9px;
-	cursor: pointer;
-	&:hover{
-		background-color: rgba(0,0,0,0.2);
-	}
+.#{$prefix}prev-step {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  padding: 9px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
 }
 
-[data-type="time"]{
-	.#{$prefix}time {
-		.#{$prefix}time-m,
-		.#{$prefix}time-h{
-			margin-top: 40px;
-		}
-	}
+[data-type="time"] {
+  .#{$prefix}time {
+    .#{$prefix}time-m,
+    .#{$prefix}time-h {
+      margin-top: 40px;
+    }
+  }
 }
 
 .#{$prefix}is-inline {
-	position: static;
-	background-color: transparent;
-	height: auto;
-	width: auto;
-	display: block;
-	margin-top: 2px;
-	.#{$prefix}container {
-		position: static;
-		transform: none;
-	}
-	.#{$prefix}content {
-		box-shadow: 0 0 1px -1px black;
-	}
+  position: static;
+  background-color: transparent;
+  height: auto;
+  width: auto;
+  display: block;
+  margin-top: 2px;
+
+  .#{$prefix}container {
+    position: static;
+    transform: none;
+  }
+
+  .#{$prefix}content {
+    box-shadow: 0 0 1px -1px black;
+  }
 }
 
 .#{$prefix}no-footer {
-	.#{$prefix}addon-list {
-		bottom: 0;
-		border-bottom: none;
-	}
+  .#{$prefix}addon-list {
+    bottom: 0;
+    border-bottom: none;
+  }
 }
 
 @media screen and (max-height: 460px) {
-	.#{$prefix}wrapper {
-		overflow: auto;
-		text-align: center;
-		.#{$prefix}container {
-			position: relative;
-			top: 0;
-			left: 0;
-			transform: none;
-			display: inline-block;
-			margin: 20px auto;
-		}
-	}
+  .#{$prefix}wrapper {
+    overflow: auto;
+    text-align: center;
+
+    .#{$prefix}container {
+      position: relative;
+      top: 0;
+      left: 0;
+      transform: none;
+      display: inline-block;
+      margin: 20px auto;
+    }
+  }
 }
 
 .#{$prefix}locales {
-	list-style-type: none;
-	padding: 0;
-	margin: 0;
-	position: absolute;
-	left: 14px;
-	top: 12px;
-	line-height: 24px;
-	width: 30px;
-	text-align: center;
-	opacity: 0.7;
-	li {
-		cursor: pointer;
-		text-transform: uppercase;
-		&.active {
-			display: none;
-		}
-	}
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  left: 14px;
+  top: 12px;
+  line-height: 24px;
+  width: 30px;
+  text-align: center;
+  opacity: 0.7;
+
+  li {
+    cursor: pointer;
+    text-transform: uppercase;
+
+    &.active {
+      display: none;
+    }
+  }
 }
 
 .#{$prefix}dir-ltr {
+  .#{$prefix}content,
+  .#{$prefix}actions,
+  .#{$prefix}addon-list-content {
+    direction: ltr;
+  }
 
-	.#{$prefix}content,
-	.#{$prefix}actions,
-	.#{$prefix}addon-list-content {
-		direction: ltr;
-	}
+  .#{$prefix}content,
+  .#{$prefix}actions {
+    text-align: left;
+    font-family: sans-serif;
+  }
 
-	.#{$prefix}content,
-	.#{$prefix}actions {
-		text-align: left;
-		font-family: sans-serif;
-	}
-	.#{$prefix}month-label {  font-size: 90%  }
+  .#{$prefix}month-label {
+    font-size: 90%
+  }
 
-	.#{$prefix}addon-list-item,
-	.#{$prefix}weekday,
-	.#{$prefix}day {
-		float: left;
-	}
+  .#{$prefix}addon-list-item,
+  .#{$prefix}weekday,
+  .#{$prefix}day {
+    float: left;
+  }
 
-	.#{$prefix}locales {
-		left: auto;
-		right: 14px;
-	}
+  .#{$prefix}locales {
+    left: auto;
+    right: 14px;
+  }
 }
 
 .#{$prefix}dir-rtl {
+  .#{$prefix}next,
+  .#{$prefix}prev {
+    transform: rotateY(180deg);
+  }
 
-	.#{$prefix}next,
-	.#{$prefix}prev {
-		transform: rotateY(180deg);
-	}
-	
-	.#{$prefix}next {  float: left  }
-	.#{$prefix}prev {  float: right  }
+  .#{$prefix}next {
+    float: left
+  }
+
+  .#{$prefix}prev {
+    float: right
+  }
 }

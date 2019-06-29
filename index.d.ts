@@ -1,1 +1,1 @@
-declare module 'vue-persian-datetime-picker';
+declare module 'vue-persian-datetime-picker'

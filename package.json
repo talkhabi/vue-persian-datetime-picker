@@ -22,7 +22,8 @@
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
     "export": "cross-env NODE_ENV=export webpack --progress --hide-modules",
     "browser": "cross-env NODE_ENV=browser webpack --progress --hide-modules",
-    "buildAll": "npm run build && npm run export && npm run browser"
+    "buildAll": "npm run build && npm run export && npm run browser",
+    "lint": "eslint --fix --ext .js,.vue src"
   },
   "dependencies": {
     "moment-jalaali": "^0.7.3"
@@ -43,6 +44,10 @@
     "babel-preset-stage-3": "^6.24.1",
     "cross-env": "^5.0.5",
     "css-loader": "^0.28.7",
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "^4.3.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-vue": "^5.2.2",
     "file-loader": "^1.1.4",
     "highlight.js": "^9.12.0",
     "node-sass": "^4.7.2",
@@ -55,5 +60,40 @@
     "vue-template-compiler": "^2.4.4",
     "webpack": "^3.6.0",
     "webpack-dev-server": "^2.9.1"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "eslint:recommended",
+      "plugin:prettier/recommended",
+      "plugin:vue/recommended",
+      "prettier",
+      "prettier/vue"
+    ],
+    "rules": {
+      "vue/max-attributes-per-line": ["error", {
+        "singleline": 5,
+        "multiline": {
+          "max": 1,
+          "allowFirstLine": false
+        }
+      }],
+      "vue/html-self-closing": ["error", {
+        "html": {
+          "void": "always",
+          "normal": "always",
+          "component": "always"
+        },
+        "svg": "always",
+        "math": "always"
+      }]
+    }
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
   }
 }
