@@ -806,6 +806,7 @@ export default {
       let m = this.core.getWeekArray(this.date.clone().startOf('day'))
       let data = []
       let selected = false
+      let selectedStart = this.selectedDate.clone().startOf('day')
       let min = this.minDate
         ? this.minDate
             .clone()
@@ -824,7 +825,7 @@ export default {
           let sel =
             d === null || selected
               ? false
-              : Math.abs(this.selectedDate.diff(d, 'hours')) < 20
+              : Math.abs(selectedStart.diff(d, 'hours')) < 20
           let m = this.core.moment(d)
           week.push({
             date: d,
