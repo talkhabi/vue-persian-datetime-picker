@@ -121,6 +121,12 @@ This project is licensed under the MIT License
 
 ## Change log
 
+### 2.0.2 (2019-07-17)
+ * Flipped month change buttons in rtl direction
+ * Added label to locales. fixed #67
+ * Added display format to each locale. fixed #67
+ * Fixed wrong date on date-time picker mode 
+ 
 ### 2.0.1 (2019-05-11)
 
  * Fixed [#53](https://github.com/talkhabi/vue-persian-datetime-picker/issues/53)
