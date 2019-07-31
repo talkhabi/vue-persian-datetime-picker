@@ -73,7 +73,7 @@
               :style="{ 'background-color': color }"
             >
               <div
-                v-if="type === 'date' || type === 'datetime'"
+                v-if="['date', 'datetime', 'year-month'].indexOf(type) !== -1"
                 :class="[prefix('year-label'), directionClass]"
                 @click="goStep('y')"
               >
@@ -84,6 +84,7 @@
                 </transition>
               </div>
               <div
+                v-if="type !== 'year-month'"
                 :class="[prefix('date'), directionClass]"
                 :style="{ 'font-size': type === 'datetime' ? '22px' : '' }"
               >
@@ -203,6 +204,7 @@
                   </div>
                 </div>
               </template>
+
               <div v-else style="height:250px" />
 
               <transition name="fade">
@@ -372,7 +374,7 @@
 
               <transition name="fade">
                 <span
-                  v-if="steps.length > 1 && currentStep !== 'd'"
+                  v-if="steps.length > 1 && currentStep !== 'd' && hasStep('d')"
                   :class="[prefix('close-addon')]"
                   @click="goStep('d')"
                   >x</span
@@ -785,21 +787,14 @@ export default {
       return this.steps[this.step]
     },
     formattedDate() {
-      let t = this.steps
-      let f = ''
-      if (t.indexOf('y') !== -1) {
-        f = 'jYYYY'
-      }
-      if (t.indexOf('m') !== -1) {
-        f += ' jMMMM '
-      }
-      if (t.indexOf('d') !== -1) {
-        f = 'ddd jDD jMMMM'
-      }
-      if (t.indexOf('t') !== -1) {
-        f += ' HH:mm '
-      }
-      return f ? this.selectedDate.xFormat(f) : ''
+      let format = ''
+
+      if (this.hasStep('y')) format = 'jYYYY'
+      if (this.hasStep('m')) format += ' jMMMM '
+      if (this.hasStep('d')) format = 'ddd jDD jMMMM'
+      if (this.hasStep('t')) format += ' HH:mm '
+
+      return format ? this.selectedDate.xFormat(format) : ''
     },
     month() {
       if (!this.hasStep('d')) return []
@@ -960,6 +955,9 @@ export default {
           case 'month':
             format = 'MM'
             break
+          case 'year-month':
+            format = 'YYYY-MM'
+            break
         }
       }
       return this.output ? this.output.format(format) : ''
@@ -982,6 +980,9 @@ export default {
             break
           case 'month':
             format = 'jMM'
+            break
+          case 'year-month':
+            format = 'jYYYY/jMM'
             break
         }
       }
@@ -1257,7 +1258,7 @@ export default {
         this.selectedDate = this.selectedDate.set(t).clone()
       }
 
-      if (['year', 'month'].indexOf(this.type) !== -1)
+      if (['year', 'month', 'year-month'].indexOf(this.type) !== -1)
         this.selectedDate = this.date.clone()
 
       this.output = this.selectedDate.clone()
@@ -1325,6 +1326,10 @@ export default {
         case 'time':
           this.steps = ['t']
           this.goStep('t')
+          break
+        case 'year-month':
+          this.steps = ['y', 'm']
+          this.goStep('y')
           break
       }
     },

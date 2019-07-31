@@ -14,6 +14,8 @@
       <br />
       <date-picker v-model="time" type="time" />
       <br />
+      <date-picker v-model="yearMonth" type="year-month" />
+      <br />
       <date-picker v-model="year" type="year" min="1350" max="1410" />
       <br />
       <date-picker v-model="month" type="month" />
@@ -30,6 +32,9 @@
         </highlight-code>
         <highlight-code lang="html" v-pre>
           &lt;date-picker v-model="time" type="time" /&gt;
+        </highlight-code>
+        <highlight-code lang="html" v-pre>
+          &lt;date-picker v-model="yearMonth" type="year-month" /&gt;
         </highlight-code>
         <highlight-code lang="html" v-pre>
           &lt;date-picker v-model="year" type="year" /&gt;
@@ -52,6 +57,7 @@ export default {
     return {
       date: '',
       time: '',
+      yearMonth: '',
       datetime: '',
       year: '',
       month: ''
