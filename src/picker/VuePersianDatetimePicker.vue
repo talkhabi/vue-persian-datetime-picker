@@ -427,7 +427,7 @@ import Btn from './components/Btn.vue'
 import CalendarIcon from './components/CalendarIcon.vue'
 import TimeIcon from './components/TimeIcon.vue'
 import CoreModule from './modules/core'
-
+import moment from 'moment'
 export default {
   components: { Arrow, Btn, CalendarIcon, TimeIcon },
   model: {
@@ -727,7 +727,16 @@ export default {
      *  en: { ... }
      * }
      */
-    localeConfig: { type: Object, default: () => ({}) }
+    localeConfig: { type: Object, default: () => ({}) },
+
+    /**
+     * Timezone configuration
+     * @type String | Boolean | Function
+     * @default false
+     * @example true | false | +03:30 | +04:30
+     * @version 2.1.0
+     */
+    timezone: { type: [Boolean, String, Function], default: false }
   },
   data() {
     let coreModule = new CoreModule('fa')
@@ -998,6 +1007,7 @@ export default {
       let output = this.output.clone()
       let format = this.selfFormat
       if (/j\w/.test(format)) output.locale('fa')
+      this.setTimezone(output, 'out')
       return output.format(format)
     },
     displayValue() {
@@ -1049,6 +1059,7 @@ export default {
     value: { handler: 'updateDates', immediate: true },
     min: { handler: 'setMinMax', immediate: true },
     max: { handler: 'setMinMax', immediate: true },
+    timezone: { handler: 'updateDates' },
     inline: {
       handler(val) {
         if (!this.disabled) this.visible = !!val
@@ -1272,6 +1283,8 @@ export default {
         d = this.getMoment(d ? d : this.value || this.initialValue)
 
       this.date = d.isValid() ? d : this.core.moment()
+
+      this.date = this.setTimezone(this.date, 'in')
 
       if (!this.hasStep('t')) this.date.set({ hour: 0, minute: 0, second: 0 })
 
@@ -1518,6 +1531,25 @@ export default {
       this.date = this.date.clone()
       this.selectedDate = this.selectedDate.clone()
       this.$forceUpdate()
+    },
+    setTimezone(date, mode) {
+      let tz = this.timezone
+      let r = mode === 'in' ? 1 : -1
+      let moment = this.core.moment
+      if (tz) {
+        if (typeof tz === 'string') {
+          let t =
+            moment()
+              .utc()
+              .format('YYYY-MM-DDTHH:mm:ss') + tz
+          date.add(moment.parseZone(t).utcOffset() * r, 'minutes')
+        } else if (typeof tz === 'boolean' && tz) {
+          date.subtract(new Date().getTimezoneOffset() * r, 'minutes')
+        } else if (typeof tz === 'function') {
+          date = tz(date, mode, this)
+        }
+      }
+      return date.clone()
     }
   },
   install(Vue, options) {

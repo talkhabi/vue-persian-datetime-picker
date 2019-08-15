@@ -109,6 +109,7 @@ if (process.env.NODE_ENV === 'export') {
 
   module.exports.externals = (module.exports.externals || []).concat([
     'vue',
+    'moment',
     'moment-jalaali'
   ])
 
