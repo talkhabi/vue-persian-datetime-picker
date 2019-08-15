@@ -15,11 +15,11 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        use: ['vue-style-loader', 'css-loader']
+        use: ['vue-style-loader', 'css-loader', 'postcss-loader']
       },
       {
         test: /\.scss$/,
-        use: ['vue-style-loader', 'css-loader', 'sass-loader']
+        use: ['vue-style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
       },
       {
         test: /\.sass$/,
@@ -37,6 +37,7 @@ module.exports = {
             sass: [
               'vue-style-loader',
               'css-loader',
+              'postcss-loader',
               'sass-loader?indentedSyntax'
             ]
           }
