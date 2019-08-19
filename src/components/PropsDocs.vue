@@ -299,6 +299,16 @@
          * }
          */
         localeConfig: {},
+
+        /**
+         * Timezone configuration
+         * @type String | Boolean | Function
+         * @default false
+         * @example true | false | +03:30 | +04:30
+         * @note: Formats like "Asia/tehran" does not supported!
+         * @version 2.1.0
+         */
+        timezone: { type: [Boolean, String, Function], default: false }
       &rbrace;
     </highlight-code>
     <!-- eslint-enable -->

@@ -21,6 +21,7 @@ import DisableDates from './components/examples/DisableDates.vue'
 import WithLabel from './components/examples/WithLabel.vue'
 import Highlight from './components/examples/Highlight.vue'
 import Gregorian from './components/examples/Gregorian.vue'
+import Timezone from './components/examples/Timezone'
 import PropsDocs from './components/PropsDocs.vue'
 import EventsDocs from './components/EventsDocs.vue'
 
@@ -144,6 +145,12 @@ export const routes = [
     name: 'locale',
     meta: { pageTitle: 'Localization' },
     components: cmp(Gregorian)
+  },
+  {
+    path: '/timezone',
+    name: 'timezone',
+    meta: { pageTitle: 'Timezone' },
+    components: cmp(Timezone)
   },
   {
     path: '/datetime-picker',
