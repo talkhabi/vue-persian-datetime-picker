@@ -121,10 +121,14 @@ This project is licensed under the MIT License
 
 ## Change log
 
+### 2.1.0 (2019-08-19)
+ * Added "year-month" type `<date-picker type="year-month" />`. fixed [#70](https://github.com/talkhabi/vue-persian-datetime-picker/issues/70)
+ * Timezone support `<date-picker type="datetime" :timezone="true" />`. fixed [#33](https://github.com/talkhabi/vue-persian-datetime-picker/issues/33)
+
 ### 2.0.2 (2019-07-17)
  * Flipped month change buttons in rtl direction
- * Added label to locales. fixed #67
- * Added display format to each locale. fixed #67
+ * Added label to locales. fixed [#67](https://github.com/talkhabi/vue-persian-datetime-picker/issues/67)
+ * Added display format to each locale. fixed [#68](https://github.com/talkhabi/vue-persian-datetime-picker/issues/68)
  * Fixed wrong date on date-time picker mode 
  
 ### 2.0.1 (2019-05-11)
@@ -134,7 +138,7 @@ This project is licensed under the MIT License
 
 ### 2.0.0 (2019-01-16)
 
- * Added gregorian support `<date-picker locale="en"></date-picker>`
+ * Added gregorian support `<date-picker locale="en" />`
  * Added locale configuration support 
  * Improved css transitions
  * Fixed min-max in time picker
@@ -145,9 +149,9 @@ This project is licensed under the MIT License
 
 ### 1.1.6 (2018-12-29)
 
- * Added jumpMinute and roundMinute to time-picker `<date-picker type="time" :jumpMinute="5" :roundMinute="true"></date-picker>`
- * Added clear button `<date-picker :clearable="true"></date-picker>`
- * Added inline mode `<date-picker :inline="true"></date-picker>`
+ * Added jumpMinute and roundMinute to time-picker `<date-picker type="time" :jumpMinute="5" :roundMinute="true" />`
+ * Added clear button `<date-picker :clearable="true" />`
+ * Added inline mode `<date-picker :inline="true" />`
  * Fixed `tab` key press problem
  * Fixed responsive mode
  * Fixed watching to `min-max` changes
