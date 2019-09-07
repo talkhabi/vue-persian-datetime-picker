@@ -427,7 +427,6 @@ import Btn from './components/Btn.vue'
 import CalendarIcon from './components/CalendarIcon.vue'
 import TimeIcon from './components/TimeIcon.vue'
 import CoreModule from './modules/core'
-import moment from 'moment'
 export default {
   components: { Arrow, Btn, CalendarIcon, TimeIcon },
   model: {
