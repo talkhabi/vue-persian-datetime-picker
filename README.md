@@ -121,6 +121,9 @@ This project is licensed under the MIT License
 
 ## Change log
 
+### 2.1.1 (2019-09-07)
+ * Fixed JumpMinute and hour change
+
 ### 2.1.0 (2019-08-19)
  * Added "year-month" type `<date-picker type="year-month" />`. fixed [#70](https://github.com/talkhabi/vue-persian-datetime-picker/issues/70)
  * Timezone support `<date-picker type="datetime" :timezone="true" />`. fixed [#33](https://github.com/talkhabi/vue-persian-datetime-picker/issues/33)
