@@ -1257,7 +1257,8 @@ export default {
       }, 300)
     },
     wheelSetTime(k, e) {
-      this.setTime(e.wheelDeltaY > 0 ? this.jumpMinute : -this.jumpMinute, k)
+      let delta = k === 'm' ? this.jumpMinute : 1
+      this.setTime(e.wheelDeltaY > 0 ? delta : -delta, k)
     },
     submit() {
       if (this.step < this.steps.length - 1) return this.nextStep()
