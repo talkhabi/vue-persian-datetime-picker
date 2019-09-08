@@ -1081,8 +1081,21 @@ export default {
       if (this.isLower(this.date)) this.date = this.minDate.clone()
       if (this.isMore(this.date)) this.date = this.maxDate.clone()
     },
-    time(val, old) {
-      this.setDirection('directionClassTime', val, old)
+    time: {
+      handler(val, old) {
+        if (this.hasStep('t') && this.roundMinute) {
+          let time = this.time.clone()
+          let jm = this.jumpMinute
+          let m = (jm - (time.minute() % jm)) % jm
+          time.add({ m })
+          if (time.valueOf() !== this.time.valueOf()) {
+            this.time = time
+            this.selectedDate.set({ m: time.minute() })
+          }
+        }
+        if (old) this.setDirection('directionClassTime', val, old)
+      },
+      immediate: true
     },
     visible(val) {
       if (val) {
@@ -1163,7 +1176,7 @@ export default {
       if (e.keyCode === 9 && this.visible) this.visible = false
     })
   },
-  beforeDestroy() {
+  destroyed() {
     window.clearInterval(this.updateNowInterval)
   },
   methods: {
@@ -1195,7 +1208,7 @@ export default {
       }
     },
     fastUpdateCounter(e) {
-      if (!e) this.transitionSpeed = 300
+      if (!e) this.timeData.transitionSpeed = 300
       this.classFastCounter = e ? 'fast-updating' : ''
     },
     nextMonth() {
@@ -1227,12 +1240,7 @@ export default {
     setTime(v, k) {
       let time = this.time.clone()
 
-      if (this.type === 'time' && k === 'm' && this.roundMinute) {
-        let x = v - (time.minute() % v)
-        time.add({ [k]: x })
-      } else {
-        time.add({ [k]: v })
-      }
+      time.add({ [k]: v })
 
       if (this.type !== 'time') {
         let date = this.date.clone()
@@ -1296,13 +1304,6 @@ export default {
 
       this.selectedDate = this.date.clone()
       this.time = this.date.clone()
-
-      if (this.type === 'time' && this.roundMinute) {
-        let x =
-          (this.jumpMinute - (this.time.minute() % this.jumpMinute)) %
-          this.jumpMinute
-        this.time.add({ ['m']: x })
-      }
 
       if (this.value !== '' && this.value !== null && this.value.length !== 0) {
         this.output = this.selectedDate.clone()
