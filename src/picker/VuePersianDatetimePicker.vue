@@ -301,7 +301,7 @@
                       >
                         <div
                           v-for="(item, i) in time.format('HH').split('')"
-                          :key="`${item}_${i}_h`"
+                          :key="`h__${i}`"
                           class="counter-item"
                           v-bind="timeAttributes"
                         >
@@ -342,7 +342,7 @@
                       >
                         <div
                           v-for="(item, i) in time.format('mm').split('')"
-                          :key="`${item}_${i}_m`"
+                          :key="`m__${i}`"
                           class="counter-item"
                           v-bind="timeAttributes"
                         >
