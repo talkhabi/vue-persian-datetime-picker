@@ -121,6 +121,10 @@ This project is licensed under the MIT License
 
 ## Change log
 
+### 2.1.2 (2019-09-08)
+ * Fixed jumpMinute and roundMinute in datetime mode
+ * Fixed time animation effect
+
 ### 2.1.1 (2019-09-07)
  * Fixed JumpMinute and hour change
 
