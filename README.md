@@ -7,13 +7,13 @@
 See documentation and demo at [vue-persian-datetime-picker](https://talkhabi.github.io/vue-persian-datetime-picker)
 
 
-## Installing
+## Installation
 ### browser
 ```html
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="https://cdn.jsdelivr.net/npm/moment"></script>
 <script src="https://cdn.jsdelivr.net/npm/moment-jalaali@0.7.4/build/moment-jalaali.js"></script>
-<script src="dist/vue-persian-datetime-picker-browser.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue-persian-datetime-picker/dist/vue-persian-datetime-picker-browser.js"></script>
 <div id="app">
     <date-picker v-model="date"></date-picker>
 </div>
