@@ -738,7 +738,8 @@ export default {
     timezone: { type: [Boolean, String, Function], default: false }
   },
   data() {
-    let coreModule = new CoreModule('fa')
+    let defaultLocale = this.locale.split(',')[0]
+    let coreModule = new CoreModule(defaultLocale)
     return {
       core: coreModule,
       now: coreModule.moment(),
@@ -857,15 +858,11 @@ export default {
     years() {
       if (!this.hasStep('y') || this.currentStep !== 'y') return []
       let moment = this.core.moment
-      let min = this.minDate
-        ? this.minDate.xYear()
-        : moment('1300', 'jYYYY').xYear()
-      let max = this.maxDate
-        ? this.maxDate.xYear()
-        : moment('1430', 'jYYYY').xYear()
+      let min = this.minDate ? this.minDate : moment('1300', 'jYYYY')
+      let max = this.maxDate ? this.maxDate : min.clone().add(150, 'year')
       let cy = this.date.xYear()
       return this.core
-        .getYearsList(min, max)
+        .getYearsList(min.xYear(), max.xYear())
         .reverse()
         .map(item => {
           let year = moment().xYear(item)
@@ -1131,14 +1128,16 @@ export default {
           .split(',')
           .filter(i => allowedLocales.indexOf(i) !== -1)
         this.locales = locales.length ? locales : ['fa']
-        this.setLocale(this.locales[0])
+        if (this.core.locale.name !== this.locales[0])
+          this.setLocale(this.locales[0])
       },
       immediate: true
     },
     localeConfig: {
       handler(config) {
         this.core.setLocalesConfig(config)
-        this.setLocale(this.locales[0])
+        if (this.core.locale.name !== this.locales[0])
+          this.setLocale(this.locales[0])
       },
       deep: true,
       immediate: true
