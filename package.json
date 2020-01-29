@@ -61,7 +61,7 @@
     "vue-router": "^3.0.2",
     "vue-template-compiler": "^2.4.4",
     "webpack": "^3.6.0",
-    "webpack-dev-server": "^2.9.1"
+    "webpack-dev-server": "^3.1.11"
   },
   "eslintConfig": {
     "root": true,
