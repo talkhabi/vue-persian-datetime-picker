@@ -121,6 +121,9 @@ This project is licensed under the MIT License
 
 ## Change log
 
+### 2.1.3 (2020-01-30)
+ * Fixed initial locale value
+
 ### 2.1.2 (2019-09-08)
  * Fixed jumpMinute and roundMinute in datetime mode
  * Fixed time animation effect
