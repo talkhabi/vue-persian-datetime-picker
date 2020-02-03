@@ -38,7 +38,7 @@
         width="13"
         direction="right"
         :style="{ 'background-color': color }"
-        class="daychange nextday"
+        :class="[prefix('daychange'), prefix('nextday')]"
         @click.native="changeDayBtn(1)"
       />
       <arrow
@@ -47,7 +47,7 @@
         fill="#fff"
         direction="left"
         :style="{ 'background-color': color }"
-        class="daychange previousday"
+        :class="[prefix('daychange'), prefix('previousday')]"
         @click.native="changeDayBtn(-1)"
       />
 
