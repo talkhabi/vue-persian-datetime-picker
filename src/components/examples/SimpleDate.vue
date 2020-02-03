@@ -24,16 +24,27 @@
 
       <template slot="code">
         <!-- eslint-disable -->
-        <highlight-code lang="html" v-pre>&lt;date-picker v-model="date" :clearable="true" /&gt;</highlight-code>
-        <highlight-code lang="html" v-pre>&lt;date-picker v-model="datetime" type="datetime" /&gt;</highlight-code>
-        <highlight-code lang="html" v-pre>&lt;date-picker v-model="time" type="time" /&gt;</highlight-code>
-        <highlight-code
-          lang="html"
-          v-pre
-        >&lt;date-picker v-model="yearMonth" type="year-month" /&gt;</highlight-code>
-        <highlight-code lang="html" v-pre>&lt;date-picker v-model="year" type="year" /&gt;</highlight-code>
-        <highlight-code lang="html" v-pre>&lt;date-picker v-model="month" type="month" /&gt;</highlight-code>
-        <highlight-code lang="html" v-pre>&lt;date-picker locale="en,fa" format="YYYY/M/D" /&gt;</highlight-code>
+        <highlight-code lang="html" v-pre>
+          &lt;date-picker v-model="date" :clearable="true" /&gt;
+        </highlight-code>
+        <highlight-code lang="html" v-pre>
+          &lt;date-picker v-model="datetime" type="datetime" /&gt;
+        </highlight-code>
+        <highlight-code lang="html" v-pre>
+          &lt;date-picker v-model="time" type="time" /&gt;
+        </highlight-code>
+        <highlight-code lang="html" v-pre>
+          &lt;date-picker v-model="yearMonth" type="year-month" /&gt;
+        </highlight-code>
+        <highlight-code lang="html" v-pre>
+          &lt;date-picker v-model="year" type="year" /&gt;
+        </highlight-code>
+        <highlight-code lang="html" v-pre>
+          &lt;date-picker v-model="month" type="month" /&gt;
+        </highlight-code>
+        <highlight-code lang="html" v-pre>
+          &lt;date-picker locale="en,fa" format="YYYY/M/D" /&gt;
+        </highlight-code>
         <!-- eslint-enable -->
       </template>
     </card>
