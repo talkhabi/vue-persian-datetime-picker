@@ -47,17 +47,17 @@
       cursor: default;
     }
   }
-  .daychange{
+  .#{$prefix}daychange{
     position: absolute;
     vertical-align: middle;
     background: #417cf4;
     height: 100%;
   }
 
-  .daychange.nextday{
+  .#{$prefix}daychange.#{$prefix}nextday{
     right: -12px;
   }
-  .daychange.previousday{
+  .#{$prefix}daychange.#{$prefix}previousday{
     left: -13px;
   }
 
