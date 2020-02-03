@@ -1,12 +1,16 @@
 <template>
   <div class="pt-5">
-    <h1 class="text-center" style="margin-bottom: 50px">VUE PERSIAN DATE TIME PICKER</h1>
-    <h5 class="text-center mb-5">A vue plugin to select jalali date and time</h5>
+    <h1 class="text-center" style="margin-bottom: 50px">
+      VUE PERSIAN DATE TIME PICKER
+    </h1>
+    <h5 class="text-center mb-5">
+      A vue plugin to select jalali date and time
+    </h5>
 
     <card title="Simple example">
       <date-picker v-model="date" :clearable="true" />
       <br />
-      <date-picker v-model="datetime" type="datetime" :day-change-shortcut="true" />
+      <date-picker v-model="datetime" type="datetime" />
       <br />
       <date-picker v-model="time" type="time" />
       <br />
