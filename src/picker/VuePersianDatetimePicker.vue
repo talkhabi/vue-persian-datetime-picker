@@ -1195,8 +1195,12 @@ export default {
     },
     changeDayBtn(day) {
       this.date = this.date.clone().xAdd(day, 'day')
+      let d = this.core.moment(this.date._i)
+      let s = this.selectedDate
+      d.set({ hour: s.hour(), minute: s.minute(), second: 0 })
+      this.selectedDate = d.clone()
+      this.submit()
       this.nextStep()
-      this.output = this.date.clone()
     },
     selectDay(day) {
       if (!day.date || day.disabled) return
