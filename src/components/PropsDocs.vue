@@ -3,6 +3,16 @@
     <!-- eslint-disable -->
     <highlight-code :lang="'javascript'">
       &lbrace;
+          /**
+        * Next and previous day shortcut
+        * @type Boolean
+        * @default False
+        * @if false, the picker will not show shortcuts
+        * @if true, the picker will show shortcuts
+        * @example < :day-change-shortcut="true">
+        */
+        dayChangeShortcut: { type: Boolean, default: false },
+
         /**
          * Default input value
          * @type Number String

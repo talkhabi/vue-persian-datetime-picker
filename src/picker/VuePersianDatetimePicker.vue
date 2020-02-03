@@ -5,10 +5,7 @@
     :data-locale="localeData.name"
     :data-locale-dir="localeData.config.dir"
   >
-    <span
-      v-if="!element"
-      :class="[prefix('input-group'), { disabled: disabled }]"
-    >
+    <span v-if="!element" :class="[prefix('input-group'), { disabled: disabled }]">
       <label
         :for="id"
         :class="[prefix('icon-btn')]"
@@ -32,26 +29,35 @@
         @focus="focus"
         @blur="setOutput"
       />
-      <input
-        v-if="altName"
-        type="hidden"
-        :name="altName"
-        :value="altFormatted"
+      <!-- <span style="position: absolute;right: 20px;" @click="changeDayBtn(1)"> -->
+      <arrow
+        v-if="(type === 'date' || type === 'datetime') && dayChangeShortcut"
+        @click.native="changeDayBtn(1)"
+        width="13"
+        fill="#000"
+        direction="right"
+        style="vertical-align: middle; position: absolute;right: 30px;"
       />
+      <!-- </span> -->
+      <arrow
+        v-if="(type === 'date' || type === 'datetime') && dayChangeShortcut"
+        @click.native="changeDayBtn(-1)"
+        width="13"
+        fill="#000"
+        direction="left"
+        style="vertical-align: middle; position: absolute;left: 40px;"
+      />
+
+      <!-- <span style="position: absolute;left: 20px;" @click="changeDayBtn(-1)">back</span> -->
+      <input v-if="altName" type="hidden" :name="altName" :value="altFormatted" />
       <i
         v-if="clearable && !disabled && displayValue"
         :class="[prefix('clear-btn')]"
         @click="clearValue"
-        >x</i
-      >
+      >x</i>
     </span>
 
-    <input
-      v-else-if="altName"
-      type="hidden"
-      :name="altName"
-      :value="altFormatted"
-    />
+    <input v-else-if="altName" type="hidden" :name="altName" :value="altFormatted" />
 
     <transition name="fade-scale">
       <div
@@ -68,10 +74,7 @@
       >
         <div :class="[prefix('container')]">
           <div :class="[prefix('content')]">
-            <div
-              :class="[prefix('header')]"
-              :style="{ 'background-color': color }"
-            >
+            <div :class="[prefix('header')]" :style="{ 'background-color': color }">
               <div
                 v-if="['date', 'datetime', 'year-month'].indexOf(type) !== -1"
                 :class="[prefix('year-label'), directionClass]"
@@ -100,8 +103,8 @@
                   @click="setLocale(localeItem)"
                 >
                   {{
-                    core.localesConfig[localeItem].lang.label ||
-                      localeItem.toUpperCase()
+                  core.localesConfig[localeItem].lang.label ||
+                  localeItem.toUpperCase()
                   }}
                 </li>
               </ul>
@@ -116,12 +119,7 @@
                     :disabled="nextMonthDisabled"
                     @click="nextMonth"
                   >
-                    <arrow
-                      width="10"
-                      fill="#000"
-                      direction="right"
-                      style="vertical-align: middle"
-                    />
+                    <arrow width="10" fill="#000" direction="right" style="vertical-align: middle" />
                   </button>
                   <button
                     type="button"
@@ -130,49 +128,30 @@
                     :disabled="prevMonthDisabled"
                     @click="prevMonth"
                   >
-                    <arrow
-                      width="10"
-                      fill="#000"
-                      direction="left"
-                      style="vertical-align: middle"
-                    />
+                    <arrow width="10" fill="#000" direction="left" style="vertical-align: middle" />
                   </button>
                   <transition name="slideX">
-                    <div
-                      :key="date.xMonth()"
-                      :class="[prefix('month-label')]"
-                      @click="goStep('m')"
-                    >
-                      <span :style="{ 'border-color': color, color: color }">{{
+                    <div :key="date.xMonth()" :class="[prefix('month-label')]" @click="goStep('m')">
+                      <span :style="{ 'border-color': color, color: color }">
+                        {{
                         date.xFormat('jMMMM jYYYY')
-                      }}</span>
+                        }}
+                      </span>
                     </div>
                   </transition>
                 </div>
-                <div
-                  class="clearfix"
-                  :class="[prefix('month'), directionClassDate]"
-                >
+                <div class="clearfix" :class="[prefix('month'), directionClassDate]">
                   <div class="clearfix" :class="[prefix('week')]">
                     <div
                       v-for="(day, i) in weekDays"
                       :key="`${i}-${day}`"
                       :class="[prefix('weekday')]"
-                    >
-                      {{ day }}
-                    </div>
+                    >{{ day }}</div>
                   </div>
-                  <div
-                    :class="[prefix('days')]"
-                    :style="{ height: month.length * 40 + 'px' }"
-                  >
+                  <div :class="[prefix('days')]" :style="{ height: month.length * 40 + 'px' }">
                     <transition name="slideX" :class="directionClassDate">
                       <div :key="date.xMonth()">
-                        <div
-                          v-for="(m, mi) in month"
-                          :key="mi"
-                          class="clearfix"
-                        >
+                        <div v-for="(m, mi) in month" :key="mi" class="clearfix">
                           <div
                             v-for="(day, di) in m"
                             :key="di"
@@ -193,9 +172,11 @@
                                 :class="[prefix('day-effect')]"
                                 :style="{ 'background-color': color }"
                               />
-                              <span :class="[prefix('day-text')]">{{
+                              <span :class="[prefix('day-text')]">
+                                {{
                                 day.formatted
-                              }}</span>
+                                }}
+                              </span>
                             </template>
                           </div>
                         </div>
@@ -233,9 +214,7 @@
                       ]"
                       :disabled="year.disabled"
                       @click="selectYear(year)"
-                    >
-                      {{ year.xFormat('jYYYY') }}
-                    </div>
+                    >{{ year.xFormat('jYYYY') }}</div>
                   </div>
                 </div>
               </transition>
@@ -267,9 +246,7 @@
                         monthItem.attributes.style
                       ]"
                       @click="selectMonth(monthItem)"
-                    >
-                      {{ monthItem.xFormat('jMMMM') }}
-                    </div>
+                    >{{ monthItem.xFormat('jMMMM') }}</div>
                   </div>
                 </div>
               </transition>
@@ -314,8 +291,7 @@
                                   timeData.transitionSpeed +
                                   'ms ease-in-out'
                               }"
-                              >{{ item }}</span
-                            >
+                            >{{ item }}</span>
                           </transition>
                         </div>
                       </div>
@@ -355,8 +331,7 @@
                                   timeData.transitionSpeed +
                                   'ms ease-in-out'
                               }"
-                              >{{ item }}</span
-                            >
+                            >{{ item }}</span>
                           </transition>
                         </div>
                       </div>
@@ -377,8 +352,7 @@
                   v-if="steps.length > 1 && currentStep !== 'd' && hasStep('d')"
                   :class="[prefix('close-addon')]"
                   @click="goStep('d')"
-                  >x</span
-                >
+                >x</span>
               </transition>
 
               <br v-if="autoSubmit && !hasStep('t')" />
@@ -389,27 +363,21 @@
                   :disabled="!canSubmit"
                   :style="{ color: color }"
                   @click="submit()"
-                >
-                  {{ lang.submit }}
-                </button>
+                >{{ lang.submit }}</button>
 
                 <button
                   v-if="!inline"
                   type="button"
                   :style="{ color: color }"
                   @click="visible = false"
-                >
-                  {{ lang.cancel }}
-                </button>
+                >{{ lang.cancel }}</button>
 
                 <button
                   v-if="canGoToday"
                   type="button"
                   :style="{ color: color }"
                   @click="goToday()"
-                >
-                  {{ lang.now }}
-                </button>
+                >{{ lang.now }}</button>
               </div>
             </div>
           </div>
@@ -434,6 +402,16 @@ export default {
     event: 'input'
   },
   props: {
+    /**
+     * Next and previous day shortcut
+     * @type Boolean
+     * @default False
+     * @if false, the picker will not show shortcuts
+     * @if true, the picker will show shortcuts
+     * @example <... :day-change-shortcut="true">
+     */
+    dayChangeShortcut: { type: Boolean, default: false },
+
     /**
      * Default input value
      * @type Number String
@@ -1216,7 +1194,13 @@ export default {
     prevMonth() {
       this.date = this.date.clone().xAdd(-1, 'month')
     },
+    changeDayBtn(day) {
+      this.date = this.date.clone().xAdd(day, 'day')
+      this.nextStep()
+      this.output = this.date.clone()
+    },
     selectDay(day) {
+      console.log(day)
       if (!day.date || day.disabled) return
       let d = this.core.moment(day.date)
       let s = this.selectedDate
