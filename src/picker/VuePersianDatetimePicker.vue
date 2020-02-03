@@ -29,26 +29,25 @@
         @focus="focus"
         @blur="setOutput"
       />
-      <!-- <span style="position: absolute;right: 20px;" @click="changeDayBtn(1)"> -->
       <arrow
         v-if="(type === 'date' || type === 'datetime') && dayChangeShortcut"
         @click.native="changeDayBtn(1)"
         width="13"
-        fill="#000"
+        fill="#fff"
         direction="right"
-        style="vertical-align: middle; position: absolute;right: 30px;"
+        :style="{ 'background-color': color }"
+        class="daychange nextday"
       />
-      <!-- </span> -->
       <arrow
         v-if="(type === 'date' || type === 'datetime') && dayChangeShortcut"
         @click.native="changeDayBtn(-1)"
         width="13"
-        fill="#000"
+        fill="#fff"
         direction="left"
-        style="vertical-align: middle; position: absolute;left: 40px;"
+        :style="{ 'background-color': color }"
+        class="daychange previousday"
       />
 
-      <!-- <span style="position: absolute;left: 20px;" @click="changeDayBtn(-1)">back</span> -->
       <input v-if="altName" type="hidden" :name="altName" :value="altFormatted" />
       <i
         v-if="clearable && !disabled && displayValue"
@@ -1200,7 +1199,6 @@ export default {
       this.output = this.date.clone()
     },
     selectDay(day) {
-      console.log(day)
       if (!day.date || day.disabled) return
       let d = this.core.moment(day.date)
       let s = this.selectedDate

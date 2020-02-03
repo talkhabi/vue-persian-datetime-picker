@@ -47,6 +47,21 @@
       cursor: default;
     }
   }
+  .daychange{
+    position: absolute;
+    vertical-align: middle;
+    background: #417cf4;
+    height: 100%;
+  }
+
+  .daychange.nextday{
+    right: -12px;
+  }
+  .daychange.previousday{
+    left: -13px;
+  }
+
+  
 
   .#{$prefix}clear-btn {
     position: absolute;
