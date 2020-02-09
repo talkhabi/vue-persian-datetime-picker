@@ -32,24 +32,26 @@
         @focus="focus"
         @blur="setOutput"
       />
-      <arrow
+      <template
         v-if="(type === 'date' || type === 'datetime') && dayChangeShortcut"
-        fill="#fff"
-        width="13"
-        direction="right"
-        :style="{ 'background-color': color }"
-        :class="[prefix('day-change'), prefix('nextday')]"
-        @click.native="changeDayBtn(1)"
-      />
-      <arrow
-        v-if="(type === 'date' || type === 'datetime') && dayChangeShortcut"
-        width="13"
-        fill="#fff"
-        direction="left"
-        :style="{ 'background-color': color }"
-        :class="[prefix('day-change'), prefix('previousday')]"
-        @click.native="changeDayBtn(-1)"
-      />
+      >
+        <arrow
+          fill="#fff"
+          width="13"
+          direction="right"
+          :style="{ 'background-color': color }"
+          :class="[prefix('day-change'), prefix('nextday')]"
+          @click.native="changeDayBtn(1)"
+        />
+        <arrow
+          width="13"
+          fill="#fff"
+          direction="left"
+          :style="{ 'background-color': color }"
+          :class="[prefix('day-change'), prefix('previousday')]"
+          @click.native="changeDayBtn(-1)"
+        />
+      </template>
 
       <input
         v-if="altName"
