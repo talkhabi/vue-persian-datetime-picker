@@ -456,16 +456,6 @@ export default {
   },
   props: {
     /**
-     * Next and previous day shortcut
-     * @type Boolean
-     * @default False
-     * @if false, the picker will not show shortcuts
-     * @if true, the picker will show shortcuts
-     * @example <... :day-change-shortcut="true">
-     */
-    dayChangeShortcut: { type: Boolean, default: false },
-
-    /**
      * Default input value
      * @type Number String
      * @default []
@@ -766,7 +756,17 @@ export default {
      * @example true | false | +03:30 | +04:30
      * @version 2.1.0
      */
-    timezone: { type: [Boolean, String, Function], default: false }
+    timezone: { type: [Boolean, String, Function], default: false },
+
+    /**
+     * Next and previous day shortcut
+     * @type Boolean
+     * @default False
+     * @if false, the picker will not show shortcuts
+     * @if true, the picker will show shortcuts
+     * @example <... :day-change-shortcut="true">
+     */
+    dayChangeShortcut: { type: Boolean, default: false }
   },
   data() {
     let defaultLocale = this.locale.split(',')[0]
