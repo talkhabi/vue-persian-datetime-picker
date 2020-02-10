@@ -40,7 +40,7 @@
           width="13"
           direction="right"
           :style="{ 'background-color': color }"
-          :class="[prefix('day-change'), prefix('nextday')]"
+          :class="[prefix('day-change'), prefix('next-day')]"
           @click.native="changeDayBtn(1)"
         />
         <arrow
@@ -48,7 +48,7 @@
           fill="#fff"
           direction="left"
           :style="{ 'background-color': color }"
-          :class="[prefix('day-change'), prefix('previousday')]"
+          :class="[prefix('day-change'), prefix('previous-day')]"
           @click.native="changeDayBtn(-1)"
         />
       </template>
