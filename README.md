@@ -121,6 +121,10 @@ This project is licensed under the MIT License
 
 ## Change log
 
+### 2.1.5 (2020-04-19)
+ * Fixed wrong date in Safari browsers
+ * Fixed scroll to element (year section)
+
 ### 2.1.4 (2020-01-30)
  * Fixed initial locale value
 
