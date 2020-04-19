@@ -421,7 +421,6 @@
 
 <script>
 import './assets/scss/style.scss'
-import utils from './modules/utils'
 import Arrow from './components/Arrow.vue'
 import Btn from './components/Btn.vue'
 import CalendarIcon from './components/CalendarIcon.vue'
@@ -807,53 +806,36 @@ export default {
     },
     month() {
       if (!this.hasStep('d')) return []
-      let m = this.core.getWeekArray(this.date.clone().startOf('day'))
-      let data = []
-      let selected = false
-      let selectedStart = this.selectedDate.clone().startOf('day')
-      let min = this.minDate
-        ? this.minDate
-            .clone()
-            .startOf('day')
-            .unix()
-        : -Infinity
-      let max = this.maxDate
-        ? this.maxDate
-            .clone()
-            .endOf('day')
-            .unix()
-        : Infinity
-      m.forEach(w => {
-        let week = []
-        w.forEach(d => {
-          let sel =
-            d === null || selected
-              ? false
-              : Math.abs(selectedStart.diff(d, 'hours')) < 20
-          let m = this.core.moment(d)
-          week.push({
-            date: d,
-            formatted: d === null ? '' : m.xDate(),
-            selected: sel,
-            disabled:
-              (this.minDate &&
-                m
-                  .clone()
-                  .startOf('day')
-                  .unix() < min) ||
-              (this.maxDate &&
-                m
-                  .clone()
-                  .endOf('day')
-                  .unix() > max) ||
-              (d && this.checkDisable('d', m)),
-            attributes: d ? this.getHighlights('d', m) : {}
-          })
-          selected = sel
+      let selectedFound = false
+      let selectedStart = this.selectedDate.clone().set({ h: 12, m: 0 })
+      let min = this.minDate ? this.minDate.clone().startOf('day') : -Infinity
+      let max = this.maxDate ? this.maxDate.clone().endOf('day') : Infinity
+      return this.core.getWeekArray(this.date.clone()).map(weekItem => {
+        return weekItem.map(day => {
+          let data = {
+            date: day,
+            formatted: '',
+            selected: false,
+            disabled: false,
+            attributes: {}
+          }
+          if (!day) return data
+          let selected = false
+          if (!selectedFound) {
+            selected = Math.abs(selectedStart.diff(day, 'hours')) < 20
+            selectedFound = selected
+          }
+          let dayMoment = this.core.moment(day)
+          data.formatted = dayMoment.xDate()
+          data.selected = selected
+          data.disabled =
+            (this.minDate && dayMoment.clone().startOf('day') < min) ||
+            (this.maxDate && dayMoment.clone().endOf('day') > max) ||
+            this.checkDisable('d', dayMoment)
+          data.attributes = this.getHighlights('d', dayMoment)
+          return data
         })
-        data.push(week)
       })
-      return data
     },
     years() {
       if (!this.hasStep('y') || this.currentStep !== 'y') return []
@@ -1074,7 +1056,6 @@ export default {
     },
     date(val, old) {
       this.setDirection('directionClassDate', val, old)
-      this.checkScroll()
       if (this.isLower(this.date)) this.date = this.minDate.clone()
       if (this.isMore(this.date)) this.date = this.maxDate.clone()
     },
@@ -1194,16 +1175,19 @@ export default {
     checkScroll() {
       let step = this.currentStep
       if (step === 'y' || (step === 'm' && this.visible)) {
-        this.$nextTick(() => {
-          setTimeout(() => {
-            let container = this.$refs[{ y: 'year', m: 'month' }[step]]
-            if (container) {
-              let top = container.querySelector('.selected')
-              top = top ? top.offsetTop - 110 : 0
-              utils.scrollTo(container, top, 400)
+        setTimeout(() => {
+          let container = this.$refs[{ y: 'year', m: 'month' }[step]]
+          if (container) {
+            let selected = container.querySelector('.selected')
+            if (selected && 'scrollIntoView' in selected) {
+              try {
+                selected.scrollIntoView({ block: 'center' })
+              } catch (er) {
+                selected.scrollIntoView()
+              }
             }
-          }, 100)
-        })
+          }
+        }, 100)
       }
     },
     fastUpdateCounter(e) {
