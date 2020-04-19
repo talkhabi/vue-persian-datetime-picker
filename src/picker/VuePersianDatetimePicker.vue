@@ -807,53 +807,36 @@ export default {
     },
     month() {
       if (!this.hasStep('d')) return []
-      let m = this.core.getWeekArray(this.date.clone().startOf('day'))
-      let data = []
-      let selected = false
-      let selectedStart = this.selectedDate.clone().startOf('day')
-      let min = this.minDate
-        ? this.minDate
-            .clone()
-            .startOf('day')
-            .unix()
-        : -Infinity
-      let max = this.maxDate
-        ? this.maxDate
-            .clone()
-            .endOf('day')
-            .unix()
-        : Infinity
-      m.forEach(w => {
-        let week = []
-        w.forEach(d => {
-          let sel =
-            d === null || selected
-              ? false
-              : Math.abs(selectedStart.diff(d, 'hours')) < 20
-          let m = this.core.moment(d)
-          week.push({
-            date: d,
-            formatted: d === null ? '' : m.xDate(),
-            selected: sel,
-            disabled:
-              (this.minDate &&
-                m
-                  .clone()
-                  .startOf('day')
-                  .unix() < min) ||
-              (this.maxDate &&
-                m
-                  .clone()
-                  .endOf('day')
-                  .unix() > max) ||
-              (d && this.checkDisable('d', m)),
-            attributes: d ? this.getHighlights('d', m) : {}
-          })
-          selected = sel
+      let selectedFound = false
+      let selectedStart = this.selectedDate.clone().set({ h: 12, m: 0 })
+      let min = this.minDate ? this.minDate.clone().startOf('day') : -Infinity
+      let max = this.maxDate ? this.maxDate.clone().endOf('day') : Infinity
+      return this.core.getWeekArray(this.date.clone()).map(weekItem => {
+        return weekItem.map(day => {
+          let data = {
+            date: day,
+            formatted: '',
+            selected: false,
+            disabled: false,
+            attributes: {}
+          }
+          if (!day) return data
+          let selected = false
+          if (!selectedFound) {
+            selected = Math.abs(selectedStart.diff(day, 'hours')) < 20
+            selectedFound = selected
+          }
+          let dayMoment = this.core.moment(day)
+          data.formatted = dayMoment.xDate()
+          data.selected = selected
+          data.disabled =
+            (this.minDate && dayMoment.clone().startOf('day') < min) ||
+            (this.maxDate && dayMoment.clone().endOf('day') > max) ||
+            this.checkDisable('d', dayMoment)
+          data.attributes = this.getHighlights('d', dayMoment)
+          return data
         })
-        data.push(week)
       })
-      return data
     },
     years() {
       if (!this.hasStep('y') || this.currentStep !== 'y') return []
