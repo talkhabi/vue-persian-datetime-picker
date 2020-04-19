@@ -138,7 +138,7 @@ const Core = function(defaultLocaleName) {
     this.localesConfig = utils.extend(true, defaults, config)
   }
 
-  Instance.getWeekArray = function getWeekArray(d) {
+  Instance.getWeekArray = function getWeekArray(date) {
     function addWeek(weekArray, week) {
       let emptyDays = 7 - week.length
 
@@ -149,16 +149,13 @@ const Core = function(defaultLocaleName) {
       weekArray.push(week)
     }
 
-    let moment = this.moment
-    let daysInMonth = xDaysInMonth(moment(d).xYear(), moment(d).xMonth())
+    date.set({ h: 12, m: 0 })
+    let daysInMonth = xDaysInMonth(date.xYear(), date.xMonth())
+    let day = date.clone().xDate(1)
+    let dayArray = [day.toDate()]
 
-    let dayArray = []
-    for (let i = 1; i <= daysInMonth; i++) {
-      dayArray.push(
-        moment(d)
-          .xDate(i)
-          .toDate()
-      )
+    for (let i = 2; i <= daysInMonth; i++) {
+      dayArray.push(day.xAdd(1, 'day').toDate())
     }
 
     let weekArray = []

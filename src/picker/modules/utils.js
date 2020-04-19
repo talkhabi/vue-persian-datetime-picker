@@ -1,34 +1,3 @@
-// c = element to scroll to or top position in pixels
-// e = duration of the scroll in ms, time scrolling
-// d = (optative) ease function. Default easeOutCuaic
-function scrollTo(a, c, e, d) {
-  d || (d = easeOutCuaic)
-  a = a || document.documentElement
-  if (0 === a.scrollTop) {
-    var b = a.scrollTop
-    ++a.scrollTop
-    a = b + 1 === a.scrollTop-- ? a : document.body
-  }
-  b = a.scrollTop
-  0 >= e ||
-    ('object' === typeof b && (b = b.offsetTop),
-    'object' === typeof c && (c = c.offsetTop),
-    (function(a, b, c, f, d, e, h) {
-      function g() {
-        0 > f || 1 < f || 0 >= d
-          ? (a.scrollTop = c)
-          : ((a.scrollTop = b - (b - c) * h(f)), (f += d * e), setTimeout(g, e))
-      }
-
-      g()
-    })(a, b, c, 0, 1 / e, 20, d))
-}
-
-function easeOutCuaic(t) {
-  t--
-  return t * t * t + 1
-}
-
 let toString = Object.prototype.toString,
   hasOwnProperty = Object.prototype.hasOwnProperty
 const tools = {
@@ -38,7 +7,6 @@ const tools = {
   isArray: function(obj) {
     return toString.call(obj) === '[object Array]'
   },
-
   isPlainObject: function(obj) {
     // Must be an Object.
     // Because of IE, we also have to check the presence of the constructor property.
@@ -147,7 +115,4 @@ const extend = function() {
   return target
 }
 
-export default {
-  scrollTo,
-  extend
-}
+export default { extend }
