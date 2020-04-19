@@ -421,7 +421,6 @@
 
 <script>
 import './assets/scss/style.scss'
-import utils from './modules/utils'
 import Arrow from './components/Arrow.vue'
 import Btn from './components/Btn.vue'
 import CalendarIcon from './components/CalendarIcon.vue'
@@ -1057,7 +1056,6 @@ export default {
     },
     date(val, old) {
       this.setDirection('directionClassDate', val, old)
-      this.checkScroll()
       if (this.isLower(this.date)) this.date = this.minDate.clone()
       if (this.isMore(this.date)) this.date = this.maxDate.clone()
     },
@@ -1177,16 +1175,19 @@ export default {
     checkScroll() {
       let step = this.currentStep
       if (step === 'y' || (step === 'm' && this.visible)) {
-        this.$nextTick(() => {
-          setTimeout(() => {
-            let container = this.$refs[{ y: 'year', m: 'month' }[step]]
-            if (container) {
-              let top = container.querySelector('.selected')
-              top = top ? top.offsetTop - 110 : 0
-              utils.scrollTo(container, top, 400)
+        setTimeout(() => {
+          let container = this.$refs[{ y: 'year', m: 'month' }[step]]
+          if (container) {
+            let selected = container.querySelector('.selected')
+            if (selected && 'scrollIntoView' in selected) {
+              try {
+                selected.scrollIntoView({ block: 'center' })
+              } catch (er) {
+                selected.scrollIntoView()
+              }
             }
-          }, 100)
-        })
+          }
+        }, 100)
       }
     },
     fastUpdateCounter(e) {
