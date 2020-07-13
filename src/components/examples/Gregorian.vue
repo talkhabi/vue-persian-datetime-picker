@@ -28,7 +28,6 @@
       </highlight-code>
       <highlight-code lang="html" v-pre>
         &lt;date-picker
-          date-picker
           locale="fa,en"
           :locale-config="{
             fa: {

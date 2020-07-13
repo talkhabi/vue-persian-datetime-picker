@@ -61,7 +61,7 @@ const localesConfig = {
   }
 }
 
-const Core = function(defaultLocaleName) {
+const Core = function(defaultLocaleName, defaultOptions) {
   'use strict'
 
   const Instance = {
@@ -220,7 +220,7 @@ const Core = function(defaultLocaleName) {
     return list
   }
 
-  Instance.changeLocale(defaultLocaleName)
+  Instance.changeLocale(defaultLocaleName, defaultOptions)
 
   return Instance
 }

@@ -121,6 +121,10 @@ This project is licensed under the MIT License
 
 ## Change log
 
+### 2.1.6 (2020-07-13)
+ * Fixed `locale-config` prop [#116](https://github.com/talkhabi/vue-persian-datetime-picker/issues/116)
+ * Added `show-now-btn` prop [#109](https://github.com/talkhabi/vue-persian-datetime-picker/issues/109)
+
 ### 2.1.5 (2020-04-19)
  * Fixed wrong date in Safari browsers
  * Fixed scroll to element (year section)
