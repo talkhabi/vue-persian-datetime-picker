@@ -403,7 +403,7 @@
                 </button>
 
                 <button
-                  v-if="canGoToday"
+                  v-if="showNowBtn && canGoToday"
                   type="button"
                   :style="{ color: color }"
                   @click="goToday()"
@@ -734,7 +734,15 @@ export default {
      * @example true | false | +03:30 | +04:30
      * @version 2.1.0
      */
-    timezone: { type: [Boolean, String, Function], default: false }
+    timezone: { type: [Boolean, String, Function], default: false },
+
+    /**
+     * Show or hide NOW button
+     * @type Boolean
+     * @default true
+     * @version 2.1.6
+     */
+    showNowBtn: { type: Boolean, default: true }
   },
   data() {
     let defaultLocale = this.locale.split(',')[0]
