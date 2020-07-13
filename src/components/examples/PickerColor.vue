@@ -1,83 +1,50 @@
 <template>
-  <card title="Theme color">
-    <span
-      v-for="(color, index) in colors"
-      :key="color"
-      class="color-selector"
-      :style="{ backgroundColor: color }"
-      @click="
-        activeColorIndex = index
-        show = true
-      "
-    />
+  <div>
+    <card title="Theme example">
+      <date-picker color="#5c6bc0" class="mb-4 d-block" />
 
-    <div class="clearfix" />
+      <date-picker color="#e91e63" class="mb-4 pt-1 d-block" />
 
-    <date-picker
-      v-model="date"
-      :color="colors[activeColorIndex]"
-      :show="show"
-      @close="show = false"
-    />
+      <date-picker color="#7b1fa2" class="mb-4  d-block" />
 
-    <template slot="code">
-      <!-- eslint-disable -->
-      <highlight-code lang="html" v-pre>
-        &lt;span class="color-selector"
-          v-for="color,index in colors"
-          :style="{backgroundColor: color}"
-          @click="activeColorIndex=index;show=true;"
-        /&gt;
-        &lt;date-picker
-          v-model="date"
-          :color="colors[activeColorIndex]"
-          :show="show"
-          @close="show=false"
-        /&gt;
-      </highlight-code>
-      <highlight-code lang="javascript" v-pre>
-        data() {
-          return {
-            date: '',
-            show: false,
-            colors: ['#5c6bc0', '#e91e63', '#7b1fa2', '#1e88e5', '#03a9f4', '#00acc1', '#ff9800', 'dimgray'],
-            activeColorIndex: 0,
-          }
-        }
-      </highlight-code>
-      <!-- eslint-enable -->
-    </template>
-  </card>
+      <date-picker color="#1e88e5" class="mb-4 pt-1 d-block" />
+
+      <date-picker color="#03a9f4" class="mb-4  d-block" />
+
+      <date-picker color="#00acc1" class="mb-4 pt-1 d-block" />
+
+      <date-picker color="#ff9800" class="mb-4  d-block" />
+
+      <date-picker color="dimgray" class="mb-4 pt-1 d-block" />
+
+      <template slot="code">
+        <!-- eslint-disable -->
+        <highlight-code lang="html" v-pre>
+          &lt;date-picker color="#5c6bc0" /&gt;
+        </highlight-code>
+        <highlight-code lang="html" v-pre>
+          &lt;date-picker color="#e91e63" /&gt;
+        </highlight-code>
+        <highlight-code lang="html" v-pre>
+          &lt;date-picker color="#7b1fa2" /&gt;
+        </highlight-code>
+        <highlight-code lang="html" v-pre>
+          &lt;date-picker color="#1e88e5" /&gt;
+        </highlight-code>
+        <highlight-code lang="html" v-pre>
+          &lt;date-picker color="#03a9f4" /&gt;
+        </highlight-code>
+        <highlight-code lang="html" v-pre>
+          &lt;date-picker color="#00acc1" /&gt;
+        </highlight-code>
+        <highlight-code lang="html" v-pre>
+          &lt;date-picker color="#ff9800" /&gt;
+        </highlight-code>
+        <highlight-code lang="html" v-pre>
+          &lt;date-picker color="dimgray" /&gt;
+        </highlight-code>
+        <!-- eslint-enable -->
+      </template>
+    </card>
+  </div>
 </template>
-
-<script>
-export default {
-  data() {
-    return {
-      date: '',
-      show: false,
-      colors: [
-        '#5c6bc0',
-        '#e91e63',
-        '#7b1fa2',
-        '#1e88e5',
-        '#03a9f4',
-        '#00acc1',
-        '#ff9800',
-        'dimgray'
-      ],
-      activeColorIndex: 0
-    }
-  }
-}
-</script>
-
-<style scoped>
-.color-selector {
-  display: inline-block;
-  width: 15px;
-  height: 15px;
-  cursor: pointer;
-  margin: 0 0 10px 10px;
-}
-</style>
