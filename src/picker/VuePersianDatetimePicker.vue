@@ -738,7 +738,7 @@ export default {
   },
   data() {
     let defaultLocale = this.locale.split(',')[0]
-    let coreModule = new CoreModule(defaultLocale)
+    let coreModule = new CoreModule(defaultLocale, this.localeConfig)
     return {
       core: coreModule,
       now: coreModule.moment(),
@@ -988,13 +988,17 @@ export default {
       this.setTimezone(output, 'out')
       return output.format(format)
     },
-    displayValue() {
-      if (!this.output) return ''
-      let output = this.output.clone()
-      let format =
+    selfDisplayFormat() {
+      return (
         this.localeData.config.displayFormat ||
         this.displayFormat ||
         this.selfFormat
+      )
+    },
+    displayValue() {
+      if (!this.output) return ''
+      let output = this.output.clone()
+      let format = this.selfDisplayFormat
       if (/j\w/.test(format)) output.locale('fa')
       return output.format(format)
     },
@@ -1102,6 +1106,7 @@ export default {
       this.visible = val
     },
     locale: {
+      immediate: true,
       handler(val) {
         let allowedLocales = ['fa', 'en']
         let locales = val
@@ -1111,17 +1116,15 @@ export default {
         this.locales = locales.length ? locales : ['fa']
         if (this.core.locale.name !== this.locales[0])
           this.setLocale(this.locales[0])
-      },
-      immediate: true
+      }
     },
     localeConfig: {
+      deep: true,
+      immediate: true,
       handler(config) {
         this.core.setLocalesConfig(config)
-        if (this.core.locale.name !== this.locales[0])
-          this.setLocale(this.locales[0])
-      },
-      deep: true,
-      immediate: true
+        this.setLocale(this.localeData.name)
+      }
     },
     'localeData.name'() {
       this.$emit('localeChange', this.localeData)
@@ -1405,12 +1408,7 @@ export default {
       this.output = null
       if (val) {
         try {
-          this.output = this.core.moment(
-            val,
-            this.localeData.config.displayFormat ||
-              this.displayFormat ||
-              this.selfFormat
-          )
+          this.output = this.core.moment(val, this.selfDisplayFormat)
           if (!this.output.isValid()) this.output = null
         } catch (er) {
           this.output = null
