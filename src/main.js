@@ -11,7 +11,7 @@ Vue.use(vIcon, 'v-icon')
  * Use Vue Highlight.js
  */
 Vue.use(VueHighlightJS)
-import 'highlight.js/styles/atom-one-dark-reasonable.css'
+import 'highlight.js/styles/atom-one-dark.css'
 
 /**
  * Define some global variables

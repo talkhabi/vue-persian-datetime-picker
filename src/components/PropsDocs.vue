@@ -308,7 +308,15 @@
          * @note: Formats like "Asia/tehran" does not supported!
          * @version 2.1.0
          */
-        timezone: { type: [Boolean, String, Function], default: false }
+        timezone: false,
+
+        /**
+         * Show or hide NOW button
+         * @type Boolean
+         * @default true
+         * @version 2.1.6
+         */
+        showNowBtn: true
       &rbrace;
     </highlight-code>
     <!-- eslint-enable -->
