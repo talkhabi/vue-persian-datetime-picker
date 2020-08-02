@@ -6,8 +6,8 @@
         <div class="col-md-12">
           <h5 class="card-title">{{ title }}</h5>
         </div>
-        <div class="col-md-6"><slot name="code" /></div>
-        <div class="col-md-6"><slot /></div>
+        <div :class="codeColClass"><slot name="code" /></div>
+        <div :class="sampleColClass"><slot /></div>
         <div v-if="hasDocs" class="col-md-12">
           <button
             type="button"
@@ -29,7 +29,9 @@
 export default {
   props: {
     title: { type: String, default: '' },
-    version: { type: String, default: '' }
+    version: { type: String, default: '' },
+    codeColClass: { type: String, default: 'col-md-6' },
+    sampleColClass: { type: String, default: 'col-md-6' }
   },
   data() {
     return {

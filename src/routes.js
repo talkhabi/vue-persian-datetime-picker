@@ -24,6 +24,7 @@ import Localization from './components/examples/Localization.vue'
 import Timezone from './components/examples/Timezone'
 import PropsDocs from './components/PropsDocs.vue'
 import EventsDocs from './components/EventsDocs.vue'
+import Slots from './components/Slots.vue'
 
 const cmp = component => ({
   default: component,
@@ -163,6 +164,12 @@ export const routes = [
     name: 'time-picker',
     meta: { pageTitle: 'Time picker' },
     components: cmp(SimpleTime)
+  },
+  {
+    path: '/slots',
+    name: 'slots',
+    meta: { pageTitle: 'Slots' },
+    components: cmp(Slots)
   },
   {
     path: '/events',
