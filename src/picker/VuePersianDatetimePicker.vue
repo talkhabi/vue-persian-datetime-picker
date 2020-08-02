@@ -18,7 +18,7 @@
         <slot name="label">
           <time-icon v-if="type === 'time'" width="16px" height="16px" />
           <calendar-icon v-else width="16px" height="16px" />
-          <span v-if="label">{{ label }}</span>
+          <span v-if="label" v-text="label" />
         </slot>
       </label>
       <input
@@ -42,8 +42,9 @@
         v-if="clearable && !disabled && displayValue"
         :class="[prefix('clear-btn')]"
         @click="clearValue"
-        >x</i
       >
+        <slot name="clear-btn" v-bind="{ vm }">x</slot>
+      </i>
     </span>
 
     <input
@@ -79,7 +80,9 @@
               >
                 <transition name="slideY">
                   <span :key="selectedDate.xYear()">
-                    <span>{{ selectedDate.xYear() }}</span>
+                    <slot name="header-year" v-bind="{ vm, selectedDate }">
+                      {{ selectedDate.xYear() }}
+                    </slot>
                   </span>
                 </transition>
               </div>
@@ -89,17 +92,26 @@
                 :style="{ 'font-size': type === 'datetime' ? '22px' : '' }"
               >
                 <transition name="slideY">
-                  <span :key="formattedDate">{{ formattedDate }}</span>
+                  <span :key="formattedDate">
+                    <slot name="header-date" v-bind="{ vm, formattedDate }">
+                      {{ formattedDate }}
+                    </slot>
+                  </span>
                 </transition>
               </div>
-              <locale-change
+              <slot
                 v-if="locales.length > 1"
-                :locale-data="localeData"
-                :core="core"
-                :locales="locales"
-                :class="[prefix('locales')]"
-                @change="setLocale"
-              />
+                name="locales"
+                v-bind="{ vm, locales, setLocale }"
+              >
+                <locale-change
+                  :locale-data="localeData"
+                  :core="core"
+                  :locales="locales"
+                  :class="[prefix('locales')]"
+                  @change="setLocale"
+                />
+              </slot>
             </div>
             <div :class="[prefix('body')]">
               <template v-if="hasStep('d')">
@@ -138,9 +150,12 @@
                       :class="[prefix('month-label')]"
                       @click="goStep('m')"
                     >
-                      <span :style="{ 'border-color': color, color: color }">{{
-                        date.xFormat('jMMMM jYYYY')
-                      }}</span>
+                      <slot name="month-name" v-bind="{ vm, date, color }">
+                        <span
+                          :style="{ 'border-color': color, color }"
+                          v-text="date.xFormat('jMMMM jYYYY')"
+                        />
+                      </slot>
                     </div>
                   </transition>
                 </div>
@@ -154,7 +169,9 @@
                       :key="`${i}-${day}`"
                       :class="[prefix('weekday')]"
                     >
-                      {{ day }}
+                      <slot name="weekday" v-bind="{ vm, day }">
+                        {{ day }}
+                      </slot>
                     </div>
                   </div>
                   <div
@@ -184,13 +201,16 @@
                             @click="selectDay(day)"
                           >
                             <template v-if="day.date != null">
-                              <span
-                                :class="[prefix('day-effect')]"
-                                :style="{ 'background-color': color }"
-                              />
-                              <span :class="[prefix('day-text')]">{{
-                                day.formatted
-                              }}</span>
+                              <slot name="day-item" v-bind="{ vm, day, color }">
+                                <span
+                                  :class="[prefix('day-effect')]"
+                                  :style="{ 'background-color': color }"
+                                />
+                                <span
+                                  :class="[prefix('day-text')]"
+                                  v-text="day.formatted"
+                                />
+                              </slot>
                             </template>
                           </div>
                         </div>
@@ -229,7 +249,9 @@
                       :disabled="year.disabled"
                       @click="selectYear(year)"
                     >
-                      {{ year.xFormat('jYYYY') }}
+                      <slot name="year-item" v-bind="{ vm, year, color }">
+                        {{ year.xFormat('jYYYY') }}
+                      </slot>
                     </div>
                   </div>
                 </div>
@@ -263,7 +285,9 @@
                       ]"
                       @click="selectMonth(monthItem)"
                     >
-                      {{ monthItem.xFormat('jMMMM') }}
+                      <slot name="month-item" v-bind="{ vm, monthItem, color }">
+                        {{ monthItem.xFormat('jMMMM') }}
+                      </slot>
                     </div>
                   </div>
                 </div>
@@ -372,39 +396,52 @@
                   v-if="steps.length > 1 && currentStep !== 'd' && hasStep('d')"
                   :class="[prefix('close-addon')]"
                   @click="goStep('d')"
-                  >x</span
                 >
+                  <slot name="close-btn" v-bind="{ vm }">x</slot>
+                </span>
               </transition>
 
               <br v-if="autoSubmit && !hasStep('t')" />
 
               <div v-else :class="[prefix('actions')]">
-                <button
-                  type="button"
-                  :disabled="!canSubmit"
-                  :style="{ color: color }"
-                  @click="submit()"
+                <slot
+                  name="submit-btn"
+                  v-bind="{ vm, canSubmit, color, submit, lang }"
                 >
-                  {{ lang.submit }}
-                </button>
+                  <button
+                    type="button"
+                    :disabled="!canSubmit"
+                    :style="{ color }"
+                    @click="submit"
+                    v-text="lang.submit"
+                  />
+                </slot>
 
-                <button
+                <slot
                   v-if="!inline"
-                  type="button"
-                  :style="{ color: color }"
-                  @click="visible = false"
+                  name="cancel-btn"
+                  v-bind="{ vm, color, lang }"
                 >
-                  {{ lang.cancel }}
-                </button>
+                  <button
+                    type="button"
+                    :style="{ color }"
+                    @click="visible = false"
+                    v-text="lang.cancel"
+                  />
+                </slot>
 
-                <button
+                <slot
                   v-if="showNowBtn && canGoToday"
-                  type="button"
-                  :style="{ color: color }"
-                  @click="goToday()"
+                  name="now-btn"
+                  v-bind="{ vm, color, goToday, lang }"
                 >
-                  {{ lang.now }}
-                </button>
+                  <button
+                    type="button"
+                    :style="{ color }"
+                    @click="goToday"
+                    v-text="lang.now"
+                  />
+                </slot>
               </div>
             </div>
           </div>
@@ -776,6 +813,9 @@ export default {
     }
   },
   computed: {
+    vm() {
+      return this
+    },
     id() {
       return (
         '_' +
