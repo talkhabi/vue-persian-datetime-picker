@@ -121,6 +121,10 @@ This project is licensed under the MIT License
 
 ## Change log
 
+### 2.2.0 (2020-08-02)
+ * [Custom localization](https://talkhabi.github.io/vue-persian-datetime-picker/#/locale) is now supported
+ * Added some [slots](https://talkhabi.github.io/vue-persian-datetime-picker/#/slots)
+
 ### 2.1.6 (2020-07-13)
  * Fixed `locale-config` prop [#116](https://github.com/talkhabi/vue-persian-datetime-picker/issues/116)
  * Added `show-now-btn` prop [#109](https://github.com/talkhabi/vue-persian-datetime-picker/issues/109)
