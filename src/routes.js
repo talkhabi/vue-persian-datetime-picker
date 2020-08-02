@@ -20,7 +20,7 @@ import AppendTo from './components/examples/AppendTo.vue'
 import DisableDates from './components/examples/DisableDates.vue'
 import WithLabel from './components/examples/WithLabel.vue'
 import Highlight from './components/examples/Highlight.vue'
-import Gregorian from './components/examples/Gregorian.vue'
+import Localization from './components/examples/Localization.vue'
 import Timezone from './components/examples/Timezone'
 import PropsDocs from './components/PropsDocs.vue'
 import EventsDocs from './components/EventsDocs.vue'
@@ -144,7 +144,7 @@ export const routes = [
     path: '/locale',
     name: 'locale',
     meta: { pageTitle: 'Localization' },
-    components: cmp(Gregorian)
+    components: cmp(Localization)
   },
   {
     path: '/timezone',
