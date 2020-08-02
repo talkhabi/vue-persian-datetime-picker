@@ -7,6 +7,7 @@
           :key="route.path"
           :to="route.path"
           exact-active-class="active"
+          :class="{ 'is-new': newItems.includes(route.name) }"
           tag="li"
         >
           <a>{{ route.meta.pageTitle }}</a>
@@ -21,19 +22,16 @@ import { routes } from '../../routes'
 
 export default {
   name: 'Sidebar',
-  components: {},
-  props: [],
   data() {
-    return {}
+    return {
+      newItems: ['locale', 'slots']
+    }
   },
   computed: {
     routes() {
       // modify routes here
       return routes.filter(route => route.meta.showInMenu !== false)
     }
-  },
-  watch: {},
-  created() {},
-  methods: {}
+  }
 }
 </script>

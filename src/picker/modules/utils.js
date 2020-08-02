@@ -115,4 +115,11 @@ const extend = function() {
   return target
 }
 
-export default { extend }
+/**
+ * full clone using JSON.stringify
+ * @param obj
+ * @returns {any}
+ */
+const clone = obj => JSON.parse(JSON.stringify(obj))
+
+export default { extend, clone }
