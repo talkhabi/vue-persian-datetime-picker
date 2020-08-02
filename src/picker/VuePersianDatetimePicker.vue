@@ -92,19 +92,14 @@
                   <span :key="formattedDate">{{ formattedDate }}</span>
                 </transition>
               </div>
-              <ul v-if="locales.length > 1" :class="[prefix('locales')]">
-                <li
-                  v-for="(localeItem, i) in locales"
-                  :key="i"
-                  :class="{ active: localeItem === localeData.name }"
-                  @click="setLocale(localeItem)"
-                >
-                  {{
-                    core.localesConfig[localeItem].lang.label ||
-                      localeItem.toUpperCase()
-                  }}
-                </li>
-              </ul>
+              <locale-change
+                v-if="locales.length > 1"
+                :locale-data="localeData"
+                :core="core"
+                :locales="locales"
+                :class="[prefix('locales')]"
+                @change="setLocale"
+              />
             </div>
             <div :class="[prefix('body')]">
               <template v-if="hasStep('d')">
@@ -426,8 +421,9 @@ import Btn from './components/Btn.vue'
 import CalendarIcon from './components/CalendarIcon.vue'
 import TimeIcon from './components/TimeIcon.vue'
 import CoreModule from './modules/core'
+import LocaleChange from './components/LocaleChange'
 export default {
-  components: { Arrow, Btn, CalendarIcon, TimeIcon },
+  components: { LocaleChange, Arrow, Btn, CalendarIcon, TimeIcon },
   model: {
     prop: 'value',
     event: 'input'
@@ -997,11 +993,17 @@ export default {
       return output.format(format)
     },
     selfDisplayFormat() {
-      return (
-        this.localeData.config.displayFormat ||
-        this.displayFormat ||
-        this.selfFormat
-      )
+      let format = this.displayFormat || this.selfFormat
+      let localeFormat = this.localeData.config.displayFormat
+      if (localeFormat) {
+        return typeof localeFormat === 'function'
+          ? localeFormat(this)
+          : localeFormat
+      }
+      if (this.localeData.name !== 'fa') {
+        format = format.replace(/j/g, '')
+      }
+      return format
     },
     displayValue() {
       if (!this.output) return ''
@@ -1116,11 +1118,7 @@ export default {
     locale: {
       immediate: true,
       handler(val) {
-        let allowedLocales = ['fa', 'en']
-        let locales = val
-          .toString()
-          .split(',')
-          .filter(i => allowedLocales.indexOf(i) !== -1)
+        let locales = val.toString().split(',')
         this.locales = locales.length ? locales : ['fa']
         if (this.core.locale.name !== this.locales[0])
           this.setLocale(this.locales[0])

@@ -4,6 +4,7 @@
 import moment from 'moment-jalaali'
 import fa from './moment.locale.fa'
 import utils from './utils'
+
 moment.updateLocale('en', {
   weekdaysMin: 'S_M_T_W_T_F_S'.split('_')
 })
@@ -85,12 +86,12 @@ const Core = function(defaultLocaleName, defaultOptions) {
     options = {}
   ) {
     let locale = this.locale
-    let config = JSON.parse(
-      JSON.stringify(localesConfig[localeName] || localesConfig.fa)
-    )
-    let methods = localMethods[localeName] || localMethods.fa
+    let config = utils.clone(localesConfig[localeName] || localesConfig.en)
+    let methods = localMethods[localeName] || localMethods.en
 
     options = options[localeName] || {}
+    if (!localesConfig[localeName])
+      options = utils.extend(true, {}, utils.clone(localesConfig.en), options)
     locale.name = localeName
     locale.config = utils.extend(true, config, options)
 
@@ -134,7 +135,17 @@ const Core = function(defaultLocaleName, defaultOptions) {
   }
 
   Instance.setLocalesConfig = function(config) {
-    let defaults = JSON.parse(JSON.stringify(localesConfig))
+    let defaults = utils.clone(localesConfig)
+    for (let key in config) {
+      if (config.hasOwnProperty(key) && defaults[key] === undefined)
+        defaults[key] = utils.extend(
+          true,
+          {},
+          utils.clone(defaults.en),
+          { lang: { label: key } },
+          config[key]
+        )
+    }
     this.localesConfig = utils.extend(true, defaults, config)
   }
 
