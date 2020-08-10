@@ -81,7 +81,7 @@
                 <transition name="slideY">
                   <span :key="selectedDate.xYear()">
                     <slot name="header-year" v-bind="{ vm, selectedDate }">
-                      {{ selectedDate.xYear() }}
+                      {{ convertToLocaleNumber(selectedDate.xYear()) }}
                     </slot>
                   </span>
                 </transition>
@@ -94,7 +94,7 @@
                 <transition name="slideY">
                   <span :key="formattedDate">
                     <slot name="header-date" v-bind="{ vm, formattedDate }">
-                      {{ formattedDate }}
+                      {{ convertToLocaleNumber(formattedDate) }}
                     </slot>
                   </span>
                 </transition>
@@ -153,7 +153,9 @@
                       <slot name="month-name" v-bind="{ vm, date, color }">
                         <span
                           :style="{ 'border-color': color, color }"
-                          v-text="date.xFormat('jMMMM jYYYY')"
+                          v-text="
+                            convertToLocaleNumber(date.xFormat('jMMMM jYYYY'))
+                          "
                         />
                       </slot>
                     </div>
@@ -208,7 +210,7 @@
                                 />
                                 <span
                                   :class="[prefix('day-text')]"
-                                  v-text="day.formatted"
+                                  v-text="convertToLocaleNumber(day.formatted)"
                                 />
                               </slot>
                             </template>
@@ -250,7 +252,7 @@
                       @click="selectYear(year)"
                     >
                       <slot name="year-item" v-bind="{ vm, year, color }">
-                        {{ year.xFormat('jYYYY') }}
+                        {{ convertToLocaleNumber(year.xFormat('jYYYY')) }}
                       </slot>
                     </div>
                   </div>
@@ -1050,7 +1052,7 @@ export default {
       let output = this.output.clone()
       let format = this.selfDisplayFormat
       if (/j\w/.test(format)) output.locale('fa')
-      return output.format(format)
+      return this.convertToLocaleNumber(output.format(format))
     },
     isDisableTime() {
       return this.hasStep('t') && this.checkDisable('t', this.time)
@@ -1578,6 +1580,18 @@ export default {
         }
       }
       return date.clone()
+    },
+    convertToLocaleNumber(value) {
+      if (this.locale == 'fa') {
+        return `${value}`.replace(/\d+/g, function(digit) {
+          var ret = ''
+          for (var i = 0, len = digit.length; i < len; i++) {
+            ret += String.fromCharCode(digit.charCodeAt(i) + 1728)
+          }
+          return ret
+        })
+      }
+      return value
     }
   },
   install(Vue, options) {
