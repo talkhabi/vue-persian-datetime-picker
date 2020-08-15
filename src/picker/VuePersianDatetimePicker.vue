@@ -777,7 +777,13 @@ export default {
      * @default true
      * @version 2.1.6
      */
-    showNowBtn: { type: Boolean, default: true }
+    showNowBtn: { type: Boolean, default: true },
+    /**
+     * Convert to locale numbers or not
+     * @type Boolean
+     * @default false
+     */
+    convertNumbers: { type: Boolean, default: false }
   },
   data() {
     let defaultLocale = this.locale.split(',')[0]
@@ -1582,14 +1588,16 @@ export default {
       return date.clone()
     },
     convertToLocaleNumber(value) {
-      if (this.locale == 'fa') {
-        return `${value}`.replace(/\d+/g, function(digit) {
-          var ret = ''
-          for (var i = 0, len = digit.length; i < len; i++) {
-            ret += String.fromCharCode(digit.charCodeAt(i) + 1728)
-          }
-          return ret
-        })
+      if (this.convertNumbers) {
+        if (this.locale == 'fa') {
+          return `${value}`.replace(/\d+/g, function(digit) {
+            var ret = ''
+            for (var i = 0, len = digit.length; i < len; i++) {
+              ret += String.fromCharCode(digit.charCodeAt(i) + 1728)
+            }
+            return ret
+          })
+        }
       }
       return value
     }
