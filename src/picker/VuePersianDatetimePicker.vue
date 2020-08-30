@@ -335,8 +335,8 @@
                                   timeData.transitionSpeed +
                                   'ms ease-in-out'
                               }"
-                              >{{ item }}</span
-                            >
+                              v-text="convertToLocaleNumber(item)"
+                            />
                           </transition>
                         </div>
                       </div>
@@ -376,8 +376,8 @@
                                   timeData.transitionSpeed +
                                   'ms ease-in-out'
                               }"
-                              >{{ item }}</span
-                            >
+                              v-text="convertToLocaleNumber(item)"
+                            />
                           </transition>
                         </div>
                       </div>
