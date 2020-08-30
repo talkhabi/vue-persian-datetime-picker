@@ -121,6 +121,9 @@ This project is licensed under the MIT License
 
 ## Change log
 
+### 2.3.0 (2020-08-30)
+ * Added [`convert-numbers`](https://github.com/talkhabi/vue-persian-datetime-picker/pull/117) prop that converts numbers to persian in fa locale: `<date-picker convert-numbers />`
+
 ### 2.2.0 (2020-08-02)
  * [Custom localization](https://talkhabi.github.io/vue-persian-datetime-picker/#/locale) is now supported
  * Added some [slots](https://talkhabi.github.io/vue-persian-datetime-picker/#/slots)
