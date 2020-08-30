@@ -38,7 +38,7 @@
         * @if empty {displayFormat} = {format}
         * @see https://github.com/jalaali/moment-jalaali
         */
-        displayFormat: {type: String, 'default': ''},
+        displayFormat: 'jYYYY/jMM/jDD HH:mm',
 
         /**
          * Format for output value
@@ -316,7 +316,16 @@
          * @default true
          * @version 2.1.6
          */
-        showNowBtn: true
+        showNowBtn: true,
+
+        /**
+         * Convert to locale numbers or not
+         * @type Boolean
+         * @default false
+         * @example &lt;date-picker convert-numbers /&gt;
+         * @version 2.3.0
+         */
+        convertNumbers: true
       &rbrace;
     </highlight-code>
     <!-- eslint-enable -->
