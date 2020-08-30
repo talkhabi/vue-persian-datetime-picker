@@ -778,10 +778,13 @@ export default {
      * @version 2.1.6
      */
     showNowBtn: { type: Boolean, default: true },
+
     /**
      * Convert to locale numbers or not
      * @type Boolean
      * @default false
+     * @example <date-picker convert-numbers />
+     * @version 2.3.0
      */
     convertNumbers: { type: Boolean, default: false }
   },
