@@ -1562,6 +1562,7 @@ export default {
     },
     clearValue() {
       if (this.disabled) return
+      this.output = null
       this.$emit('input', '')
       this.$emit('change', null)
     },
