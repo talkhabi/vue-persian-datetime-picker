@@ -62,6 +62,7 @@
           prefix('wrapper'),
           prefix(`dir-${localeData.config.dir}`),
           inline ? prefix('is-inline') : '',
+          compactTime ? prefix('compact-time') : '',
           autoSubmit && !hasStep('t') ? prefix('no-footer') : ''
         ]"
         :data-type="type"
@@ -786,7 +787,16 @@ export default {
      * @example <date-picker convert-numbers />
      * @version 2.3.0
      */
-    convertNumbers: { type: Boolean, default: false }
+    convertNumbers: { type: Boolean, default: false },
+
+    /**
+     * Display the time on the front page
+     * @type Boolean
+     * @default false
+     * @example <date-picker compact-time />
+     * @version 2.4.0
+     */
+    compactTime: { type: Boolean, default: false }
   },
   data() {
     let defaultLocale = this.locale.split(',')[0]
@@ -1221,7 +1231,9 @@ export default {
   },
   methods: {
     nextStep() {
-      if (this.steps.length <= this.step + 1) {
+      let step = this.step + 1
+      if (this.compactTime && this.type === 'datetime') step += 1
+      if (this.steps.length <= step) {
         return this.autoSubmit || this.inline ? this.submit() : ''
       } else {
         this.step++
@@ -1263,8 +1275,11 @@ export default {
     selectDay(day) {
       if (!day.date || day.disabled) return
       let d = this.core.moment(day.date)
-      let s = this.selectedDate
-      d.set({ hour: s.hour(), minute: s.minute(), second: 0 })
+      d.set({
+        hour: this.time.hour(),
+        minute: this.time.minute(),
+        second: 0
+      })
       this.date = d.clone()
       this.selectedDate = d.clone()
       this.time = d.clone()
@@ -1312,7 +1327,9 @@ export default {
       this.setTime(e.wheelDeltaY > 0 ? delta : -delta, k)
     },
     submit() {
-      if (this.step < this.steps.length - 1) return this.nextStep()
+      let steps = this.steps.length - 1
+      if (this.compactTime && this.type === 'datetime') steps -= 1
+      if (this.step < steps) return this.nextStep()
 
       if (this.hasStep('t')) {
         let t = { hour: this.time.hour(), minute: this.time.minute() }
