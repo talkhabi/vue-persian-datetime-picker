@@ -16,6 +16,22 @@
       </template>
     </card>
 
+    <card title="Compact mode" version="2.4.0">
+      <date-picker type="datetime" compact-time auto-submit />
+
+      <template slot="code">
+        <!-- eslint-disable -->
+        <highlight-code lang="html" v-pre>
+          &lt;date-picker
+            type="datetime"
+            compact-time
+            auto-submit
+          /&gt;
+        </highlight-code>
+        <!-- eslint-enable -->
+      </template>
+    </card>
+
     <card title="Datetime minimum and maximum">
       <date-picker
         v-model="datetime2"

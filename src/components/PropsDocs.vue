@@ -325,7 +325,16 @@
          * @example &lt;date-picker convert-numbers /&gt;
          * @version 2.3.0
          */
-        convertNumbers: true
+        convertNumbers: true,
+
+        /**
+         * Display the time on the front page
+         * @type Boolean
+         * @default false
+         * @example &lt;date-picker compact-time /&gt;
+         * @version 2.4.0
+         */
+         compactTime: { type: Boolean, default: false }
       &rbrace;
     </highlight-code>
     <!-- eslint-enable -->
