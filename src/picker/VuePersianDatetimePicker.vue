@@ -1538,8 +1538,14 @@ export default {
         return false
       }
 
-      if (item === 'y') value = this.core.moment(value, 'jYYYY')
-      return check(value, value.format(this.selfFormat))
+      let format = this.selfFormat
+      if (item === 'y') {
+        value = this.core.moment(value, 'jYYYY')
+      } else if (item === 'd') {
+        // remove time from format
+        format = format.replace(/(H(H?))|(h(h?))?(:?)m(m?)(:?)(s(s?))?/g, '')
+      }
+      return check(value, value.format(format))
     },
     getHighlights(item, value) {
       let highlight = this.highlight
