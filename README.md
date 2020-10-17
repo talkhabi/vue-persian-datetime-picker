@@ -121,6 +121,12 @@ This project is licensed under the MIT License
 
 ## Change log
 
+### 2.4.0 (2020-10-17)
+ * Added `compat-time` to display time on the front page (in datetime mode)
+ * Fixed clear value [#125](https://github.com/talkhabi/vue-persian-datetime-picker/issues/125)
+ * Fixed disabling in datetime mode [#123](https://github.com/talkhabi/vue-persian-datetime-picker/issues/123)
+ * Fixed timezone in the first and second half of the year [#108](https://github.com/talkhabi/vue-persian-datetime-picker/issues/108)
+
 ### 2.3.0 (2020-08-30)
  * Added [`convert-numbers`](https://github.com/talkhabi/vue-persian-datetime-picker/pull/117) prop that converts numbers to persian in fa locale: `<date-picker convert-numbers />`
 

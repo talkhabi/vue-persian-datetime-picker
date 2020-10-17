@@ -540,6 +540,76 @@
   }
 }
 
+[data-type="datetime"] {
+  .#{$prefix}compact-time {
+    .#{$prefix}time {
+      margin-top: 10px;
+      display: block !important;
+      position: relative;
+      border-top: solid 1px #eee;
+      overflow: hidden;
+      .#{$prefix}addon-list-content {
+        display: flex;
+        justify-content: center;
+        direction: ltr;
+      }
+      .counter-item {
+        width: 18px;
+      }
+      .counter {
+        height: 30px;
+        font-size: 20px;
+        line-height: 34px;
+        width: 40px;
+      }
+      .up-arrow-btn,
+      .down-arrow-btn {
+        position: absolute;
+        top: 0;
+        height: 26px;
+        width: 26px;
+        margin: 2px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(black, 0.05);
+      }
+      .#{$prefix}time-m {
+        margin-top: 0;
+        float: none;
+        width: 100px;
+        .up-arrow-btn {
+          right: 30px;
+        }
+        .down-arrow-btn {
+          right: 0;
+        }
+      }
+      .#{$prefix}time-h {
+        margin-top: 0;
+        float: none;
+        width: 100px;
+        &:after {
+          font-size: 20px;
+        }
+        .counter {
+          margin-left: auto;
+        }
+        .up-arrow-btn {
+          left: 0;
+        }
+        .down-arrow-btn {
+          left: 30px;
+        }
+      }
+      svg {
+        height: 10px;
+      }
+    }
+  }
+}
+
 @media screen and (max-height: 460px) {
   .#{$prefix}wrapper {
     overflow: auto;
