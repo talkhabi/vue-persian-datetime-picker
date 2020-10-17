@@ -1580,9 +1580,9 @@ export default {
     },
     setTimezone(date, mode) {
       let tz = this.timezone
-      let r = mode === 'in' ? 1 : -1
-      let moment = this.core.moment
       if (tz) {
+        let r = mode === 'in' ? 1 : -1
+        let moment = this.core.moment
         if (typeof tz === 'string') {
           let t =
             moment()
@@ -1590,7 +1590,7 @@ export default {
               .format('YYYY-MM-DDTHH:mm:ss') + tz
           date.add(moment.parseZone(t).utcOffset() * r, 'minutes')
         } else if (typeof tz === 'boolean' && tz) {
-          date.subtract(new Date().getTimezoneOffset() * r, 'minutes')
+          date.subtract(new Date(date).getTimezoneOffset() * r, 'minutes')
         } else if (typeof tz === 'function') {
           date = tz(date, mode, this)
         }
