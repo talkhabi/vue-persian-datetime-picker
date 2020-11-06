@@ -1,17 +1,17 @@
 <template>
   <span
-    :class="prefix('main')"
+    class="vpd-main"
     :data-type="type"
     :data-locale="localeData.name"
     :data-locale-dir="localeData.config.dir"
   >
     <span
       v-if="!element"
-      :class="[prefix('input-group'), { disabled: disabled }]"
+      :class="['vpd-input-group', { 'vpd-disabled': disabled }]"
     >
       <label
         :for="id"
-        :class="[prefix('icon-btn')]"
+        class="vpd-icon-btn"
         :style="{ 'background-color': color }"
         @click.prevent.stop="visible = true"
       >
@@ -25,7 +25,7 @@
         :id="id"
         type="text"
         :name="name"
-        :class="[inputClass, { 'is-editable': editable }]"
+        :class="[inputClass, { 'vpd-is-editable': editable }]"
         :placeholder="placeholder"
         :value="displayValue"
         :disabled="disabled"
@@ -40,7 +40,7 @@
       />
       <i
         v-if="clearable && !disabled && displayValue"
-        :class="[prefix('clear-btn')]"
+        class="vpd-clear-btn"
         @click="clearValue"
       >
         <slot name="clear-btn" v-bind="{ vm }">x</slot>
@@ -59,24 +59,21 @@
         v-if="visible"
         ref="picker"
         :class="[
-          prefix('wrapper'),
-          prefix(`dir-${localeData.config.dir}`),
-          inline ? prefix('is-inline') : '',
-          compactTime ? prefix('compact-time') : '',
-          autoSubmit && !hasStep('t') ? prefix('no-footer') : ''
+          'vpd-wrapper',
+          `vpd-dir-${localeData.config.dir}`,
+          inline ? 'vpd-is-inline' : '',
+          compactTime ? 'vpd-compact-time' : '',
+          autoSubmit && !hasStep('t') ? 'vpd-no-footer' : ''
         ]"
         :data-type="type"
         @click.self="wrapperClick"
       >
-        <div :class="[prefix('container')]">
-          <div :class="[prefix('content')]">
-            <div
-              :class="[prefix('header')]"
-              :style="{ 'background-color': color }"
-            >
+        <div class="vpd-container">
+          <div class="vpd-content">
+            <div class="vpd-header" :style="{ 'background-color': color }">
               <div
                 v-if="['date', 'datetime', 'year-month'].indexOf(type) !== -1"
-                :class="[prefix('year-label'), directionClass]"
+                :class="['vpd-year-label', directionClass]"
                 @click="goStep('y')"
               >
                 <transition name="slideY">
@@ -89,7 +86,7 @@
               </div>
               <div
                 v-if="type !== 'year-month'"
-                :class="[prefix('date'), directionClass]"
+                :class="['vpd-date', directionClass]"
                 :style="{ 'font-size': type === 'datetime' ? '22px' : '' }"
               >
                 <transition name="slideY">
@@ -109,17 +106,17 @@
                   :locale-data="localeData"
                   :core="core"
                   :locales="locales"
-                  :class="[prefix('locales')]"
+                  class="vpd-locales"
                   @change="setLocale"
                 />
               </slot>
             </div>
-            <div :class="[prefix('body')]">
+            <div class="vpd-body">
               <template v-if="hasStep('d')">
-                <div :class="[prefix('controls'), directionClassDate]">
+                <div :class="['vpd-controls', directionClassDate]">
                   <button
                     type="button"
-                    :class="[prefix('next')]"
+                    class="vpd-next"
                     :title="lang.nextMonth"
                     :disabled="nextMonthDisabled"
                     @click="nextMonth"
@@ -133,7 +130,7 @@
                   </button>
                   <button
                     type="button"
-                    :class="[prefix('prev')]"
+                    class="vpd-prev"
                     :title="lang.prevMonth"
                     :disabled="prevMonthDisabled"
                     @click="prevMonth"
@@ -148,7 +145,7 @@
                   <transition name="slideX">
                     <div
                       :key="date.xMonth()"
-                      :class="[prefix('month-label')]"
+                      class="vpd-month-label"
                       @click="goStep('m')"
                     >
                       <slot name="month-name" v-bind="{ vm, date, color }">
@@ -163,14 +160,14 @@
                   </transition>
                 </div>
                 <div
-                  class="clearfix"
-                  :class="[prefix('month'), directionClassDate]"
+                  class="vpd-clearfix"
+                  :class="['vpd-month', directionClassDate]"
                 >
-                  <div class="clearfix" :class="[prefix('week')]">
+                  <div class="vpd-clearfix vpd-week">
                     <div
                       v-for="(day, i) in weekDays"
                       :key="`${i}-${day}`"
-                      :class="[prefix('weekday')]"
+                      class="vpd-weekday"
                     >
                       <slot name="weekday" v-bind="{ vm, day }">
                         {{ day }}
@@ -178,7 +175,7 @@
                     </div>
                   </div>
                   <div
-                    :class="[prefix('days')]"
+                    class="vpd-days"
                     :style="{ height: month.length * 40 + 'px' }"
                   >
                     <transition name="slideX" :class="directionClassDate">
@@ -186,16 +183,16 @@
                         <div
                           v-for="(m, mi) in month"
                           :key="mi"
-                          class="clearfix"
+                          class="vpd-clearfix"
                         >
                           <div
                             v-for="(day, di) in m"
                             :key="di"
                             :class="[
-                              prefix('day'),
+                              'vpd-day',
                               {
-                                selected: day.selected,
-                                empty: day.date == null
+                                'vpd-selected': day.selected,
+                                'vpd-empty': day.date == null
                               },
                               day.attributes.class
                             ]"
@@ -206,11 +203,11 @@
                             <template v-if="day.date != null">
                               <slot name="day-item" v-bind="{ vm, day, color }">
                                 <span
-                                  :class="[prefix('day-effect')]"
+                                  class="vpd-day-effect"
                                   :style="{ 'background-color': color }"
                                 />
                                 <span
-                                  :class="[prefix('day-text')]"
+                                  class="vpd-day-text"
                                   v-text="convertToLocaleNumber(day.formatted)"
                                 />
                               </slot>
@@ -231,18 +228,18 @@
                   v-show="currentStep === 'y'"
                   ref="year"
                   :class="[
-                    prefix('addon-list'),
-                    { 'can-close': steps.length > 1 }
+                    'vpd-addon-list',
+                    { 'vpd-can-close': steps.length > 1 }
                   ]"
                 >
-                  <div :class="[prefix('addon-list-content')]">
+                  <div class="vpd-addon-list-content">
                     <div
                       v-for="(year, yi) in years"
                       :key="yi"
                       v-bind="year.attributes"
                       :class="[
-                        prefix('addon-list-item'),
-                        { selected: year.selected },
+                        'vpd-addon-list-item',
+                        { 'vpd-selected': year.selected },
                         year.attributes.class
                       ]"
                       :style="[
@@ -266,19 +263,18 @@
                   v-show="currentStep === 'm'"
                   ref="month"
                   :class="[
-                    prefix('addon-list'),
-                    prefix('month-list'),
-                    { 'can-close': steps.length > 1 }
+                    'vpd-addon-list vpd-month-list',
+                    { 'vpd-can-close': steps.length > 1 }
                   ]"
                 >
-                  <div :class="[prefix('addon-list-content')]">
+                  <div class="vpd-addon-list-content">
                     <div
                       v-for="(monthItem, mi) in months"
                       :key="mi"
                       v-bind="monthItem.attributes"
                       :class="[
-                        prefix('addon-list-item'),
-                        { selected: monthItem.selected },
+                        'vpd-addon-list-item',
+                        { 'vpd-selected': monthItem.selected },
                         monthItem.attributes.class
                       ]"
                       :disabled="monthItem.disabled"
@@ -302,29 +298,28 @@
                   v-show="currentStep === 't'"
                   ref="time"
                   :class="[
-                    prefix('addon-list'),
-                    prefix('time'),
-                    { disabled: isDisableTime }
+                    'vpd-addon-list vpd-time',
+                    { 'vpd-disabled': isDisableTime }
                   ]"
                 >
-                  <div :class="[prefix('addon-list-content')]">
-                    <div :class="[prefix('time-h'), classFastCounter]">
+                  <div class="vpd-addon-list-content">
+                    <div :class="['vpd-time-h', classFastCounter]">
                       <btn
-                        class="up-arrow-btn"
+                        class="vpd-up-arrow-btn"
                         @update="setTime(1, 'h')"
                         @fastUpdate="fastUpdateCounter"
                       >
                         <arrow width="20" direction="up" />
                       </btn>
                       <div
-                        class="counter"
+                        class="vpd-counter"
                         :class="directionClassTime"
                         @mousewheel.stop.prevent="wheelSetTime('h', $event)"
                       >
                         <div
                           v-for="(item, i) in time.format('HH').split('')"
                           :key="`h__${i}`"
-                          class="counter-item"
+                          class="vpd-counter-item"
                           v-bind="timeAttributes"
                         >
                           <transition name="slideY">
@@ -342,30 +337,30 @@
                         </div>
                       </div>
                       <btn
-                        class="down-arrow-btn"
+                        class="vpd-down-arrow-btn"
                         @update="setTime(-1, 'h')"
                         @fastUpdate="fastUpdateCounter"
                       >
                         <arrow width="20" direction="down" />
                       </btn>
                     </div>
-                    <div :class="[prefix('time-m'), classFastCounter]">
+                    <div :class="['vpd-time-m', classFastCounter]">
                       <btn
-                        class="up-arrow-btn"
+                        class="vpd-up-arrow-btn"
                         @update="setTime(jumpMinute, 'm')"
                         @fastUpdate="fastUpdateCounter"
                       >
                         <arrow width="20" direction="up" />
                       </btn>
                       <div
-                        class="counter"
+                        class="vpd-counter"
                         :class="directionClassTime"
                         @mousewheel.stop.prevent="wheelSetTime('m', $event)"
                       >
                         <div
                           v-for="(item, i) in time.format('mm').split('')"
                           :key="`m__${i}`"
-                          class="counter-item"
+                          class="vpd-counter-item"
                           v-bind="timeAttributes"
                         >
                           <transition name="slideY">
@@ -383,7 +378,7 @@
                         </div>
                       </div>
                       <btn
-                        class="down-arrow-btn"
+                        class="vpd-down-arrow-btn"
                         @update="setTime(-jumpMinute, 'm')"
                         @fastUpdate="fastUpdateCounter"
                       >
@@ -397,7 +392,7 @@
               <transition name="fade">
                 <span
                   v-if="steps.length > 1 && currentStep !== 'd' && hasStep('d')"
-                  :class="[prefix('close-addon')]"
+                  class="vpd-close-addon"
                   @click="goStep('d')"
                 >
                   <slot name="close-btn" v-bind="{ vm }">x</slot>
@@ -406,7 +401,7 @@
 
               <br v-if="autoSubmit && !hasStep('t')" />
 
-              <div v-else :class="[prefix('actions')]">
+              <div v-else class="vpd-actions">
                 <slot
                   name="submit-btn"
                   v-bind="{ vm, canSubmit, color, submit, lang }"
@@ -1250,7 +1245,7 @@ export default {
         setTimeout(() => {
           let container = this.$refs[{ y: 'year', m: 'month' }[step]]
           if (container) {
-            let selected = container.querySelector('.selected')
+            let selected = container.querySelector('.vpd-selected')
             if (selected && 'scrollIntoView' in selected) {
               try {
                 selected.scrollIntoView({ block: 'center' })
@@ -1468,9 +1463,6 @@ export default {
         this.visible = true
         return false
       }
-    },
-    prefix(c) {
-      return 'vpd-' + c
     },
     hasStep(step) {
       return this.steps.indexOf(step) !== -1
