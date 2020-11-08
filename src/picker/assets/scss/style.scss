@@ -541,7 +541,7 @@
 }
 
 [data-type="datetime"] {
-  .#{$prefix}compact-time {
+  &.#{$prefix}compact-time {
     .#{$prefix}time {
       margin-top: 10px;
       display: block !important;
