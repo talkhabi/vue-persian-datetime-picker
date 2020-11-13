@@ -470,7 +470,7 @@ export default {
      * @default []
      * @example 1396/08/01 22:45 | 2017/07/07 20:45 | {unix} | 20:45
      */
-    value: { type: [Number, String], default: '' },
+    value: { type: [Number, String, Date], default: '' },
 
     /**
      * Initial value of picker (if value is empty)
@@ -505,7 +505,7 @@ export default {
      * Format for output value
      * @type String
      * @default Null
-     * @example jYYYY/jMM/jDD HH:mm | YYYY/MM/DD HH:mm | x | unix | HH:mm
+     * @example jYYYY/jMM/jDD HH:mm | YYYY/MM/DD HH:mm | x | date | HH:mm
      * @if empty, it will be built according to the type of picker:
      *
      * --- time:     HH:mm
@@ -1011,7 +1011,7 @@ export default {
     },
     selfFormat() {
       let format = this.format
-      if (format === '' || format === undefined) {
+      if (['', undefined, 'date'].indexOf(format) !== -1) {
         switch (this.type) {
           case 'time':
             format = 'HH:mm'
@@ -1046,6 +1046,8 @@ export default {
       let format = this.selfFormat
       if (/j\w/.test(format)) output.locale('fa')
       this.setTimezone(output, 'out')
+      if (this.value instanceof Date || this.format === 'date')
+        return output.toDate()
       return output.format(format)
     },
     selfDisplayFormat() {
@@ -1342,8 +1344,11 @@ export default {
       this.$emit('change', this.selectedDate.clone())
     },
     updateDates(d) {
-      if (null === d || typeof d !== 'object')
+      if (d instanceof Date) {
+        d = this.getMoment(d)
+      } else if (null === d || typeof d !== 'object') {
         d = this.getMoment(d ? d : this.value || this.initialValue)
+      }
 
       this.date = d.isValid() ? d : this.core.moment()
 
@@ -1421,6 +1426,9 @@ export default {
     getMoment(date) {
       let d,
         moment = this.core.moment
+
+      if (date instanceof Date) return moment(date)
+
       if (this.selfInputFormat === 'x' || this.selfInputFormat === 'unix') {
         d = moment(date.toString().length === 10 ? date * 1000 : date * 1)
       } else {
