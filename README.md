@@ -121,6 +121,10 @@ This project is licensed under the MIT License
 
 ## Change log
 
+### 2.4.1 (2020-11-13)
+ * Fixed [#131](https://github.com/talkhabi/vue-persian-datetime-picker/issues/131)
+ * Fixed [#128](https://github.com/talkhabi/vue-persian-datetime-picker/issues/128)
+
 ### 2.4.0 (2020-10-17)
  * Added `compat-time` to display time on the front page (in datetime mode)
  * Fixed clear value [#125](https://github.com/talkhabi/vue-persian-datetime-picker/issues/125)

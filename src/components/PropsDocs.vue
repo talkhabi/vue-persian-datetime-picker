@@ -44,7 +44,7 @@
          * Format for output value
          * @type String
          * @default Null
-         * @example jYYYY/jMM/jDD HH:mm | YYYY/MM/DD HH:mm | x | unix | HH:mm
+         * @example jYYYY/jMM/jDD HH:mm | YYYY/MM/DD HH:mm | x | date | HH:mm
          * @if empty, it will be built according to the type of picker:
          *
          * --- time:     HH:mm
