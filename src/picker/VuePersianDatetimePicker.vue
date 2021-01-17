@@ -931,50 +931,38 @@ export default {
       return (
         this.hasStep('d') &&
         this.minDate &&
-        this.minDate
-          .clone()
-          .xStartOf('month')
-          .unix() >=
-          this.date
-            .clone()
-            .xStartOf('month')
-            .unix()
+        this.minDate.clone().xStartOf('month') >=
+          this.date.clone().xStartOf('month')
       )
     },
     nextMonthDisabled() {
       return (
         this.hasStep('d') &&
         this.maxDate &&
-        this.maxDate
-          .clone()
-          .xStartOf('month')
-          .unix() <=
-          this.date
-            .clone()
-            .xStartOf('month')
-            .unix()
+        this.maxDate.clone().xStartOf('month') <=
+          this.date.clone().xStartOf('month')
       )
     },
     canGoToday() {
       if (!this.minDate && !this.maxDate) return true
-      let now = this.now.unix(),
-        min = this.minDate && this.minDate.unix() <= now,
-        max = this.maxDate && now <= this.maxDate.unix()
+      let now = this.now,
+        min = this.minDate && this.minDate <= now,
+        max = this.maxDate && now <= this.maxDate
 
       if (this.type === 'time') {
         if (this.minDate) {
-          min = this.now
+          min = now
             .clone()
             .hour(this.minDate.hour())
             .minute(this.minDate.minute())
-          min = min.unix() <= now
+          min = min <= now
         }
         if (this.maxDate) {
           max = this.now
             .clone()
             .hour(this.maxDate.hour())
             .minute(this.maxDate.minute())
-          max = now <= max.unix()
+          max = now <= max
         }
       }
 
@@ -1412,10 +1400,7 @@ export default {
       if (this.hasStep(s)) this.goStep(s)
     },
     setDirection(prop, val, old) {
-      if (typeof old.unix === 'function') {
-        this[prop] =
-          val.unix() > old.unix() ? 'direction-next' : 'direction-prev'
-      }
+      this[prop] = val > old ? 'direction-next' : 'direction-prev'
     },
     setMinMax() {
       let min = this.getMoment(this.min),
@@ -1578,10 +1563,10 @@ export default {
       )
     },
     isLower(date) {
-      return this.minDate && date.unix() < this.minDate.unix()
+      return this.minDate && date < this.minDate
     },
     isMore(date) {
-      return this.maxDate && date.unix() > this.maxDate.unix()
+      return this.maxDate && date > this.maxDate
     },
     clearValue() {
       if (this.disabled) return

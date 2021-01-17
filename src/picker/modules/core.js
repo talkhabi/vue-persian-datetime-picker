@@ -203,28 +203,14 @@ const Core = function(defaultLocaleName, defaultOptions) {
 
   Instance.getMonthsList = function getMonthsList(minDate, maxDate, date) {
     let list = [],
-      min = minDate
-        ? minDate
-            .clone()
-            .xStartOf('month')
-            .unix()
-        : -Infinity,
-      max = maxDate
-        ? maxDate
-            .clone()
-            .xEndOf('month')
-            .unix()
-        : Infinity
+      min = minDate ? minDate.clone().xStartOf('month') : -Infinity,
+      max = maxDate ? maxDate.clone().xEndOf('month') : Infinity
     for (let i = 0; i < 12; i++) {
       let month = date.clone().xMonth(i)
-      let start = month
-        .clone()
-        .xStartOf('month')
-        .unix()
-      let end = month
-        .clone()
-        .xEndOf('month')
-        .unix()
+      let start = month.clone().xStartOf('month')
+
+      let end = month.clone().xEndOf('month')
+
       month.disabled = start < min || end > max
       list.push(month)
     }
