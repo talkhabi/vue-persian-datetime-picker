@@ -1558,6 +1558,7 @@ export default {
       })
 
       this.output = output.filter(d => d)
+      this.output.sort((a, b) => a - b)
 
       if (this.output.length) {
         this.updateDates(cloneDates(this.output))
