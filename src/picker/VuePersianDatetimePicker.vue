@@ -1393,15 +1393,22 @@ export default {
       }
     },
     updateDates(payload) {
+      if (this.range && !payload) payload = []
+
       const payloadIsArray = payload instanceof Array
       const getDate = (input, index = 0) => {
         let date
         let startValue =
           this.value instanceof Array ? this.value[index] : this.value
         try {
-          if (input instanceof Date) date = this.getMoment(input)
-          if (null === input || typeof input !== 'object')
+          let isObject = typeof input === 'object'
+          if (input instanceof Date) {
+            date = this.getMoment(input)
+          } else if (input && isObject && 'clone' in input) {
+            date = input.clone()
+          } else if (null === input || !isObject) {
             date = this.getMoment(input || startValue || this.initialValue)
+          }
           date = date.isValid() ? date : this.core.moment()
         } catch (e) {
           date = this.core.moment()
@@ -1540,6 +1547,8 @@ export default {
       let value = e.target.value.split('~')
 
       let output = value.map(item => {
+        item = `${item}`.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '')
+        if (item === '') return null
         try {
           let date = this.core.moment(item, this.selfDisplayFormat)
           return date.isValid() ? date : null
@@ -1555,8 +1564,8 @@ export default {
         this.submit()
       } else {
         this.$forceUpdate()
-        this.$emit('input', null)
-        this.$emit('change', null)
+        this.$emit('input', this.range ? [] : null)
+        this.$emit('change', this.range ? [] : null)
       }
     },
     wrapperClick() {
