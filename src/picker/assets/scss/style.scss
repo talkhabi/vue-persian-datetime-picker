@@ -228,6 +228,22 @@
         opacity: 1;
       }
     }
+
+    &.#{$prefix}range-between {
+      color: #ffffff;
+      .#{$prefix}day-effect {
+        transform: scale(0.75);
+        opacity: 1;
+      }
+    }
+
+    &.#{$prefix}range-hover {
+      color: #ffffff;
+      .#{$prefix}day-effect {
+        transform: scale(0.7);
+        opacity: 0.6;
+      }
+    }
   }
 }
 
@@ -539,72 +555,84 @@
   }
 }
 
-[data-type="datetime"] {
-  &.#{$prefix}compact-time {
-    .#{$prefix}time {
-      margin-top: 10px;
-      display: block !important;
-      position: relative;
-      border-top: solid 1px #eee;
-      overflow: hidden;
-      .#{$prefix}addon-list-content {
-        display: flex;
-        justify-content: center;
-        direction: ltr;
-      }
-      .#{$prefix}counter-item {
-        width: 18px;
-      }
-      .#{$prefix}counter {
-        height: 30px;
-        font-size: 20px;
-        line-height: 34px;
-        width: 40px;
-      }
-      .#{$prefix}up-arrow-btn,
-      .#{$prefix}down-arrow-btn {
-        position: absolute;
-        top: 0;
-        height: 26px;
-        width: 26px;
-        margin: 2px;
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: rgba(black, 0.05);
-      }
-      .#{$prefix}time-m {
-        margin-top: 0;
-        float: none;
-        width: 100px;
-        .#{$prefix}up-arrow-btn {
-          right: 30px;
+.#{$prefix}wrapper {
+  &[data-type="datetime"] {
+    &.#{$prefix}compact-time {
+      .#{$prefix}time {
+        margin-top: 10px;
+        display: block !important;
+        position: relative;
+        border-top: solid 1px #eee;
+        overflow: hidden;
+        .#{$prefix}addon-list-content {
+          display: flex;
+          justify-content: center;
+          direction: ltr;
         }
-        .#{$prefix}down-arrow-btn {
-          right: 0;
-        }
-      }
-      .#{$prefix}time-h {
-        margin-top: 0;
-        float: none;
-        width: 100px;
-        &:after {
-          font-size: 20px;
+        .#{$prefix}counter-item {
+          width: 18px;
         }
         .#{$prefix}counter {
-          margin-left: auto;
+          height: 30px;
+          font-size: 20px;
+          line-height: 34px;
+          width: 40px;
         }
-        .#{$prefix}up-arrow-btn {
-          left: 0;
-        }
+        .#{$prefix}up-arrow-btn,
         .#{$prefix}down-arrow-btn {
-          left: 30px;
+          position: absolute;
+          top: 0;
+          height: 26px;
+          width: 26px;
+          margin: 2px;
+          border-radius: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background-color: rgba(black, 0.05);
+        }
+        .#{$prefix}time-m {
+          margin-top: 0;
+          float: none;
+          width: 100px;
+          .#{$prefix}up-arrow-btn {
+            right: 30px;
+          }
+          .#{$prefix}down-arrow-btn {
+            right: 0;
+          }
+        }
+        .#{$prefix}time-h {
+          margin-top: 0;
+          float: none;
+          width: 100px;
+          &:after {
+            font-size: 20px;
+          }
+          .#{$prefix}counter {
+            margin-left: auto;
+          }
+          .#{$prefix}up-arrow-btn {
+            left: 0;
+          }
+          .#{$prefix}down-arrow-btn {
+            left: 30px;
+          }
+        }
+        svg {
+          height: 10px;
         }
       }
-      svg {
-        height: 10px;
-      }
+    }
+
+    .#{$prefix}date {
+      font-size: 22px;
+    }
+  }
+
+  &.#{$prefix}is-range {
+    .#{$prefix}date {
+      font-size: 16px;
     }
   }
 }

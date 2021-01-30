@@ -61,9 +61,12 @@
         :class="[
           'vpd-wrapper',
           `vpd-dir-${localeData.config.dir}`,
-          inline ? 'vpd-is-inline' : '',
-          compactTime ? 'vpd-compact-time' : '',
-          autoSubmit && !hasStep('t') ? 'vpd-no-footer' : ''
+          {
+            'vpd-is-range': range,
+            'vpd-is-inline': inline,
+            'vpd-compact-time': compactTime,
+            'vpd-no-footer': autoSubmit && !hasStep('t')
+          }
         ]"
         :data-type="type"
         @click.self="wrapperClick"
@@ -87,7 +90,6 @@
               <div
                 v-if="type !== 'year-month'"
                 :class="['vpd-date', directionClass]"
-                :style="{ 'font-size': type === 'datetime' ? '22px' : '' }"
               >
                 <transition name="slideY">
                   <span :key="formattedDate">
@@ -177,11 +179,12 @@
                   <div
                     class="vpd-days"
                     :style="{ height: month.length * 40 + 'px' }"
+                    @mouseleave="hoveredItem = null"
                   >
                     <transition name="slideX" :class="directionClassDate">
                       <div :key="date.xMonth()">
                         <div
-                          v-for="(m, mi) in month"
+                          v-for="(m, mi) in monthDays"
                           :key="mi"
                           class="vpd-clearfix"
                         >
@@ -192,13 +195,18 @@
                               'vpd-day',
                               {
                                 'vpd-selected': day.selected,
-                                'vpd-empty': day.date == null
+                                'vpd-empty': day.date == null,
+                                'vpd-range-first': day.isFirst,
+                                'vpd-range-last': day.isLast,
+                                'vpd-range-between': day.isBetween,
+                                'vpd-range-hover': hoveredItem && day.isHover
                               },
                               day.attributes.class
                             ]"
                             v-bind="day.attributes"
                             :disabled="day.disabled"
                             @click="selectDay(day)"
+                            @mouseover="hoveredItem = day.date"
                           >
                             <template v-if="day.date != null">
                               <slot name="day-item" v-bind="{ vm, day, color }">
@@ -457,6 +465,8 @@ import CalendarIcon from './components/CalendarIcon.vue'
 import TimeIcon from './components/TimeIcon.vue'
 import CoreModule from './modules/core'
 import LocaleChange from './components/LocaleChange'
+import { cloneDates, isSameDay } from './modules/utils'
+
 export default {
   components: { LocaleChange, Arrow, Btn, CalendarIcon, TimeIcon },
   model: {
@@ -470,7 +480,7 @@ export default {
      * @default []
      * @example 1396/08/01 22:45 | 2017/07/07 20:45 | {unix} | 20:45
      */
-    value: { type: [Number, String, Date], default: '' },
+    value: { type: [Number, String, Date, Array], default: '' },
 
     /**
      * Initial value of picker (if value is empty)
@@ -791,7 +801,16 @@ export default {
      * @example <date-picker compact-time />
      * @version 2.4.0
      */
-    compactTime: { type: Boolean, default: false }
+    compactTime: { type: Boolean, default: false },
+
+    /**
+     * Enable or disable range mode
+     * @type Boolean
+     * @default false
+     * @example <date-picker range />
+     * @version 2.5.0
+     */
+    range: { type: Boolean, default: false }
   },
   data() {
     let defaultLocale = this.locale.split(',')[0]
@@ -800,7 +819,8 @@ export default {
       core: coreModule,
       now: coreModule.moment(),
       date: {},
-      selectedDate: {},
+      selectedDates: [],
+      hoveredItem: null,
       visible: false,
       directionClass: '',
       directionClassDate: '',
@@ -822,7 +842,7 @@ export default {
       },
       minDate: false,
       maxDate: false,
-      output: '',
+      output: [],
       updateNowInterval: null,
       locales: ['fa'],
       localeData: coreModule.locale
@@ -840,34 +860,29 @@ export default {
           .substr(2, 9)
       )
     },
-    input() {
-      let input = false
-      if (this.value !== '' && this.value !== null && this.value.length !== 0) {
-        try {
-          input = this.core.moment(this.value, this.selfFormat)
-        } catch (er) {
-          input = false
-        }
-      }
-      return input
-    },
     currentStep() {
       return this.steps[this.step]
+    },
+    selectedDate() {
+      let dates = this.selectedDates
+      return dates.length ? dates[dates.length - 1] : this.date
     },
     formattedDate() {
       let format = ''
 
       if (this.hasStep('y')) format = 'jYYYY'
       if (this.hasStep('m')) format += ' jMMMM '
-      if (this.hasStep('d')) format = 'ddd jDD jMMMM'
+      if (this.hasStep('d')) {
+        format = this.range ? 'jD jMMMM jYYYY' : 'ddd jD jMMMM'
+      }
       if (this.hasStep('t')) format += ' HH:mm '
 
-      return format ? this.selectedDate.xFormat(format) : ''
+      if (!format) return ''
+
+      return this.selectedDates.map(d => d.xFormat(format)).join(' ~ ')
     },
     month() {
       if (!this.hasStep('d')) return []
-      let selectedFound = false
-      let selectedStart = this.selectedDate.clone().set({ h: 12, m: 0 })
       let min = this.minDate ? this.minDate.clone().startOf('day') : -Infinity
       let max = this.maxDate ? this.maxDate.clone().endOf('day') : Infinity
       return this.core.getWeekArray(this.date.clone()).map(weekItem => {
@@ -880,19 +895,38 @@ export default {
             attributes: {}
           }
           if (!day) return data
-          let selected = false
-          if (!selectedFound) {
-            selected = Math.abs(selectedStart.diff(day, 'hours')) < 20
-            selectedFound = selected
-          }
           let dayMoment = this.core.moment(day)
           data.formatted = dayMoment.xDate()
-          data.selected = selected
+          data.selected = this.selectedDates.find(item => isSameDay(item, day))
           data.disabled =
             (this.minDate && dayMoment.clone().startOf('day') < min) ||
             (this.maxDate && dayMoment.clone().endOf('day') > max) ||
             this.checkDisable('d', dayMoment)
+          if (this.range && !data.disabled) {
+            let [start, end] = this.selectedDates
+            data.isFirst = data.selected && start && isSameDay(start, day)
+            data.isLast = data.selected && end && isSameDay(end, day)
+            data.isBetween =
+              !data.selected && start && end && day > start && day < end
+          }
           data.attributes = this.getHighlights('d', dayMoment)
+          return data
+        })
+      })
+    },
+    monthDays() {
+      if (this.selectedDates.length !== 1 || !this.hoveredItem)
+        return this.month
+      let dates = [this.hoveredItem, this.selectedDates[0]]
+      dates.sort((a, b) => a - b)
+      let [start, end] = dates
+      return this.month.map(weekItem => {
+        return weekItem.map(data => {
+          if (!data.date) return data
+          if (this.range && !data.disabled) {
+            let day = data.date
+            data.isHover = !data.selected && day > start && day < end
+          }
           return data
         })
       })
@@ -931,50 +965,38 @@ export default {
       return (
         this.hasStep('d') &&
         this.minDate &&
-        this.minDate
-          .clone()
-          .xStartOf('month')
-          .unix() >=
-          this.date
-            .clone()
-            .xStartOf('month')
-            .unix()
+        this.minDate.clone().xStartOf('month') >=
+          this.date.clone().xStartOf('month')
       )
     },
     nextMonthDisabled() {
       return (
         this.hasStep('d') &&
         this.maxDate &&
-        this.maxDate
-          .clone()
-          .xStartOf('month')
-          .unix() <=
-          this.date
-            .clone()
-            .xStartOf('month')
-            .unix()
+        this.maxDate.clone().xStartOf('month') <=
+          this.date.clone().xStartOf('month')
       )
     },
     canGoToday() {
       if (!this.minDate && !this.maxDate) return true
-      let now = this.now.unix(),
-        min = this.minDate && this.minDate.unix() <= now,
-        max = this.maxDate && now <= this.maxDate.unix()
+      let now = this.now,
+        min = this.minDate && this.minDate <= now,
+        max = this.maxDate && now <= this.maxDate
 
       if (this.type === 'time') {
         if (this.minDate) {
-          min = this.now
+          min = now
             .clone()
             .hour(this.minDate.hour())
             .minute(this.minDate.minute())
-          min = min.unix() <= now
+          min = min <= now
         }
         if (this.maxDate) {
           max = this.now
             .clone()
             .hour(this.maxDate.hour())
             .minute(this.maxDate.minute())
-          max = now <= max.unix()
+          max = now <= max
         }
       }
 
@@ -1007,7 +1029,7 @@ export default {
             break
         }
       }
-      return this.output ? this.output.format(format) : ''
+      return this.output.map(d => d.format(format)).join(' ~ ')
     },
     selfFormat() {
       let format = this.format
@@ -1041,14 +1063,14 @@ export default {
         : this.inputFormat
     },
     outputValue() {
-      if (!this.output) return ''
-      let output = this.output.clone()
+      let output = cloneDates(this.output)
       let format = this.selfFormat
-      if (/j\w/.test(format)) output.locale('fa')
-      this.setTimezone(output, 'out')
-      if (this.value instanceof Date || this.format === 'date')
-        return output.toDate()
-      return output.format(format)
+      let isDate = this.value instanceof Date || this.format === 'date'
+      return output.map(item => {
+        ;/j\w/.test(format) && item.locale('fa')
+        this.setTimezone(item, 'out')
+        return isDate ? item.toDate() : item.format(format)
+      })
     },
     selfDisplayFormat() {
       let format = this.displayFormat || this.selfFormat
@@ -1064,11 +1086,14 @@ export default {
       return format
     },
     displayValue() {
-      if (!this.output) return ''
-      let output = this.output.clone()
       let format = this.selfDisplayFormat
-      if (/j\w/.test(format)) output.locale('fa')
-      return this.convertToLocaleNumber(output.format(format))
+      return this.output
+        .map(item => {
+          let output = item.clone()
+          ;/j\w/.test(format) && output.locale('fa')
+          return this.convertToLocaleNumber(output.format(format))
+        })
+        .join(' ~ ')
     },
     isDisableTime() {
       return this.hasStep('t') && this.checkDisable('t', this.time)
@@ -1140,7 +1165,9 @@ export default {
           time.add({ m })
           if (time.valueOf() !== this.time.valueOf()) {
             this.time = time
-            this.selectedDate.set({ m: time.minute() })
+            // @todo: this line should apply time to current date selection,
+            // not all of them
+            this.selectedDates.forEach(d => d.set({ m: time.minute() }))
           }
         }
         if (old) this.setDirection('directionClassTime', val, old)
@@ -1231,7 +1258,8 @@ export default {
       let step = this.step + 1
       if (this.compactTime && this.type === 'datetime') step += 1
       if (this.steps.length <= step) {
-        return this.autoSubmit || this.inline ? this.submit() : ''
+        let passSelected = this.selectedDates.length >= (this.range ? 2 : 1)
+        if ((this.autoSubmit || this.inline) && passSelected) this.submit()
       } else {
         this.step++
         this.goStep(this.step)
@@ -1278,8 +1306,18 @@ export default {
         second: 0
       })
       this.date = d.clone()
-      this.selectedDate = d.clone()
       this.time = d.clone()
+      if (this.range) {
+        let length = this.selectedDates.length
+        if (!length || length > 1) {
+          this.selectedDates = [d.clone()]
+        } else {
+          this.selectedDates.push(d.clone())
+          this.selectedDates.sort((a, b) => a - b)
+        }
+      } else {
+        this.selectedDates = [d.clone()]
+      }
       this.nextStep()
     },
     selectYear(year) {
@@ -1325,34 +1363,66 @@ export default {
     },
     submit() {
       let steps = this.steps.length - 1
+      let selected = this.selectedDates
       if (this.compactTime && this.type === 'datetime') steps -= 1
       if (this.step < steps) return this.nextStep()
 
       if (this.hasStep('t')) {
         let t = { hour: this.time.hour(), minute: this.time.minute() }
         this.date = this.date.set(t).clone()
-        this.selectedDate = this.selectedDate.set(t).clone()
+        this.selectedDates = selected.map(d => d.set(t).clone())
       }
 
       if (['year', 'month', 'year-month'].indexOf(this.type) !== -1)
-        this.selectedDate = this.date.clone()
+        this.selectedDates = selected.map(() => this.date.clone())
 
-      this.output = this.selectedDate.clone()
-      this.visible = false
-
-      this.$emit('input', this.outputValue)
-      this.$emit('change', this.selectedDate.clone())
-    },
-    updateDates(d) {
-      if (d instanceof Date) {
-        d = this.getMoment(d)
-      } else if (null === d || typeof d !== 'object') {
-        d = this.getMoment(d ? d : this.value || this.initialValue)
+      if (this.range && selected.length > 1) {
+        selected[0].xStartOf('day')
+        selected[1].xEndOf('day')
       }
 
-      this.date = d.isValid() ? d : this.core.moment()
+      this.output = cloneDates(selected)
+      this.visible = false
 
-      this.date = this.setTimezone(this.date, 'in')
+      if (this.range) {
+        this.$emit('input', this.outputValue)
+        this.$emit('change', cloneDates(selected))
+      } else {
+        this.$emit('input', this.outputValue[0])
+        this.$emit('change', selected[0].clone())
+      }
+    },
+    updateDates(payload) {
+      if (this.range && !payload) payload = []
+
+      const payloadIsArray = payload instanceof Array
+      const getDate = (input, index = 0) => {
+        let date
+        let startValue =
+          this.value instanceof Array ? this.value[index] : this.value
+        try {
+          let isObject = typeof input === 'object'
+          if (input instanceof Date) {
+            date = this.getMoment(input)
+          } else if (input && isObject && 'clone' in input) {
+            date = input.clone()
+          } else if (null === input || !isObject) {
+            date = this.getMoment(input || startValue || this.initialValue)
+          }
+          date = date.isValid() ? date : this.core.moment()
+        } catch (e) {
+          date = this.core.moment()
+        }
+        this.setTimezone(date, 'in')
+        return date
+      }
+
+      if (payloadIsArray) {
+        this.date = getDate(payload[0])
+        this.selectedDates = payload.map(getDate)
+      } else {
+        this.date = getDate(payload)
+      }
 
       if (!this.hasStep('t')) this.date.set({ hour: 0, minute: 0, second: 0 })
 
@@ -1362,13 +1432,13 @@ export default {
         this.date = this.maxDate.clone()
       }
 
-      this.selectedDate = this.date.clone()
+      if (!payloadIsArray) this.selectedDates = [this.date.clone()]
       this.time = this.date.clone()
 
-      if (this.value !== '' && this.value !== null && this.value.length !== 0) {
-        this.output = this.selectedDate.clone()
+      if (this.value !== '' && this.value !== null && this.value.length) {
+        this.output = cloneDates(this.selectedDates)
       } else {
-        this.output = null
+        this.output = []
         this.$forceUpdate()
       }
     },
@@ -1377,7 +1447,7 @@ export default {
       if (!this.hasStep('t')) now.set({ hour: 0, minute: 0, second: 0 })
       this.date = now.clone()
       this.time = now.clone()
-      this.selectedDate = now.clone()
+      this.selectedDates = [now.clone()]
     },
     setType() {
       switch (this.type) {
@@ -1412,10 +1482,7 @@ export default {
       if (this.hasStep(s)) this.goStep(s)
     },
     setDirection(prop, val, old) {
-      if (typeof old.unix === 'function') {
-        this[prop] =
-          val.unix() > old.unix() ? 'direction-next' : 'direction-prev'
-      }
+      this[prop] = val > old ? 'direction-next' : 'direction-prev'
     },
     setMinMax() {
       let min = this.getMoment(this.min),
@@ -1477,24 +1544,29 @@ export default {
     },
     setOutput(e) {
       if (!this.editable) return
-      let val = e.target.value
+      let value = e.target.value.split('~')
 
-      this.output = null
-      if (val) {
+      let output = value.map(item => {
+        item = `${item}`.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '')
+        if (item === '') return null
         try {
-          this.output = this.core.moment(val, this.selfDisplayFormat)
-          if (!this.output.isValid()) this.output = null
+          let date = this.core.moment(item, this.selfDisplayFormat)
+          return date.isValid() ? date : null
         } catch (er) {
-          this.output = null
+          return null
         }
-      }
-      if (this.output) {
-        this.updateDates(this.output.clone())
+      })
+
+      this.output = output.filter(d => d)
+      this.output.sort((a, b) => a - b)
+
+      if (this.output.length) {
+        this.updateDates(cloneDates(this.output))
         this.submit()
       } else {
         this.$forceUpdate()
-        this.$emit('input', null)
-        this.$emit('change', null)
+        this.$emit('input', this.range ? [] : null)
+        this.$emit('change', this.range ? [] : null)
       }
     },
     wrapperClick() {
@@ -1578,21 +1650,21 @@ export default {
       )
     },
     isLower(date) {
-      return this.minDate && date.unix() < this.minDate.unix()
+      return this.minDate && date < this.minDate
     },
     isMore(date) {
-      return this.maxDate && date.unix() > this.maxDate.unix()
+      return this.maxDate && date > this.maxDate
     },
     clearValue() {
       if (this.disabled) return
-      this.output = null
-      this.$emit('input', '')
-      this.$emit('change', null)
+      this.output = []
+      this.$emit('input', this.range ? [] : '')
+      this.$emit('change', this.range ? [] : null)
     },
     setLocale(locale) {
       this.core.changeLocale(locale, this.localeConfig)
       this.date = this.date.clone()
-      this.selectedDate = this.selectedDate.clone()
+      this.selectedDates = this.selectedDates.map(d => d.clone())
       this.$forceUpdate()
     },
     setTimezone(date, mode) {
