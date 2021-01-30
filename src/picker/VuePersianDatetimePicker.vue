@@ -23,6 +23,7 @@
       </label>
       <input
         :id="id"
+        ref="input"
         type="text"
         :name="name"
         :class="[inputClass, { 'vpd-is-editable': editable }]"
@@ -1531,10 +1532,14 @@ export default {
       return d
     },
     focus(e) {
-      if (!this.editable) {
-        e.preventDefault()
-        e.stopPropagation()
-        e.target.blur()
+      if (this.editable) {
+        if (this.$refs.input) this.$refs.input.focus()
+      } else {
+        if (e) {
+          e.preventDefault()
+          e.stopPropagation()
+          e.target.blur()
+        }
         this.visible = true
         return false
       }
