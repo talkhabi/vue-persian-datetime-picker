@@ -3,7 +3,7 @@
     <span v-if="version" class="card-version">{{ version }}</span>
     <div class="card-body">
       <div class="row">
-        <div class="col-md-12">
+        <div v-if="title" class="col-md-12">
           <h5 class="card-title">{{ title }}</h5>
         </div>
         <div :class="codeColClass"><slot name="code" /></div>
