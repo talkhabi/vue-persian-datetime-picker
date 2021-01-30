@@ -1,7 +1,7 @@
 @import 'variables';
 @import 'transitions';
 
-.clearfix {
+.#{$prefix}clearfix {
   &:after, &:before {
     content: " ";
     display: table;
@@ -26,7 +26,7 @@
     line-height: 30px;
     padding: 0 10px;
 
-    &:not(.is-editable) {
+    &:not(.#{$prefix}is-editable) {
       cursor: pointer;
     }
   }
@@ -42,7 +42,7 @@
     }
   }
 
-  &.disabled {
+  &.#{$prefix}disabled {
     input, label {
       cursor: default;
     }
@@ -191,7 +191,7 @@
   line-height: $day-size;
   position: relative;
 
-  &:not(.empty) {
+  &:not(.#{$prefix}empty) {
     cursor: pointer;
     transition: color 450ms ease;
     text-align: center;
@@ -220,12 +220,28 @@
       }
     }
 
-    &.selected {
+    &.#{$prefix}selected {
       color: #ffffff;
 
       .#{$prefix}day-effect {
         transform: scale(1);
         opacity: 1;
+      }
+    }
+
+    &.#{$prefix}range-between {
+      color: #ffffff;
+      .#{$prefix}day-effect {
+        transform: scale(0.75);
+        opacity: 1;
+      }
+    }
+
+    &.#{$prefix}range-hover {
+      color: #ffffff;
+      .#{$prefix}day-effect {
+        transform: scale(0.7);
+        opacity: 0.6;
       }
     }
   }
@@ -372,11 +388,11 @@
   float: right;
   border: solid 4px #fff;
 
-  &.selected, &:hover {
+  &.#{$prefix}selected, &:hover {
     background-color: #f9f9f9;
   }
 
-  &.selected {
+  &.#{$prefix}selected {
     font-size: 17px;
     background-color: #f5f5f5;
   }
@@ -393,7 +409,7 @@
   border-bottom: solid 1px #eee;
   direction: ltr;
 
-  &.can-close {
+  &.#{$prefix}can-close {
     padding-top: 30px;
   }
 }
@@ -405,8 +421,7 @@
     height: 54px;
     line-height: 46px;
 
-    &.selected, &:hover {
-    }
+    // &.#{$prefix}selected, &:hover {}
   }
 }
 
@@ -446,7 +461,7 @@
     text-align: center;
     color: #a2a2a2;
 
-    .counter {
+    .#{$prefix}counter {
       font-size: 90px;
       height: 100px;
       line-height: 100px;
@@ -456,7 +471,7 @@
       transition: opacity 0.3s ease-in-out;
     }
 
-    .counter-item {
+    .#{$prefix}counter-item {
       height: inherit;
       width: 51px;
       display: inline-block;
@@ -475,8 +490,8 @@
     transition: inherit;
   }
 
-  .up-arrow-btn,
-  .down-arrow-btn {
+  .#{$prefix}up-arrow-btn,
+  .#{$prefix}down-arrow-btn {
     display: block;
     cursor: pointer;
     outline: none;
@@ -486,7 +501,7 @@
     }
   }
 
-  &.disabled .counter-item {
+  &.#{$prefix}disabled .#{$prefix}counter-item {
     opacity: 0.5;
   }
 }
@@ -540,72 +555,84 @@
   }
 }
 
-[data-type="datetime"] {
-  &.#{$prefix}compact-time {
-    .#{$prefix}time {
-      margin-top: 10px;
-      display: block !important;
-      position: relative;
-      border-top: solid 1px #eee;
-      overflow: hidden;
-      .#{$prefix}addon-list-content {
-        display: flex;
-        justify-content: center;
-        direction: ltr;
-      }
-      .counter-item {
-        width: 18px;
-      }
-      .counter {
-        height: 30px;
-        font-size: 20px;
-        line-height: 34px;
-        width: 40px;
-      }
-      .up-arrow-btn,
-      .down-arrow-btn {
-        position: absolute;
-        top: 0;
-        height: 26px;
-        width: 26px;
-        margin: 2px;
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: rgba(black, 0.05);
-      }
-      .#{$prefix}time-m {
-        margin-top: 0;
-        float: none;
-        width: 100px;
-        .up-arrow-btn {
-          right: 30px;
+.#{$prefix}wrapper {
+  &[data-type="datetime"] {
+    &.#{$prefix}compact-time {
+      .#{$prefix}time {
+        margin-top: 10px;
+        display: block !important;
+        position: relative;
+        border-top: solid 1px #eee;
+        overflow: hidden;
+        .#{$prefix}addon-list-content {
+          display: flex;
+          justify-content: center;
+          direction: ltr;
         }
-        .down-arrow-btn {
-          right: 0;
+        .#{$prefix}counter-item {
+          width: 18px;
         }
-      }
-      .#{$prefix}time-h {
-        margin-top: 0;
-        float: none;
-        width: 100px;
-        &:after {
+        .#{$prefix}counter {
+          height: 30px;
           font-size: 20px;
+          line-height: 34px;
+          width: 40px;
         }
-        .counter {
-          margin-left: auto;
+        .#{$prefix}up-arrow-btn,
+        .#{$prefix}down-arrow-btn {
+          position: absolute;
+          top: 0;
+          height: 26px;
+          width: 26px;
+          margin: 2px;
+          border-radius: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background-color: rgba(black, 0.05);
         }
-        .up-arrow-btn {
-          left: 0;
+        .#{$prefix}time-m {
+          margin-top: 0;
+          float: none;
+          width: 100px;
+          .#{$prefix}up-arrow-btn {
+            right: 30px;
+          }
+          .#{$prefix}down-arrow-btn {
+            right: 0;
+          }
         }
-        .down-arrow-btn {
-          left: 30px;
+        .#{$prefix}time-h {
+          margin-top: 0;
+          float: none;
+          width: 100px;
+          &:after {
+            font-size: 20px;
+          }
+          .#{$prefix}counter {
+            margin-left: auto;
+          }
+          .#{$prefix}up-arrow-btn {
+            left: 0;
+          }
+          .#{$prefix}down-arrow-btn {
+            left: 30px;
+          }
+        }
+        svg {
+          height: 10px;
         }
       }
-      svg {
-        height: 10px;
-      }
+    }
+
+    .#{$prefix}date {
+      font-size: 22px;
+    }
+  }
+
+  &.#{$prefix}is-range {
+    .#{$prefix}date {
+      font-size: 16px;
     }
   }
 }
@@ -639,10 +666,6 @@
 
   li {
     cursor: pointer;
-
-    &.active {
-      display: none;
-    }
   }
 }
 

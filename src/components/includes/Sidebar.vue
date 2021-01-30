@@ -24,7 +24,7 @@ export default {
   name: 'Sidebar',
   data() {
     return {
-      newItems: ['locale', 'slots']
+      newItems: ['locale', 'range']
     }
   },
   computed: {

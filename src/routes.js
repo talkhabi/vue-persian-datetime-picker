@@ -22,6 +22,7 @@ import WithLabel from './components/examples/WithLabel.vue'
 import Highlight from './components/examples/Highlight.vue'
 import Localization from './components/examples/Localization.vue'
 import Timezone from './components/examples/Timezone'
+import Range from './components/examples/Range'
 import PropsDocs from './components/PropsDocs.vue'
 import EventsDocs from './components/EventsDocs.vue'
 import Slots from './components/Slots.vue'
@@ -74,6 +75,12 @@ export const routes = [
     name: 'view',
     meta: { pageTitle: 'View at startup' },
     components: cmp(ViewProp)
+  },
+  {
+    path: '/range',
+    name: 'range',
+    meta: { pageTitle: 'Range Select' },
+    components: cmp(Range)
   },
   {
     path: '/editable',

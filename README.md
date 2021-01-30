@@ -121,6 +121,10 @@ This project is licensed under the MIT License
 
 ## Change log
 
+### 2.5.0 (2021-01-30)
+ * Added [Range option](https://talkhabi.github.io/vue-persian-datetime-picker/#/range) (for type `date` only)
+ * Fixed [#136](https://github.com/talkhabi/vue-persian-datetime-picker/issues/136)
+
 ### 2.4.1 (2020-11-13)
  * Fixed [#131](https://github.com/talkhabi/vue-persian-datetime-picker/issues/131)
  * Fixed [#128](https://github.com/talkhabi/vue-persian-datetime-picker/issues/128)
