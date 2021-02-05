@@ -6,11 +6,13 @@
   opacity: 0
 }
 
-.fade-scale-enter-active, .fade-scale-leave-active {
+.vpd-fade-scale-enter-active,
+.vpd-fade-scale-leave-active {
   transition: opacity .5s
 }
 
-.fade-scale-enter, .fade-scale-leave-active {
+.vpd-fade-scale-enter,
+.vpd-fade-scale-leave-active {
   opacity: 0;
 
   .#{$prefix}content {
