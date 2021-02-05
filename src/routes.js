@@ -23,6 +23,8 @@ import Highlight from './components/examples/Highlight.vue'
 import Localization from './components/examples/Localization.vue'
 import Timezone from './components/examples/Timezone'
 import Range from './components/examples/Range'
+import Multiple from './components/examples/Multiple'
+import Popover from './components/examples/Popover'
 import PropsDocs from './components/PropsDocs.vue'
 import EventsDocs from './components/EventsDocs.vue'
 import Slots from './components/Slots.vue'
@@ -81,6 +83,12 @@ export const routes = [
     name: 'range',
     meta: { pageTitle: 'Range Select' },
     components: cmp(Range)
+  },
+  {
+    path: '/multiple',
+    name: 'multiple',
+    meta: { pageTitle: 'Multiple Select' },
+    components: cmp(Multiple)
   },
   {
     path: '/editable',
@@ -171,6 +179,12 @@ export const routes = [
     name: 'time-picker',
     meta: { pageTitle: 'Time picker' },
     components: cmp(SimpleTime)
+  },
+  {
+    path: '/popover',
+    name: 'popover',
+    meta: { pageTitle: 'Popover' },
+    components: cmp(Popover)
   },
   {
     path: '/slots',

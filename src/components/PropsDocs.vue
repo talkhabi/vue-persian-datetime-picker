@@ -334,7 +334,39 @@
          * @example &lt;date-picker compact-time /&gt;
          * @version 2.4.0
          */
-         compactTime: { type: Boolean, default: false }
+        compactTime: true,
+
+        /**
+         * Enable or disable range mode
+         * @type Boolean
+         * @default false
+         * @example &lt;date-picker range /&gt;
+         * @version 2.5.0
+         */
+        range: true,
+
+        /**
+         * Enable or disable multiple mode
+         * @type Boolean
+         * @default false
+         * @example &lt;date-picker multiple /&gt;
+         * @version 2.6.0
+         */
+        multiple: false,
+
+        /**
+         * Enable or disable popover mode
+         * @type Boolean | String
+         * @accepted:
+         *    true | false
+         *    top-left | top-right | bottom-right | bottom-left
+         *    left-top | left-bottom | right-top | right-bottom
+         * @default false
+         * @example &lt;date-picker popover /&gt;
+         * @example &lt;date-picker popover="top-left" /&gt;
+         * @version 2.6.0
+         */
+        popover: true
       &rbrace;
     </highlight-code>
     <!-- eslint-enable -->

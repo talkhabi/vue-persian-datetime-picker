@@ -2,18 +2,21 @@
   <span
     class="vpd-main"
     :data-type="type"
+    :data-placement="popoverPlace"
     :data-locale="localeData.name"
     :data-locale-dir="localeData.config.dir"
+    :class="{ 'vpd-is-popover': isPopover }"
   >
     <span
       v-if="!element"
+      ref="inputGroup"
       :class="['vpd-input-group', { 'vpd-disabled': disabled }]"
     >
       <label
         :for="id"
         class="vpd-icon-btn"
         :style="{ 'background-color': color }"
-        @click.prevent.stop="visible = true"
+        @click.prevent.stop="visible = !visible"
       >
         <slot name="label">
           <time-icon v-if="type === 'time'" width="16px" height="16px" />
@@ -32,6 +35,7 @@
         :disabled="disabled"
         @focus="focus"
         @blur="setOutput"
+        @keydown.enter="setOutput"
       />
       <input
         v-if="altName"
@@ -55,7 +59,7 @@
       :value="altFormatted"
     />
 
-    <transition name="fade-scale">
+    <transition :name="isPopover ? '' : 'vpd-fade-scale'">
       <div
         v-if="visible"
         ref="picker"
@@ -65,6 +69,7 @@
           {
             'vpd-is-range': range,
             'vpd-is-inline': inline,
+            'vpd-is-multiple': multiple,
             'vpd-compact-time': compactTime,
             'vpd-no-footer': autoSubmit && !hasStep('t')
           }
@@ -72,7 +77,7 @@
         :data-type="type"
         @click.self="wrapperClick"
       >
-        <div class="vpd-container">
+        <div ref="container" class="vpd-container">
           <div class="vpd-content">
             <div class="vpd-header" :style="{ 'background-color': color }">
               <div
@@ -811,7 +816,30 @@ export default {
      * @example <date-picker range />
      * @version 2.5.0
      */
-    range: { type: Boolean, default: false }
+    range: { type: Boolean, default: false },
+
+    /**
+     * Enable or disable multiple mode
+     * @type Boolean
+     * @default false
+     * @example <date-picker multiple />
+     * @version 2.6.0
+     */
+    multiple: { type: Boolean, default: false },
+
+    /**
+     * Enable or disable popover mode
+     * @type Boolean | String
+     * @accepted:
+     *    true | false
+     *    top-left | top-right | bottom-right | bottom-left
+     *    left-top | left-bottom | right-top | right-bottom
+     * @default false
+     * @example <date-picker popover />
+     * @example <date-picker popover="top-left" />
+     * @version 2.6.0
+     */
+    popover: { type: [Boolean, String], default: false }
   },
   data() {
     let defaultLocale = this.locale.split(',')[0]
@@ -846,7 +874,9 @@ export default {
       output: [],
       updateNowInterval: null,
       locales: ['fa'],
-      localeData: coreModule.locale
+      localeData: coreModule.locale,
+      windowWidth: window.innerWidth,
+      popoverPlace: 'bottom-right'
     }
   },
   computed: {
@@ -874,13 +904,14 @@ export default {
       if (this.hasStep('y')) format = 'jYYYY'
       if (this.hasStep('m')) format += ' jMMMM '
       if (this.hasStep('d')) {
-        format = this.range ? 'jD jMMMM jYYYY' : 'ddd jD jMMMM'
+        format = this.isDataArray ? 'jD jMMMM jYYYY' : 'ddd jD jMMMM'
       }
       if (this.hasStep('t')) format += ' HH:mm '
 
       if (!format) return ''
 
-      return this.selectedDates.map(d => d.xFormat(format)).join(' ~ ')
+      let separator = this.multiple ? ' | ' : ' ~ '
+      return this.selectedDates.map(d => d.xFormat(format)).join(separator)
     },
     month() {
       if (!this.hasStep('d')) return []
@@ -916,7 +947,7 @@ export default {
       })
     },
     monthDays() {
-      if (this.selectedDates.length !== 1 || !this.hoveredItem)
+      if (!this.range || this.selectedDates.length !== 1 || !this.hoveredItem)
         return this.month
       let dates = [this.hoveredItem, this.selectedDates[0]]
       dates.sort((a, b) => a - b)
@@ -1127,6 +1158,12 @@ export default {
     },
     lang() {
       return this.localeData.config.lang
+    },
+    isPopover() {
+      return (this.popover === '' || this.popover) && this.windowWidth > 480
+    },
+    isDataArray() {
+      return this.range || this.multiple
     }
   },
   watch: {
@@ -1192,6 +1229,7 @@ export default {
           }
         })
         this.checkScroll()
+        this.setPlacement()
         this.$emit('open', this)
       } else {
         if (this.inline && !this.disabled) return (this.visible = true)
@@ -1248,11 +1286,20 @@ export default {
     })
     document.body.addEventListener('keydown', e => {
       e = e || event
-      if (e.keyCode === 9 && this.visible) this.visible = false
+      let code = e.keyCode
+      if ((code === 9 || code === 27) && this.visible) this.visible = false
     })
+    window.addEventListener('resize', this.onWindowResize, true)
+    window.addEventListener('mousedown', this.onWindowClick, true)
   },
-  destroyed() {
+  beforeDestroy() {
     window.clearInterval(this.updateNowInterval)
+    window.removeEventListener('resize', this.onWindowResize, true)
+    window.removeEventListener('mousedown', this.onWindowClick, true)
+    let picker = this.$refs.picker
+    if (this.appendTo && picker && picker.$el && picker.$el.parentNode) {
+      picker.$el.parentNode.removeChild(picker.$el)
+    }
   },
   methods: {
     nextStep() {
@@ -1260,7 +1307,9 @@ export default {
       if (this.compactTime && this.type === 'datetime') step += 1
       if (this.steps.length <= step) {
         let passSelected = this.selectedDates.length >= (this.range ? 2 : 1)
-        if ((this.autoSubmit || this.inline) && passSelected) this.submit()
+        if ((this.autoSubmit || this.inline) && passSelected) {
+          this.submit(!this.multiple)
+        }
       } else {
         this.step++
         this.goStep(this.step)
@@ -1300,24 +1349,33 @@ export default {
     },
     selectDay(day) {
       if (!day.date || day.disabled) return
-      let d = this.core.moment(day.date)
-      d.set({
+      let date = this.core.moment(day.date)
+      date.set({
         hour: this.time.hour(),
         minute: this.time.minute(),
         second: 0
       })
-      this.date = d.clone()
-      this.time = d.clone()
+      this.date = date.clone()
+      this.time = date.clone()
       if (this.range) {
         let length = this.selectedDates.length
         if (!length || length > 1) {
-          this.selectedDates = [d.clone()]
+          this.selectedDates = [date.clone()]
         } else {
-          this.selectedDates.push(d.clone())
+          this.selectedDates.push(date.clone())
           this.selectedDates.sort((a, b) => a - b)
         }
+      } else if (this.multiple) {
+        let exists = this.selectedDates.findIndex(
+          d => d.valueOf() === date.valueOf()
+        )
+        if (exists > -1) {
+          this.selectedDates.splice(exists, 1)
+        } else {
+          this.selectedDates.push(date.clone())
+        }
       } else {
-        this.selectedDates = [d.clone()]
+        this.selectedDates = [date.clone()]
       }
       this.nextStep()
     },
@@ -1362,7 +1420,7 @@ export default {
       let delta = k === 'm' ? this.jumpMinute : 1
       this.setTime(e.wheelDeltaY > 0 ? delta : -delta, k)
     },
-    submit() {
+    submit(close = true) {
       let steps = this.steps.length - 1
       let selected = this.selectedDates
       if (this.compactTime && this.type === 'datetime') steps -= 1
@@ -1383,9 +1441,9 @@ export default {
       }
 
       this.output = cloneDates(selected)
-      this.visible = false
+      if (close) this.visible = false
 
-      if (this.range) {
+      if (this.isDataArray) {
         this.$emit('input', this.outputValue)
         this.$emit('change', cloneDates(selected))
       } else {
@@ -1394,7 +1452,7 @@ export default {
       }
     },
     updateDates(payload) {
-      if (this.range && !payload) payload = []
+      if (this.isDataArray && !payload) payload = []
 
       const payloadIsArray = payload instanceof Array
       const getDate = (input, index = 0) => {
@@ -1539,8 +1597,10 @@ export default {
           e.preventDefault()
           e.stopPropagation()
           e.target.blur()
+          this.visible = !this.visible
+        } else {
+          this.visible = true
         }
-        this.visible = true
         return false
       }
     },
@@ -1570,8 +1630,8 @@ export default {
         this.submit()
       } else {
         this.$forceUpdate()
-        this.$emit('input', this.range ? [] : null)
-        this.$emit('change', this.range ? [] : null)
+        this.$emit('input', this.isDataArray ? [] : null)
+        this.$emit('change', this.isDataArray ? [] : null)
       }
     },
     wrapperClick() {
@@ -1663,8 +1723,8 @@ export default {
     clearValue() {
       if (this.disabled) return
       this.output = []
-      this.$emit('input', this.range ? [] : '')
-      this.$emit('change', this.range ? [] : null)
+      this.$emit('input', this.isDataArray ? [] : '')
+      this.$emit('change', this.isDataArray ? [] : null)
     },
     setLocale(locale) {
       this.core.changeLocale(locale, this.localeConfig)
@@ -1702,6 +1762,50 @@ export default {
         })
       }
       return value
+    },
+    onWindowResize() {
+      this.windowWidth = window.innerWidth
+    },
+    onWindowClick(event) {
+      if (this.isPopover && this.$refs.picker && this.$refs.inputGroup) {
+        let isOnPicker = this.$refs.picker.contains(event.target)
+        let isOnInput = this.$refs.inputGroup.contains(event.target)
+        if (isOnPicker) event.preventDefault()
+        if (!isOnPicker && !isOnInput) {
+          // setTimeout because:
+          // first read the input value
+          // then process the output
+          // then close the picker
+          setTimeout(() => (this.visible = false), this.editable ? 500 : 0)
+        }
+      }
+    },
+    setPlacement() {
+      if (!this.isPopover) return
+      let allowed = [
+        'top-left',
+        'top-right',
+        'bottom-right',
+        'bottom-left',
+        'left-top',
+        'left-bottom',
+        'right-top',
+        'right-bottom'
+      ]
+      if (allowed.indexOf(this.popover) !== -1)
+        return (this.popoverPlace = this.popover)
+
+      this.popoverPlace = 'bottom-right'
+      this.$nextTick(() => {
+        let placement = ['bottom', 'right']
+        let container = this.$refs.container
+        let rect = container.getBoundingClientRect()
+        let left = rect.left
+        let bottom = window.innerHeight - rect.bottom
+        if (bottom <= 0) placement[0] = 'top'
+        if (left <= 0) placement[1] = 'left'
+        this.popoverPlace = placement.join('-')
+      })
     }
   },
   install(Vue, options) {
