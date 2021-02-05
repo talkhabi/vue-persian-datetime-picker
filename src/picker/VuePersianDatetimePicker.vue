@@ -1286,7 +1286,8 @@ export default {
     })
     document.body.addEventListener('keydown', e => {
       e = e || event
-      if (e.keyCode === 9 && this.visible) this.visible = false
+      let code = e.keyCode
+      if ((code === 9 || code === 27) && this.visible) this.visible = false
     })
     window.addEventListener('resize', this.onWindowResize, true)
     window.addEventListener('mousedown', this.onWindowClick, true)
