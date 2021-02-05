@@ -346,6 +346,15 @@
         range: true,
 
         /**
+         * Enable or disable multiple mode
+         * @type Boolean
+         * @default false
+         * @example &lt;date-picker multiple /&gt;
+         * @version 2.6.0
+         */
+        multiple: false,
+
+        /**
          * Enable or disable popover mode
          * @type Boolean | String
          * @accepted:

@@ -80,6 +80,15 @@
     </card>
 
     <card style="margin:10px 0">
+      <date-picker v-model="dates" multiple />
+      <template slot="code">
+        <highlight-code v-pre lang="html">
+          &lt;date-picker v-model="dates" multiple /&gt;
+        </highlight-code>
+      </template>
+    </card>
+
+    <card style="margin:10px 0">
       <date-picker popover auto-submit />
       <template slot="code">
         <highlight-code v-pre lang="html">
@@ -96,6 +105,7 @@ export default {
     return {
       date: '',
       dateRange: [],
+      dates: [],
       time: '',
       yearMonth: '',
       datetime: '',

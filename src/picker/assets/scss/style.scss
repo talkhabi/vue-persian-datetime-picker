@@ -709,6 +709,13 @@
       font-size: 16px;
     }
   }
+  &.#{$prefix}is-multiple {
+    .#{$prefix}date {
+      font-size: 14px;
+      white-space: normal;
+      line-height: 20px;
+    }
+  }
 }
 
 @media screen and (max-height: 460px) {
