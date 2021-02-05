@@ -78,6 +78,15 @@
         </highlight-code>
       </template>
     </card>
+
+    <card style="margin:10px 0">
+      <date-picker popover auto-submit />
+      <template slot="code">
+        <highlight-code v-pre lang="html">
+          &lt;date-picker popover auto-submit /&gt;
+        </highlight-code>
+      </template>
+    </card>
   </div>
 </template>
 
