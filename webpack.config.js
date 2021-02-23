@@ -4,6 +4,7 @@
 const path = require('path')
 const webpack = require('webpack')
 const { VueLoaderPlugin } = require('vue-loader')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
@@ -98,20 +99,32 @@ if (process.env.NODE_ENV === 'production') {
         NODE_ENV: '"production"'
       }
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: false,
-      compress: {
-        warnings: false
-      }
-    }),
     new webpack.LoaderOptionsPlugin({
       minimize: true
     })
   ])
+
+  module.exports = {
+    optimization: {
+      minimizer: [
+        // we specify a custom UglifyJsPlugin here to get source maps in production
+        new UglifyJsPlugin({
+          cache: true,
+          parallel: true,
+          uglifyOptions: {
+            compress: false,
+            ecma: 6,
+            mangle: true
+          },
+          sourceMap: true
+        })
+      ]
+    }
+  };
 }
 
 if (process.env.NODE_ENV === 'export') {
-  module.exports.entry = './src/picker/VuePersianDatetimePicker.vue'
+  module.exports.entry = path.resolve(__dirname, './src/picker/VuePersianDatetimePicker.vue')
 
   module.exports.output = {
     path: path.resolve(__dirname, './dist'),
@@ -135,21 +148,31 @@ if (process.env.NODE_ENV === 'export') {
         NODE_ENV: '"production"'
       }
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: false,
-      mangle: true,
-      compress: {
-        warnings: false
-      }
-    }),
     new webpack.LoaderOptionsPlugin({
       minimize: true
     })
   ])
+  module.exports = {
+    optimization: {
+      minimizer: [
+        // we specify a custom UglifyJsPlugin here to get source maps in production
+        new UglifyJsPlugin({
+          cache: true,
+          parallel: true,
+          uglifyOptions: {
+            compress: false,
+            ecma: 6,
+            mangle: true
+          },
+          sourceMap: true
+        })
+      ]
+    }
+  };
 }
 
 if (process.env.NODE_ENV === 'browser') {
-  module.exports.entry = './src/picker/VuePersianDatetimePicker.vue'
+  module.exports.entry = path.resolve(__dirname, './src/picker/VuePersianDatetimePicker.vue')
   module.exports.output = {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
@@ -170,15 +193,25 @@ if (process.env.NODE_ENV === 'browser') {
         NODE_ENV: '"production"'
       }
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: false,
-      mangle: true,
-      compress: {
-        warnings: false
-      }
-    }),
     new webpack.LoaderOptionsPlugin({
       minimize: true
     })
   ])
+  module.exports = {
+    optimization: {
+      minimizer: [
+        // we specify a custom UglifyJsPlugin here to get source maps in production
+        new UglifyJsPlugin({
+          cache: true,
+          parallel: true,
+          uglifyOptions: {
+            compress: false,
+            ecma: 6,
+            mangle: true
+          },
+          sourceMap: true
+        })
+      ]
+    }
+  };
 }

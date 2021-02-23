@@ -4,12 +4,9 @@
   "description": "A vue plugin to select jalali date and time",
   "author": "mohammad talkhabi",
   "scripts": {
-    "build": "webpack --progress --hide-modules",
+    "build": "webpack --progress --hide-modules --mode production",
     "lint": "eslint --fix --ext .js,.vue src",
-    "browser": "webpack --progress --hide-modules",
-    "buildAll": "npm run build && npm run export && npm run browser",
-    "dev": "webpack-dev-server --open --hot",
-    "export": "webpack --progress --hide-modules"
+    "dev": "webpack-dev-server --open --hot"
   },
   "main": "dist/vue-persian-datetime-picker.js",
   "dependencies": {
@@ -39,6 +36,7 @@
     "postcss-loader": "^3.0.0",
     "sass": "^1.22.10",
     "sass-loader": "^7.2.0",
+    "uglifyjs-webpack-plugin": "^2.2.0",
     "vue-cli-plugin-vue-next": "~0.1.4",
     "vue-highlight.js": "^2.2.0",
     "vue-icon": "^2.1.1",
