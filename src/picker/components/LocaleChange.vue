@@ -1,29 +1,36 @@
 <template>
   <ul>
-    <li @click="$emit('change', activeItem)" v-text="label" />
+    <li @click="$emit('change', activeItem)">{{ label }}</li>
   </ul>
 </template>
 
 <script>
-export default {
-  name: 'LocaleChange',
-  props: {
-    locales: { type: Array, default: () => [] },
-    core: { type: Object, default: () => ({}) },
-    localeData: { type: Object, default: () => ({}) }
-  },
-  computed: {
-    activeItem() {
-      let activeIndex = this.locales.indexOf(this.localeData.name) + 1
-      if (activeIndex === this.locales.length) activeIndex = 0
-      return String(this.locales[activeIndex])
+  import {computed} from 'vue'
+
+  export default {
+    name: 'LocaleChange',
+    emits: ['change'],
+    props: {
+      locales: {type: Array, default: () => []},
+      core: {type: Object, default: () => ({})},
+      localeData: {type: Object, default: () => ({})}
     },
-    label() {
-      return (
-        this.core.localesConfig[this.activeItem].lang.label ||
-        this.activeItem.toUpperCase()
-      )
+    setup (props) {
+      const activeItem = computed(() => {
+        let locales = props.locales.toString().split(',')
+        let activeIndex = locales.indexOf(props.localeData.name) + 1
+        if (activeIndex === props.locales.length) activeIndex = 0
+        return String(locales[activeIndex])
+      })
+
+      const label = computed(() => {
+        return props.core.localesConfig[activeItem.value].lang.label || activeItem.value.toUpperCase()
+      })
+
+      return {
+        activeItem,
+        label
+      }
     }
   }
-}
 </script>

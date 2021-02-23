@@ -1,23 +1,21 @@
 <template>
   <card title="Minimum and maximum">
-    <date-picker v-model="date" min="1396/08/08" max="1396/09/09" />
+    <date-picker v-model="date" min="1399/12/03" max="1399/12/14" />
     <code class="code">{{ date }}</code>
 
-    <template slot="code">
+    <template v-slot:code>
       <!-- eslint-disable -->
-      <highlight-code lang="html" v-pre>
-        &lt;date-picker
-          v-model="date"
-          min="1396/08/08"
-          max="1396/09/09"
-        /&gt;
-      </highlight-code>
+      <pre v-highlightjs><code class="html">&lt;date-picker
+  v-model="date"
+  min="1399/12/03"
+  max="1399/12/14"
+/&gt;</code></pre>
       <!-- eslint-enable -->
     </template>
 
-    <template slot="docs">
+    <template v-slot:docs>
       <!-- eslint-disable -->
-      <highlight-code :lang="'javascript'">
+      <pre v-highlightjs><code class="javascript">
         /**
          * Limit datetime picker minimum and maximum
          */
@@ -26,14 +24,14 @@
         default: Null
         example:
           20:20             //for time
-          1396/08/08 20:20  //for datetime
-          1396/08/08        //for date
+          1399/12/03 20:20  //for datetime
+          1399/12/14        //for date
         /*******************************/
         "max"
         type: String
         default: Null
         example: same as "min"
-      </highlight-code>
+      </code></pre>
       <!-- eslint-enable -->
     </template>
   </card>

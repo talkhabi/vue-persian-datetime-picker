@@ -197,7 +197,7 @@
     text-align: center;
   }
 
-  &[disabled] {
+  &[disabled=true] {
     cursor: default;
     color: darken(#ffffff, 20%);
 
@@ -210,7 +210,7 @@
     }
   }
 
-  &:not([disabled]) {
+  &[disabled=false] {
     &:hover {
       color: #ffffff;
 
@@ -425,7 +425,7 @@
   }
 }
 
-.#{$prefix}addon-list-item[disabled] {
+.#{$prefix}addon-list-item[disabled=true] {
   opacity: 0.3;
   cursor: default !important;
   background-color: transparent !important;

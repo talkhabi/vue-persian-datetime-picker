@@ -9,9 +9,9 @@
     />
     <code class="code">{{ date }}</code>
 
-    <template slot="code">
+    <template v-slot:code>
       <!-- eslint-disable -->
-      <highlight-code lang="html" v-pre>
+      <pre v-highlightjs><code class="html" v-pre>
         &lt;date-picker
           v-model="date"
           format="jYYYY/jMM/jDD"
@@ -19,13 +19,13 @@
           name="my_date"
           placeholder="Select a date"
         /&gt;
-      </highlight-code>
+        </code></pre>
       <!-- eslint-enable -->
     </template>
 
-    <template slot="docs">
+    <template v-slot:docs>
       <!-- eslint-disable -->
-      <highlight-code :lang="'javascript'">
+      <pre v-highlightjs><code class="javascript" v-pre>
         // Name for input element
         "name"
         type: String
@@ -43,43 +43,43 @@
         type: String
         default: Null
         example: "Select a date"
-      </highlight-code>
+      </code></pre>
       <!-- eslint-enable -->
       <div class="row">
         <div class="col-md-4">
           <!-- eslint-disable -->
-          <highlight-code lang="html">
+          <pre v-highlightjs><code class="html" v-pre>
             &lt;date-picker name="mdy_date" /&gt;
             output:
             &lt;span class="{{ $prefix }}input-group"&gt;
               &lt;label class="{{ $prefix }}icon-btn"&gt;...&lt;/label&gt;
               &lt;input type="text" name="my_date" class="..."/&gt;
             &lt;/span&gt;
-          </highlight-code>
+          </code></pre>
           <!-- eslint-enable -->
         </div>
         <div class="col-md-4">
           <!-- eslint-disable -->
-          <highlight-code lang="html">
+          <pre v-highlightjs><code class="html" v-pre>
             &lt;date-picker input-class="my-input" /&gt;
             output:
             &lt;span class="{{ $prefix }}input-group"&gt;
               &lt;label class="{{ $prefix }}icon-btn"&gt;...&lt;/label&gt;
               &lt;input type="text" class="my-input" name="..."/&gt;
             &lt;/span&gt;
-          </highlight-code>
+          </code></pre>
           <!-- eslint-enable -->
         </div>
         <div class="col-md-4">
           <!-- eslint-disable -->
-          <highlight-code lang="html">
+          <pre v-highlightjs><code class="html" v-pre>
             &lt;date-picker placeholder="select a date" /&gt;
             output:
             &lt;span class="{{ $prefix }}input-group"&gt;
               &lt;label class="{{ $prefix }}icon-btn"&gt;...&lt;/label&gt;
               &lt;input type="text" placeholder="select a date"/&gt;
             &lt;/span&gt;
-          </highlight-code>
+          </code></pre>
           <!-- eslint-enable -->
         </div>
       </div>

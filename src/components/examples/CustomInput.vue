@@ -9,14 +9,14 @@
       style="max-width:250px"
     />
     <date-picker
-      v-model="date"
+      model-value="date"
       format="jYYYY/jMM/jDD"
       element="my-custom-input"
     />
     <code class="code">{{ date }}</code>
-    <template slot="code">
+    <template v-slot:code>
       <!-- eslint-disable -->
-      <highlight-code lang="html" v-pre>
+      <pre v-highlightjs><code class="html" v-pre>
         &lt;input
           type="text"
           class="form-control form-control-lg"
@@ -30,33 +30,36 @@
           format="jYYYY/jMM/jDD"
           element="my-custom-input"
         /&gt;
-      </highlight-code>
+      </code></pre>
       <!-- eslint-enable -->
     </template>
-    <template slot="docs">
+    <template v-slot:docs>
       <!-- eslint-disable -->
       <p>Sometime you need a custom input element:</p>
-      <highlight-code lang="html">
+      <pre v-highlightjs><code class="html" v-pre>
         &lt;input type="text" name="my_date" class="my-custom-input" /&gt;
-      </highlight-code>
+      </code></pre>
       <p>define an <code class="inline">id</code> for it:</p>
-      <highlight-code lang="html">
+      <pre v-highlightjs><code class="html" v-pre>
         &lt;input type="text" name="my_date" class="my-custom-input" id="my-custom-input-id" /&gt;
-      </highlight-code>
+      </code></pre>
       <p>then pass <code class="inline">id</code> to datepicker:</p>
-      <highlight-code lang="html">
+      <pre v-highlightjs><code class="html" v-pre>
         &lt;date-picker v-model="..." format="..." element="my-custom-input-id" /&gt;
-      </highlight-code>
+      </code></pre>
       <!-- eslint-enable -->
     </template>
   </card>
 </template>
 
 <script>
+  import { ref } from 'vue'
 export default {
-  data() {
+  setup() {
+    const date = ref(null)
+
     return {
-      date: ''
+      date
     }
   }
 }

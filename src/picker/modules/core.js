@@ -62,7 +62,7 @@ const localesConfig = {
   }
 }
 
-const Core = function(defaultLocaleName, defaultOptions) {
+const CoreModule = function(defaultLocaleName, defaultOptions) {
   'use strict'
 
   const Instance = {
@@ -222,6 +222,6 @@ const Core = function(defaultLocaleName, defaultOptions) {
   return Instance
 }
 
-export default Core
+export default CoreModule
 
 export { localesConfig }

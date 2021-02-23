@@ -5,9 +5,9 @@
     code-col-class="col-12"
     sample-col-class="col-12"
   >
-    <template slot="code">
+    <template v-slot:code>
       <!-- eslint-disable -->
-      <highlight-code lang="html" v-pre>
+      <pre v-highlightjs><code class="html" v-pre>
         &lt;date-picker v-model="date"&gt;
 
           &lt;!-- slot for "header-year" --&gt;
@@ -99,7 +99,7 @@
             /&gt;
           &lt;/template&gt;
         &lt;/date-picker&gt;
-      </highlight-code>
+      </code></pre>
       <!-- eslint-enable -->
     </template>
   </card>

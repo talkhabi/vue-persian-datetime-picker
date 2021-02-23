@@ -1,30 +1,30 @@
 <template>
   <div>
     <card title="With initial value">
-      <date-picker v-model="date" format="jYYYY/jMM/jDD" />
+      <date-picker v-model="date" :initial-value="date" format="jYYYY/jMM/jDD" />
       <code class="code">{{ date }}</code>
 
-      <template slot="code">
+      <template v-slot:code>
         <!-- eslint-disable -->
-        <highlight-code lang="html" v-pre>
+        <pre v-highlightjs><code class="html" v-pre>
           &lt;date-picker
             v-model="date"
             format="jYYYY/jMM/jDD"
           /&gt;
-        </highlight-code>
-        <highlight-code lang="javascript">
+        </code></pre>
+        <pre v-highlightjs><code class="javascript" v-pre>
           data() {
             return{
               date: '1396/05/03'
             }
           }
-        </highlight-code>
+        </code></pre>
         <!-- eslint-enable -->
       </template>
 
-      <template slot="docs">
+      <template v-slot:docs>
         <!-- eslint-disable -->
-        <highlight-code :lang="'javascript'">
+        <pre v-highlightjs><code class="javascript" v-pre>
           /**
           * Show datepicker with initial value
           * v-bind:value="..."
@@ -34,13 +34,13 @@
           type: String
           default: Null
           example: 20:20  |  1396/08/08 20:20  |   1396/08/08
-        </highlight-code>
-        <highlight-code lang="html" v-pre>
+        </code></pre>
+        <pre v-highlightjs><code class="html" v-pre>
           &lt;date-picker value="1396/05/05" format="jYYYY/jMM/jDD" /&gt;
           &lt;date-picker value="1396-05-05" format="jYYYY-jMM-jDD" /&gt;
           &lt;date-picker value="2017/10/03" format="YYYY/MM/DD" /&gt;
           &lt;date-picker value="2017/10/03" input-format="YYYY/MM/DD" format="jYYYY/jMM/jDD" /&gt;
-        </highlight-code>
+        </code></pre>
         <!-- eslint-enable -->
       </template>
     </card>
@@ -59,34 +59,22 @@
       <br />
       <date-picker type="month" initial-value="05" />
 
-      <template slot="code">
+      <template v-slot:code>
         <!-- eslint-disable -->
-        <highlight-code lang="html" v-pre>
-          &lt;date-picker v-model="date" initial-value="1370/01/01" /&gt;
-        </highlight-code>
-        <highlight-code lang="html" v-pre>
-          &lt;date-picker v-model="datetime" type="datetime" initial-value="1370/01/01 20:45" /&gt;
-        </highlight-code>
-        <highlight-code lang="html" v-pre>
-          &lt;date-picker v-model="time" type="time" initial-value="20:45" /&gt;
-        </highlight-code>
-        <highlight-code lang="html" v-pre>
-          &lt;date-picker v-model="year" type="year" initial-value="1360" /&gt;
-        </highlight-code>
-        <highlight-code lang="html" v-pre>
-          &lt;date-picker v-model="month" type="month" initial-value="05" /&gt;
-        </highlight-code>
-        <highlight-code lang="javascript" v-pre>
-          data() {
-            return {
-              date: '',
-              time: '',
-              datetime: '',
-              year: '',
-              month: '',
-            }
-          }
-        </highlight-code>
+        <pre v-highlightjs><code class="html" v-pre>&lt;date-picker v-model="date" initial-value="1370/01/01" /&gt;</code></pre>
+        <pre v-highlightjs><code class="html" v-pre>&lt;date-picker v-model="datetime" type="datetime" initial-value="1370/01/01 20:45" /&gt;</code></pre>
+        <pre v-highlightjs><code class="html" v-pre>&lt;date-picker v-model="time" type="time" initial-value="20:45" /&gt;</code></pre>
+        <pre v-highlightjs><code class="html" v-pre>&lt;date-picker v-model="year" type="year" initial-value="1360" /&gt;</code></pre>
+        <pre v-highlightjs><code class="html" v-pre>&lt;date-picker v-model="month" type="month" initial-value="05" /&gt;</code></pre>
+        <pre v-highlightjs><code class="html" v-pre>data() {
+  return {
+    date: '',
+    time: '',
+    datetime: '',
+    year: '',
+    month: '',
+  }
+}</code></pre>
       <!-- eslint-enable -->
       </template>
     </card>
@@ -95,9 +83,11 @@
 
 <script>
 export default {
-  data() {
+  setup() {
+    const date = '1399/12/25'
+
     return {
-      date: '1396/05/03'
+      date
     }
   }
 }

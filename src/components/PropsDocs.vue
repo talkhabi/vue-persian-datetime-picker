@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- eslint-disable -->
-    <highlight-code :lang="'javascript'">
+    <pre v-highlightjs><code class="javascript" v-pre>
       &lbrace;
         /**
          * Default input value
@@ -99,8 +99,8 @@
          * @default False
          * @if false, the picker will shown on input focus
          * @if true, the picker will shown on label click
-         * @note if use  <... :editable="true"> with <... :element="...">
-         *     then you have to control the <... :show="true or false">
+<!--         * @note if use  <... :editable="true"> with <... :element="...">-->
+<!--         *     then you have to control the <... :show="true or false">-->
          */
         editable: false,
 
@@ -110,7 +110,7 @@
          * @default Undefined
          * @desc Sometimes you don't want to use picker default input,
          * so you can use our own input element with "id" attribute
-         * and use  <... element="the_id_of_input">
+<!--         * and use  <... element="the_id_of_input">-->
          */
         element: 'my-input-element-id',
 
@@ -368,7 +368,7 @@
          */
         popover: true
       &rbrace;
-    </highlight-code>
+    </code></pre>
     <!-- eslint-enable -->
   </div>
 </template>

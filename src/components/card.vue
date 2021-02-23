@@ -8,15 +8,15 @@
         </div>
         <div :class="codeColClass"><slot name="code" /></div>
         <div :class="sampleColClass"><slot /></div>
-        <div v-if="hasDocs" class="col-md-12">
+        <div v-if="$slots.docs" class="col-md-12">
           <button
             type="button"
             class="btn btn-sm btn-info"
-            @click="showDocs = !showDocs"
+            @click="state.showDocs = !state.showDocs"
           >
             view more
           </button>
-          <div v-if="showDocs" style="margin-top: 20px">
+          <div v-if="state.showDocs" style="margin-top: 20px">
             <slot name="docs" />
           </div>
         </div>
@@ -26,6 +26,8 @@
 </template>
 
 <script>
+  import { reactive } from 'vue'
+
 export default {
   props: {
     title: { type: String, default: '' },
@@ -33,16 +35,14 @@ export default {
     codeColClass: { type: String, default: 'col-md-6' },
     sampleColClass: { type: String, default: 'col-md-6' }
   },
-  data() {
-    return {
+  setup(props, { slots }) {
+    const state = reactive({
       showDocs: false
+    })
+
+    return {
+      state
     }
-  },
-  computed: {
-    hasDocs() {
-      return this.$slots.docs && this.$slots.docs.length
-    }
-  },
-  methods: {}
+  }
 }
 </script>

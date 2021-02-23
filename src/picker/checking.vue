@@ -6,9 +6,6 @@
     :data-locale="state.localeData.name"
     :data-locale-dir="state.localeData.config.dir"
     :class="{ 'vpd-is-popover': isPopover }"
-    :element="element"
-    :model-value="modelValue"
-    :initial-value="initialValue"
   >
     <span
       v-if="!element"
@@ -36,7 +33,6 @@
         :placeholder="placeholder"
         :value="displayValue"
         :disabled="disabled"
-        :format="format"
         @focus="focus"
         @blur="setOutput"
         @keydown.enter="setOutput"
@@ -189,7 +185,7 @@
                     <transition name="slideX" :class="state.directionClassDate">
                       <div :key="state.date.xMonth()">
                         <div
-                          v-for="(m, mi) in monthDays"
+                          v-for="(m, mi) in monthDays.value"
                           :key="mi"
                           class="vpd-clearfix"
                         >
@@ -464,8 +460,8 @@
 
 <script>
   import { ref, reactive, computed, watch, watchEffect, onMounted, onBeforeUnmount, onUpdated,
-    nextTick } from 'vue'
-  import _ from 'lodash'
+    nextTick, getCurrentInstance } from
+      'vue'
   import CoreModule from './modules/core'
   import { cloneDates, isSameDay } from './modules/utils'
   import Arrow from './components/Arrow.vue'
@@ -915,8 +911,8 @@
         }
       }
       const checkScroll = function () {
-        let step = _.cloneDeep(currentStep)
-        if (step.value === 'y' || (step.value === 'm' && state.visible)) {
+        let step = currentStep.value
+        if (step === 'y' || (step === 'm' && state.visible)) {
           setTimeout(() => {
             let container = null
             if (year.value) {
@@ -1117,6 +1113,7 @@
         state.selectedDates = [now.clone()]
       }
       const setType = function () {
+        console.log(props.type)
         switch (props.type) {
           case 'date':
             state.steps = ['y', 'm', 'd']
@@ -1153,25 +1150,26 @@
         return prop
       }
       const setMinMax = function () {
-        let min = getMoment(props.min)
-        let max = getMoment(props.max)
+        let min = getMoment(props.min),
+          max = getMoment(props.max)
         state.minDate = props.min && min.isValid() ? min : false
         state.maxDate = props.max && max.isValid() ? max : false
       }
       const getMoment = function (date) {
-        let d
-        let moment = state.core.moment
+        let d,
+          moment = state.core.moment
 
         if (date instanceof Date) return moment(date)
-        if (selfInputFormat.value === 'x' || selfInputFormat.value === 'unix') {
+
+        if (selfInputFormat === 'x' || selfInputFormat === 'unix') {
           d = moment(date.toString().length === 10 ? date * 1000 : date * 1)
         } else {
           try {
             if (date) {
-              let a = moment(date, selfInputFormat.value.value)
-              let b = moment(date, selfFormat.value.value)
-              let now = moment()
-              let year = now.xYear()
+              let a = moment(date, selfInputFormat)
+              let b = moment(date, selfFormat)
+              let now = moment(),
+                year = now.xYear()
               if (props.type === 'month') {
                 a.xYear(year)
                 b.xYear(year)
@@ -1445,7 +1443,6 @@
         if (!hasStep('d')) return []
         let min = state.minDate ? state.minDate.clone().startOf('day') : -Infinity
         let max = state.maxDate ? state.maxDate.clone().endOf('day') : Infinity
-        console.log(state.maxDate.clone().endOf('day'))
         return state.core.getWeekArray(state.date.clone()).map(weekItem => {
           return weekItem.map(day => {
             let data = {
@@ -1477,11 +1474,11 @@
       })
       const monthDays = computed(() => {
         if (!props.range || state.selectedDates.length !== 1 || !state.hoveredItem)
-          return month.value
+          return month
         let dates = [state.hoveredItem, state.selectedDates[0]]
         dates.sort((a, b) => a - b)
         let [start, end] = dates
-        return month.value.map(weekItem => {
+        return month.map(weekItem => {
           return weekItem.map(data => {
             if (!data.date) return data
             if (props.range && !data.disabled) {
@@ -1493,10 +1490,9 @@
         })
       })
       const years = computed(() => {
-        if (!hasStep('y') && currentStep.value !== 'y') return []
+        if (!hasStep('y') && currentStep !== 'y') return []
+
         let moment = state.core.moment
-        if (typeof state.maxDate !== 'boolean') state.maxDate = false
-        if (typeof state.minDate !== 'boolean') state.minDate = false
         let min = state.minDate ? state.minDate : moment('1300', 'jYYYY')
         let max = state.maxDate ? state.maxDate : min.clone().add(150, 'year')
         let cy = state.date.xYear()
@@ -1568,7 +1564,7 @@
         return false
       })
       const altFormatted = computed(() => {
-        let format = props.altFormat
+        let format = altFormat
         if (format === '' || format === undefined) {
           switch (props.type) {
             case 'time':
@@ -1656,6 +1652,7 @@
             return convertToLocaleNumber(output.format(format.value))
           })
           .join(' ~ ')
+
       })
       const isDisableTime = computed(() => hasStep('t') && checkDisable('t', state.time))
       const timeAttributes = computed(() => hasStep('t') ? getHighlights('t', state.time) : {})
@@ -1690,9 +1687,9 @@
         state.now = state.core.moment()
       }, 1000)
 
-      onUpdated(() => {
-
-      })
+      // onUpdated(() => {
+      // console.log(convertToLocaleNumber(state.date.xFormat('jMMMM jYYYY')))
+      // })
 
       onMounted(() => {
         state.date = state.core.moment()
@@ -1737,8 +1734,9 @@
       watchEffect(() => setType())
       watchEffect(() => selectedDate)
       watch(() => props.view, () => setView())
-      watch([() => props.modelValue, () => props.initialValue], () => updateDates())
-      watchEffect(() => setMinMax())
+      watch(() => props.modelValue, () => updateDates())
+      watch(() => props.min, () => setMinMax())
+      watch(() => props.max, () => setMinMax())
       watch(() => props.timezone, () => updateDates())
       watch(() => props.inline, (val) => {
         if (!props.disabled) state.visible = !!val

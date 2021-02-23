@@ -1,7 +1,7 @@
 <template>
   <div id="header" class="main-header">
-    <v-icon name="menu" @click.native="$emit('toggleSidebar')" />
-    <h1>VUE PERSIAN DATE TIME PICKER</h1>
+<!--    <v-icon name="menu" @click.native="$emit('toggleSidebar')" />-->
+    <h1><strong>VUE 3</strong> PERSIAN DATE TIME PICKER</h1>
 
     <a href="https://github.com/talkhabi/vue-persian-datetime-picker">
       <svg

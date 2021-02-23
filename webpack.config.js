@@ -1,8 +1,10 @@
 /*eslint no-undef: "error"*/
 /*eslint-env node*/
 
-var path = require('path')
-var webpack = require('webpack')
+const path = require('path')
+const webpack = require('webpack')
+const { VueLoaderPlugin } = require('vue-loader')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
   entry: './src/main.js',
@@ -46,6 +48,9 @@ module.exports = {
               'sass-loader?indentedSyntax'
             ]
           }
+          ,compilerOptions: {
+            isCustomElement: tag => tag === 'plastic-button'
+          }
           // other vue-loader options go here
         }
       },
@@ -65,7 +70,7 @@ module.exports = {
   },
   resolve: {
     alias: {
-      vue$: 'vue/dist/vue.esm.js'
+      vue$: 'vue/dist/vue.esm-bundler.js'
     },
     extensions: ['*', '.js', '.vue', '.json']
   },
@@ -77,7 +82,10 @@ module.exports = {
   performance: {
     hints: false
   },
-  plugins: [new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)],
+  plugins: [
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    new VueLoaderPlugin()
+  ],
   devtool: '#eval-source-map'
 }
 

@@ -3,14 +3,16 @@
     <nav class="main-nav">
       <ul>
         <router-link
-          v-for="route in routes"
+          v-for="route in routesList"
           :key="route.path"
           :to="route.path"
           exact-active-class="active"
-          :class="{ 'is-new': newItems.includes(route.name) }"
-          tag="li"
         >
-          <a>{{ route.meta.pageTitle }}</a>
+          <li
+            :class="{ 'is-new': newItems.includes(route.name), 'un-completed': unCompletedItems.includes(route.name) }"
+          >
+              <a>{{ route.meta.pageTitle }}</a>
+          </li>
         </router-link>
       </ul>
     </nav>
@@ -18,20 +20,22 @@
 </template>
 
 <script>
-import { routes } from '../../routes'
+  import { computed, ref } from 'vue'
+  import { routes } from '../../routes'
 
-export default {
-  name: 'Sidebar',
-  data() {
-    return {
-      newItems: ['locale', 'range', 'multiple', 'popover']
-    }
-  },
-  computed: {
-    routes() {
-      // modify routes here
-      return routes.filter(route => route.meta.showInMenu !== false)
+  export default {
+    name: 'Sidebar',
+    setup () {
+      const activeItem = ref('Home')
+      const newItems = ['locale', 'range', 'multiple', 'popover']
+      const unCompletedItems = ['min-max', 'events']
+      const routesList = computed(() => routes.filter(route => route.meta.showInMenu !== false))
+      return {
+        activeItem,
+        newItems,
+        unCompletedItems,
+        routesList
+      }
     }
   }
-}
 </script>
