@@ -14,24 +14,20 @@
       />
       <br />
       <code class="code">{{ range }}</code>
-      <template slot="code">
+      <template v-slot:code>
         <!-- eslint-disable -->
-        <highlight-code lang="html">
-          &lt;date-picker
-            v-model="range"
-            range
-            clearable
-            format="YYYY-MM-DD"
-            display-format="jMMMM jD"
-          /&gt;
-        </highlight-code>
-        <highlight-code lang="javascript">
-          data() {
-            return {
-              range: []
-            }
-          }
-        </highlight-code>
+        <pre v-highlightjs><code class="html" v-pre>&lt;date-picker
+  v-model="range"
+  range
+  clearable
+  format="YYYY-MM-DD"
+  display-format="jMMMM jD"
+/&gt;</code></pre>
+          <pre v-highlightjs><code class="javascript" v-pre>data() {
+  return {
+    range: []
+  }
+}</code></pre>
         <!-- eslint-enable -->
       </template>
     </card>
@@ -50,27 +46,23 @@
       />
       <br />
       <code class="code">{{ range2 }}</code>
-      <template slot="code">
+      <template v-slot:code>
         <!-- eslint-disable -->
-        <highlight-code lang="html">
-          &lt;date-picker
-            range
-            clearable
-            auto-submit
-            locale="en,fa"
-            min="2021-02-05"
-            max="2021-02-20"
-            format="YYYY-MM-DD HH:mm"
-            display-format="jYYYY/jM/jD"
-          /&gt;
-        </highlight-code>
-        <highlight-code lang="javascript">
-          data() {
-            return {
-              range: []
-            }
-          }
-        </highlight-code>
+        <pre v-highlightjs><code class="html" v-pre>&lt;date-picker
+  range
+  clearable
+  auto-submit
+  locale="en,fa"
+  min="2021-02-05"
+  max="2021-02-20"
+  format="YYYY-MM-DD HH:mm"
+  display-format="jYYYY/jM/jD"
+/&gt;</code></pre>
+        <pre v-highlightjs><code class="javascript" v-pre>data() {
+   return {
+    range: []
+  }
+}</code></pre>
         <!-- eslint-enable -->
       </template>
     </card>

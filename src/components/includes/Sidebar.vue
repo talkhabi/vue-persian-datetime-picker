@@ -28,7 +28,8 @@
     setup () {
       const activeItem = ref('Home')
       const newItems = ['locale', 'range', 'multiple', 'popover']
-      const unCompletedItems = ['min-max', 'events']
+      const unCompletedItems = ['min-max', 'events', 'initial-value', 'different-input-output', 'range',
+        'custom-input', 'custom-editable-input', 'disabling', 'highlight', 'locale', 'events']
       const routesList = computed(() => routes.filter(route => route.meta.showInMenu !== false))
       return {
         activeItem,

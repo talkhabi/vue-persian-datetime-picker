@@ -9,6 +9,7 @@
     :element="element"
     :model-value="modelValue"
     :initial-value="initialValue"
+    :display-format="displayFormat"
   >
     <span
       v-if="!element"
@@ -1199,7 +1200,7 @@
       }
       const focus = function (e) {
         if (props.editable) {
-          if (input) input.focus()
+          if (input) input.value.focus()
         } else {
           if (e) {
             e.preventDefault()
@@ -1217,19 +1218,17 @@
       }
       const setOutput = function (e) {
         if (!props.editable) return
-        let value = e.target.modelValue.split('~')
-
+        let value = e.target.value.split('~')
         let output = value.map(item => {
           item = `${item}`.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '')
           if (item === '') return null
           try {
-            let date = state.core.moment(item, selfDisplayFormat)
+            let date = state.core.moment(item, selfDisplayFormat.value)
             return date.isValid() ? date : null
           } catch (er) {
             return null
           }
         })
-
         state.output = output.filter(d => d)
         state.output.sort((a, b) => a - b)
 
@@ -1300,11 +1299,12 @@
           return false
         }
 
-        let format = selfFormat
+        let format = selfFormat.value
         if (item === 'y') {
           value = state.core.moment(value, 'jYYYY')
         } else if (item === 'd') {
           // remove time from format
+          console.log(format)
           format = format.replace(/(H(H?))|(h(h?))?(:?)m(m?)(:?)(s(s?))?/g, '')
         }
         return check(value, value.format(format))
@@ -1445,7 +1445,7 @@
         if (!hasStep('d')) return []
         let min = state.minDate ? state.minDate.clone().startOf('day') : -Infinity
         let max = state.maxDate ? state.maxDate.clone().endOf('day') : Infinity
-        console.log(state.maxDate.clone().endOf('day'))
+        // console.log(state.maxDate.clone().endOf('day'))
         return state.core.getWeekArray(state.date.clone()).map(weekItem => {
           return weekItem.map(day => {
             let data = {
@@ -1635,7 +1635,7 @@
         })
       })
       const selfDisplayFormat = computed(() => {
-        let format = props.displayFormat.value || selfFormat.value
+        let format = props.displayFormat || selfFormat.value
         let localeFormat = state.localeData.config.displayFormat
         if (localeFormat) {
           return typeof localeFormat === 'function'
@@ -1737,9 +1737,8 @@
       watchEffect(() => setType())
       watchEffect(() => selectedDate)
       watch(() => props.view, () => setView())
-      watch([() => props.modelValue, () => props.initialValue], () => updateDates())
+      watch([() => props.modelValue, () => props.initialValue, () => props.timezone], () => updateDates())
       watchEffect(() => setMinMax())
-      watch(() => props.timezone, () => updateDates())
       watch(() => props.inline, (val) => {
         if (!props.disabled) state.visible = !!val
       })
@@ -1779,7 +1778,7 @@
             if (props.appendTo) {
               try {
                 let container = document.querySelector(props.appendTo)
-                container.appendChild(picker)
+                container.appendChild(picker.value)
               } catch (er) {
                 // eslint-disable-next-line
                 console.warn(`Cannot append picker to "${props.appendTo}"!`)

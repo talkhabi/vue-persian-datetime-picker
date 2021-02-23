@@ -19,15 +19,11 @@
         }"
       />
 
-      <template slot="code">
+      <template v-slot:code>
         <!-- eslint-disable -->
-        <highlight-code lang="html" v-pre>
-          &lt;date-picker locale="en" /&gt;
-        </highlight-code>
-        <highlight-code lang="html" v-pre>
-          &lt;date-picker locale="en,fa" format="YYYY/M/D" /&gt;
-        </highlight-code>
-        <highlight-code lang="html" v-pre>
+        <pre v-highlightjs><code class="html" v-pre>&lt;date-picker locale="en" /&gt; </code></pre>
+        <pre v-highlightjs><code class="html" v-pre>&lt;date-picker locale="en,fa" format="YYYY/M/D" /&gt;</code></pre>
+        <pre v-highlightjs><code class="html" v-pre>
           &lt;date-picker
             locale="fa,en"
             :locale-config="{
@@ -41,13 +37,13 @@
               }
             }"
           /&gt;
-        </highlight-code>
+        </code></pre>
         <!-- eslint-enable -->
       </template>
 
-      <template slot="docs">
+      <template v-slot:docs>
         <!-- eslint-disable -->
-        <highlight-code :lang="'javascript'">
+        <pre v-highlightjs><code class="javascript" v-pre>
           "locale"
           type: String
           default: "fa"
@@ -86,7 +82,7 @@
             }
           }"
           /&gt;
-        </highlight-code>
+        </code></pre>
         <!-- eslint-enable -->
       </template>
     </card>
@@ -98,14 +94,14 @@
       />
       <template slot="code">
         <!-- eslint-disable -->
-        <highlight-code lang="html" v-pre>
+        <pre v-highlightjs><code class="html" v-pre>
           &lt;date-picker
             locale="fr,zh-cn,en,fa,ar-sa"
             :locale-config="localeConfig"
             format="YYYY/M/D"
           /&gt;
-        </highlight-code>
-        <highlight-code :lang="'javascript'">
+        </code></pre>
+        <pre v-highlightjs><code class="javascript" v-pre>
           import moment from 'moment'
           import fr from 'moment/locale/fr'
           import ar from 'moment/locale/ar-sa'
@@ -156,11 +152,11 @@
                     dow: 0,
                     dir: 'ltr',
                     displayFormat: vm => {
-                      return vm.type === 'datetime' ? 'YYYY/MM/DD HH:mm' : 'YYYY/MM/DD'
+                      // return vm.type === 'datetime' ? 'YYYY/MM/DD HH:mm' : 'YYYY/MM/DD'
                     },
                     lang: {
                       label: 'FR',
-                      submit: 'Sélection',
+                      // submit: 'Sélection',
                       cancel: 'Annuler',
                       now: 'Maintenant',
                       nextMonth: 'le mois prochain',
@@ -171,7 +167,7 @@
                     dow: 0,
                     dir: 'ltr',
                     displayFormat: vm => {
-                      return vm.type === 'datetime' ? 'YYYY/MM/DD HH:mm' : 'YYYY/MM/DD'
+                      // return vm.type === 'datetime' ? 'YYYY/MM/DD HH:mm' : 'YYYY/MM/DD'
                     },
                     lang: {
                       label: 'ZH-CN',
@@ -186,7 +182,7 @@
               }
             }
           }
-        </highlight-code>
+        </code></pre>
         <!-- eslint-enable -->
       </template>
     </card>

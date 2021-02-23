@@ -263,11 +263,22 @@ input.is-editable {
       color: $green;
     }
 
-    .hljs-name {
+    .hljs-section,
+    .hljs-name,
+    .hljs-selector-tag,
+    .hljs-deletion,
+    .hljs-subst {
       color: #e06c75;
     }
 
-    .hljs-attr {
+    .hljs-attr,
+    .hljs-variable,
+    .hljs-template-variable,
+    .hljs-type,
+    .hljs-selector-class,
+    .hljs-selector-attr,
+    .hljs-selector-pseudo,
+    .hljs-number {
       color: #d19a66;
     }
 

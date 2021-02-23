@@ -10,13 +10,11 @@
       So be careful when using these options together.
       <!-- eslint-enable -->
     </h5>
-    <template slot="code">
+    <template v-slot:code>
       <!-- eslint-disable -->
-      <highlight-code lang="html" v-pre>
-        &lt;date-picker append-to="body" /&gt;
-        &lt;date-picker append-to="#app" /&gt;
-        &lt;date-picker append-to=".my-custom-container" /&gt;
-      </highlight-code>
+      <pre v-highlightjs><code class="html" v-pre>&lt;date-picker append-to="body" /&gt;
+&lt;date-picker append-to="#app" /&gt;
+&lt;date-picker append-to=".my-custom-container" /&gt;</code></pre>
       <!-- eslint-enable -->
     </template>
   </card>

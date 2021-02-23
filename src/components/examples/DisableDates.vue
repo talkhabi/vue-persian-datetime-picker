@@ -19,10 +19,8 @@
         </span>
       </div>
 
-      <template slot="code">
-        <highlight-code lang="html">
-          &lt;date-picker :disabled="{{ disabled }}" /&gt;
-        </highlight-code>
+      <template v-slot:code>
+        <pre v-highlightjs><code class="html" v-pre>&lt;date-picker :disabled="{{ disabled }}" /&gt;</code></pre>
       </template>
     </card>
 
@@ -185,7 +183,7 @@
         />
       </div>
 
-      <template slot="code">
+      <template v-slot:code>
         <div class="btn-group mb-2">
           <span
             v-for="(btn, k) in buttons"
@@ -200,111 +198,101 @@
 
         <template v-if="tab === 'd'">
           <!-- eslint-disable -->
-          <highlight-code lang="html" v-pre>
-            String
-            &lt;date-picker disable="1397/05/09" /&gt;
+          <pre v-highlightjs><code class="html" v-pre>String
+<!--     -->&lt;date-picker disable="1397/05/09" /&gt;
 
-            Day name
-            &lt;date-picker disable="Friday" /&gt;
+<!--     -->Day name
+<!--     -->&lt;date-picker disable="Friday" /&gt;
 
-            Array of strings
-            &lt;date-picker :disable="['1397/05/07', '1397/05/08', 'Friday']" /&gt;
+<!--     -->Array of strings
+<!--     -->&lt;date-picker :disable="['1397/05/07', '1397/05/08', 'Friday']" /&gt;
 
-            Regular Expressions
-            &lt;date-picker :disable="/1397\/05\/1(.*)/" /&gt;
+<!--     -->Regular Expressions
+<!--     -->&lt;date-picker :disable="/1397\/05\/1(.*)/" /&gt;
 
-            Array of strings and RegExp
-            &lt;date-picker :disable="['1397/05/06', /1397\/05\/1(.*)/]" /&gt;
+<!--     -->Array of strings and RegExp
+<!--     -->&lt;date-picker :disable="['1397/05/06', /1397\/05\/1(.*)/]" /&gt;
 
-            Function
-            &lt;date-picker :disable="checkDate" /&gt;
-            &lt;script&gt;
-              data() {
-                return {}
-              },
-              methods: {
-                checkDate(formatted, dateMoment, checkingFor) {
-                  return (
-                    formatted === '1397/04/03' ||
-                    dateMoment.jMonth() === 4  ||  // means "mordad"
-                    dateMoment.locale('en').format('dddd') === 'Friday'
-                  )
-                }
-              }
-            &lt;/script&gt;
-          </highlight-code>
+<!--     -->Function
+<!--     -->&lt;date-picker :disable="checkDate" /&gt;
+<!--     -->&lt;script&gt;
+<!--     -->  data() {
+<!--     -->    return {}
+<!--     -->  },
+<!--     -->  methods: {
+<!--     -->    checkDate(formatted, dateMoment, checkingFor) {
+<!--     -->      return (
+<!--     -->        formatted === '1397/04/03' ||
+<!--     -->        dateMoment.jMonth() === 4  ||  // means "mordad"
+<!--     -->        dateMoment.locale('en').format('dddd') === 'Friday'
+<!--     -->      )
+<!--     -->    }
+<!--     -->  }
+<!--     -->&lt;/script&gt;</code></pre>
         <!-- eslint-enable -->
         </template>
 
         <template v-if="tab === 'y'">
           <!-- eslint-disable -->
-          <highlight-code lang="html" v-pre>
-            String
-            &lt;date-picker type="year" disable="1396" /&gt;
+          <pre v-highlightjs><code class="html" v-pre>String
+<!--     -->&lt;date-picker type="year" disable="1396" /&gt;
 
-            Array of strings
-            &lt;date-picker type="year" :disable="['1398', '1399']" /&gt;
+<!--     -->Array of strings
+<!--     -->&lt;date-picker type="year" :disable="['1398', '1399']" /&gt;
 
-            Regular Expressions
-            &lt;date-picker type="year" :disable="/139[2-6]/" /&gt;
+<!--     -->Regular Expressions
+<!--     -->&lt;date-picker type="year" :disable="/139[2-6]/" /&gt;
 
-            Array of strings and RegExp
-            &lt;date-picker type="year" :disable="['1398', /138[1-9]/]" /&gt;
-          </highlight-code>
+<!--     -->Array of strings and RegExp
+<!--     -->&lt;date-picker type="year" :disable="['1398', /138[1-9]/]" /&gt;</code></pre>
           <!-- eslint-enable -->
         </template>
 
         <template v-if="tab === 'm'">
           <!-- eslint-disable -->
-          <highlight-code lang="html" v-pre>
-            String
-            &lt;date-picker type="month" disable="04" /&gt;
+          <pre v-highlightjs><code class="html" v-pre>String
+<!--     -->&lt;date-picker type="month" disable="04" /&gt;
 
-            Array of strings
-            &lt;date-picker type="month" :disable="['04', '05', '06']" /&gt;
+<!--     -->Array of strings
+<!--     -->&lt;date-picker type="month" :disable="['04', '05', '06']" /&gt;
 
-            Regular Expressions
-            &lt;date-picker type="month" :disable="/[7-9]/" /&gt;
+<!--     -->Regular Expressions
+<!--     -->&lt;date-picker type="month" :disable="/[7-9]/" /&gt;
 
-            Array of strings and RegExp
-            &lt;date-picker type="month" :disable="['11', /[7-9]/]" /&gt;
-          </highlight-code>
+<!--     -->Array of strings and RegExp
+<!--     -->&lt;date-picker type="month" :disable="['11', /[7-9]/]" /&gt;</code></pre>
           <!-- eslint-enable -->
         </template>
 
         <template v-if="tab === 't'">
           <!-- eslint-disable -->
-          <highlight-code lang="html" v-pre>
-            String
-            &lt;date-picker type="time" disable="22:00" /&gt;
+          <pre v-highlightjs><code class="html" v-pre>String
+<!--     -->&lt;date-picker type="time" disable="22:00" /&gt;
 
-            Array of strings
-            &lt;date-picker type="time" :disable="['22:00', '22:05', '22:10']" /&gt;
+<!--     -->Array of strings
+<!--     -->&lt;date-picker type="time" :disable="['22:00', '22:05', '22:10']" /&gt;
 
-            Regular Expressions
-            &lt;date-picker type="time" :disable="/22:(.*)/" /&gt;
+<!--     -->Regular Expressions
+<!--     -->&lt;date-picker type="time" :disable="/22:(.*)/" /&gt;
 
-            Array of strings and RegExp
-            &lt;date-picker type="time" :disable="['22:00', /22:1[0-5]/]" /&gt;
-          </highlight-code>
+<!--     -->Array of strings and RegExp
+<!--     -->&lt;date-picker type="time" :disable="['22:00', /22:1[0-5]/]" /&gt;</code></pre>
         <!-- eslint-enable -->
         </template>
 
         <template v-if="tab === 'dt'">
           <!-- eslint-disable -->
-          <highlight-code lang="html" v-pre>
-            String
-            &lt;date-picker type="datetime" disable="1397/05/06 22:00" /&gt;
+          <pre v-highlightjs><code class="html" v-pre>String
+&lt;date-picker type="datetime" disable="1397/05/06 22:00" /&gt;
 
-            Array of strings
-            &lt;date-picker type="datetime" :disable="['1397/05/05', '1397/05/06 22:05', 'Friday']" /&gt;
+<!--     -->Array of strings
+<!--     -->&lt;date-picker type="datetime" :disable="['1397/05/05', '1397/05/06 22:05', 'Friday']" /&gt;
 
-            Regular Expressions
-            &lt;date-picker type="datetime" :disable="/1397\/05\/0[1-9] 12:(.*)/" /&gt;
+<!--     -->Regular Expressions
+<!--     -->&lt;date-picker type="datetime" :disable="/1397\/05\/0[1-9] 12:(.*)/" /&gt;
 
-            Array of strings and RegExp
-            &lt;date-picker type="datetime" :disable="['1397/05/06 12:00', /(.*)22:(.*)/]" /&gt;
-          </highlight-code>
+<!--     -->Array of strings and RegExp
+<!--     -->&lt;date-picker type="datetime" :disable="['1397/05/06 12:00', /(.*)22:(.*)/]" /&gt;</code></pre>
           <!-- eslint-enable -->
         </template>
       </template>
