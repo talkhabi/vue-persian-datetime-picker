@@ -71,8 +71,8 @@
             'vpd-is-inline': inline,
             'vpd-is-multiple': multiple,
             'vpd-compact-time': compactTime,
-            'vpd-no-footer': autoSubmit && !hasStep('t')
-          }
+            'vpd-no-footer': autoSubmit && !hasStep('t'),
+          },
         ]"
         :data-type="type"
         @click.self="wrapperClick"
@@ -205,9 +205,9 @@
                                 'vpd-range-first': day.isFirst,
                                 'vpd-range-last': day.isLast,
                                 'vpd-range-between': day.isBetween,
-                                'vpd-range-hover': hoveredItem && day.isHover
+                                'vpd-range-hover': hoveredItem && day.isHover,
                               },
-                              day.attributes.class
+                              day.attributes.class,
                             ]"
                             v-bind="day.attributes"
                             :disabled="day.disabled"
@@ -234,7 +234,7 @@
                 </div>
               </template>
 
-              <div v-else style="height:250px" />
+              <div v-else style="height: 250px" />
 
               <transition name="fade">
                 <div
@@ -243,7 +243,7 @@
                   ref="year"
                   :class="[
                     'vpd-addon-list',
-                    { 'vpd-can-close': steps.length > 1 }
+                    { 'vpd-can-close': steps.length > 1 },
                   ]"
                 >
                   <div class="vpd-addon-list-content">
@@ -254,11 +254,11 @@
                       :class="[
                         'vpd-addon-list-item',
                         { 'vpd-selected': year.selected },
-                        year.attributes.class
+                        year.attributes.class,
                       ]"
                       :style="[
                         { color: year.selected ? color : '' },
-                        year.attributes.style
+                        year.attributes.style,
                       ]"
                       :disabled="year.disabled"
                       @click="selectYear(year)"
@@ -278,7 +278,7 @@
                   ref="month"
                   :class="[
                     'vpd-addon-list vpd-month-list',
-                    { 'vpd-can-close': steps.length > 1 }
+                    { 'vpd-can-close': steps.length > 1 },
                   ]"
                 >
                   <div class="vpd-addon-list-content">
@@ -289,12 +289,12 @@
                       :class="[
                         'vpd-addon-list-item',
                         { 'vpd-selected': monthItem.selected },
-                        monthItem.attributes.class
+                        monthItem.attributes.class,
                       ]"
                       :disabled="monthItem.disabled"
                       :style="[
                         { color: monthItem.selected ? color : '' },
-                        monthItem.attributes.style
+                        monthItem.attributes.style,
                       ]"
                       @click="selectMonth(monthItem)"
                     >
@@ -313,7 +313,7 @@
                   ref="time"
                   :class="[
                     'vpd-addon-list vpd-time',
-                    { 'vpd-disabled': isDisableTime }
+                    { 'vpd-disabled': isDisableTime },
                   ]"
                 >
                   <div class="vpd-addon-list-content">
@@ -343,7 +343,7 @@
                                 transition:
                                   'all ' +
                                   timeData.transitionSpeed +
-                                  'ms ease-in-out'
+                                  'ms ease-in-out',
                               }"
                               v-text="convertToLocaleNumber(item)"
                             />
@@ -384,7 +384,7 @@
                                 transition:
                                   'all ' +
                                   timeData.transitionSpeed +
-                                  'ms ease-in-out'
+                                  'ms ease-in-out',
                               }"
                               v-text="convertToLocaleNumber(item)"
                             />
@@ -477,7 +477,7 @@ export default {
   components: { LocaleChange, Arrow, Btn, CalendarIcon, TimeIcon },
   model: {
     prop: 'value',
-    event: 'input'
+    event: 'input',
   },
   props: {
     /**
@@ -839,7 +839,7 @@ export default {
      * @example <date-picker popover="top-left" />
      * @version 2.6.0
      */
-    popover: { type: [Boolean, String], default: false }
+    popover: { type: [Boolean, String], default: false },
   },
   data() {
     let defaultLocale = this.locale.split(',')[0]
@@ -861,13 +861,13 @@ export default {
         year: 'y',
         month: 'm',
         day: 'd',
-        time: 't'
+        time: 't',
       },
       time: {},
       timeData: {
         transitionSpeed: 300,
         timeout: false,
-        lastUpdate: new Date().getTime()
+        lastUpdate: new Date().getTime(),
       },
       minDate: false,
       maxDate: false,
@@ -876,7 +876,7 @@ export default {
       locales: ['fa'],
       localeData: coreModule.locale,
       windowWidth: window.innerWidth,
-      popoverPlace: 'bottom-right'
+      popoverPlace: 'bottom-right',
     }
   },
   computed: {
@@ -884,12 +884,7 @@ export default {
       return this
     },
     id() {
-      return (
-        '_' +
-        Math.random()
-          .toString(36)
-          .substr(2, 9)
-      )
+      return '_' + Math.random().toString(36).substr(2, 9)
     },
     currentStep() {
       return this.steps[this.step]
@@ -911,25 +906,27 @@ export default {
       if (!format) return ''
 
       let separator = this.multiple ? ' | ' : ' ~ '
-      return this.selectedDates.map(d => d.xFormat(format)).join(separator)
+      return this.selectedDates.map((d) => d.xFormat(format)).join(separator)
     },
     month() {
       if (!this.hasStep('d')) return []
       let min = this.minDate ? this.minDate.clone().startOf('day') : -Infinity
       let max = this.maxDate ? this.maxDate.clone().endOf('day') : Infinity
-      return this.core.getWeekArray(this.date.clone()).map(weekItem => {
-        return weekItem.map(day => {
+      return this.core.getWeekArray(this.date.clone()).map((weekItem) => {
+        return weekItem.map((day) => {
           let data = {
             date: day,
             formatted: '',
             selected: false,
             disabled: false,
-            attributes: {}
+            attributes: {},
           }
           if (!day) return data
           let dayMoment = this.core.moment(day)
           data.formatted = dayMoment.xDate()
-          data.selected = this.selectedDates.find(item => isSameDay(item, day))
+          data.selected = this.selectedDates.find((item) =>
+            isSameDay(item, day)
+          )
           data.disabled =
             (this.minDate && dayMoment.clone().startOf('day') < min) ||
             (this.maxDate && dayMoment.clone().endOf('day') > max) ||
@@ -952,8 +949,8 @@ export default {
       let dates = [this.hoveredItem, this.selectedDates[0]]
       dates.sort((a, b) => a - b)
       let [start, end] = dates
-      return this.month.map(weekItem => {
-        return weekItem.map(data => {
+      return this.month.map((weekItem) => {
+        return weekItem.map((data) => {
           if (!data.date) return data
           if (this.range && !data.disabled) {
             let day = data.date
@@ -972,7 +969,7 @@ export default {
       return this.core
         .getYearsList(min.xYear(), max.xYear())
         .reverse()
-        .map(item => {
+        .map((item) => {
           let year = moment().xYear(item)
           year.selected = cy === item
           year.disabled = this.checkDisable('y', item)
@@ -984,7 +981,7 @@ export default {
       if (this.hasStep('m')) {
         let date = this.date.clone().xStartOf('month')
         let months = this.core.getMonthsList(this.minDate, this.maxDate, date)
-        months.forEach(m => {
+        months.forEach((m) => {
           m.selected = this.date.xMonth() === m.xMonth()
           m.disabled = m.disabled || this.checkDisable('m', m)
           m.attributes = this.getHighlights('m', m)
@@ -1061,7 +1058,7 @@ export default {
             break
         }
       }
-      return this.output.map(d => d.format(format)).join(' ~ ')
+      return this.output.map((d) => d.format(format)).join(' ~ ')
     },
     selfFormat() {
       let format = this.format
@@ -1098,7 +1095,7 @@ export default {
       let output = cloneDates(this.output)
       let format = this.selfFormat
       let isDate = this.value instanceof Date || this.format === 'date'
-      return output.map(item => {
+      return output.map((item) => {
         ;/j\w/.test(format) && item.locale('fa')
         this.setTimezone(item, 'out')
         return isDate ? item.toDate() : item.format(format)
@@ -1120,7 +1117,7 @@ export default {
     displayValue() {
       let format = this.selfDisplayFormat
       return this.output
-        .map(item => {
+        .map((item) => {
           let output = item.clone()
           ;/j\w/.test(format) && output.locale('fa')
           return this.convertToLocaleNumber(output.format(format))
@@ -1142,12 +1139,7 @@ export default {
     },
     weekDays() {
       let names = JSON.parse(
-        JSON.stringify(
-          this.core
-            .moment()
-            .localeData()
-            .weekdaysMin()
-        )
+        JSON.stringify(this.core.moment().localeData().weekdaysMin())
       )
       let dow = this.core.locale.config.dow
       while (dow > 0) {
@@ -1164,7 +1156,7 @@ export default {
     },
     isDataArray() {
       return this.range || this.multiple
-    }
+    },
   },
   watch: {
     type: { handler: 'setType', immediate: true },
@@ -1177,14 +1169,14 @@ export default {
       handler(val) {
         if (!this.disabled) this.visible = !!val
       },
-      immediate: true
+      immediate: true,
     },
     disabled: {
       handler(val) {
         if (val) this.visible = false
         else if (this.inline) this.visible = true
       },
-      immediate: true
+      immediate: true,
     },
     selectedDate(val, old) {
       this.setDirection('directionClass', val, old)
@@ -1205,12 +1197,12 @@ export default {
             this.time = time
             // @todo: this line should apply time to current date selection,
             // not all of them
-            this.selectedDates.forEach(d => d.set({ m: time.minute() }))
+            this.selectedDates.forEach((d) => d.set({ m: time.minute() }))
           }
         }
         if (old) this.setDirection('directionClassTime', val, old)
       },
-      immediate: true
+      immediate: true,
     },
     visible(val) {
       if (val) {
@@ -1246,7 +1238,7 @@ export default {
         this.locales = locales.length ? locales : ['fa']
         if (this.core.locale.name !== this.locales[0])
           this.setLocale(this.locales[0])
-      }
+      },
     },
     localeConfig: {
       deep: true,
@@ -1254,12 +1246,12 @@ export default {
       handler(config) {
         this.core.setLocalesConfig(config)
         this.setLocale(this.localeData.name)
-      }
+      },
     },
     'localeData.name'() {
       this.$emit('localeChange', this.localeData)
       this.setMinMax()
-    }
+    },
   },
   created() {
     this.updateNowInterval = setInterval(() => {
@@ -1273,7 +1265,7 @@ export default {
         else el.addEventListener(type, handler)
       }
       let live = (selector, event, callback, context) => {
-        addEvent(context || document, event, function(e) {
+        addEvent(context || document, event, function (e) {
           let found,
             el = e.target || e.srcElement
           while (el && !(found = el.id === selector)) el = el.parentElement
@@ -1284,7 +1276,7 @@ export default {
         live(this.element, 'click', this.focus)
       }
     })
-    document.body.addEventListener('keydown', e => {
+    document.body.addEventListener('keydown', (e) => {
       e = e || event
       let code = e.keyCode
       if ((code === 9 || code === 27) && this.visible) this.visible = false
@@ -1353,7 +1345,7 @@ export default {
       date.set({
         hour: this.time.hour(),
         minute: this.time.minute(),
-        second: 0
+        second: 0,
       })
       this.date = date.clone()
       this.time = date.clone()
@@ -1367,7 +1359,7 @@ export default {
         }
       } else if (this.multiple) {
         let exists = this.selectedDates.findIndex(
-          d => d.valueOf() === date.valueOf()
+          (d) => d.valueOf() === date.valueOf()
         )
         if (exists > -1) {
           this.selectedDates.splice(exists, 1)
@@ -1382,11 +1374,13 @@ export default {
     selectYear(year) {
       if (year.disabled) return
       this.date = this.date.clone().xYear(year.xYear())
+      this.selectedDates = [this.date]
       this.nextStep()
     },
     selectMonth(month) {
       if (month.disabled) return
       this.date = this.date.clone().xMonth(month.xMonth())
+      this.selectedDates = [this.date]
       this.nextStep()
     },
     setTime(v, k) {
@@ -1429,7 +1423,7 @@ export default {
       if (this.hasStep('t')) {
         let t = { hour: this.time.hour(), minute: this.time.minute() }
         this.date = this.date.set(t).clone()
-        this.selectedDates = selected.map(d => d.set(t).clone())
+        this.selectedDates = selected.map((d) => d.set(t).clone())
       }
 
       if (['year', 'month', 'year-month'].indexOf(this.type) !== -1)
@@ -1571,7 +1565,7 @@ export default {
               a = now.clone().set({
                 h: a.hour(),
                 m: a.minute(),
-                s: 0
+                s: 0,
               })
               b = a.clone()
             }
@@ -1611,7 +1605,7 @@ export default {
       if (!this.editable) return
       let value = e.target.value.split('~')
 
-      let output = value.map(item => {
+      let output = value.map((item) => {
         item = `${item}`.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '')
         if (item === '') return null
         try {
@@ -1622,7 +1616,7 @@ export default {
         }
       })
 
-      this.output = output.filter(d => d)
+      this.output = output.filter((d) => d)
       this.output.sort((a, b) => a - b)
 
       if (this.output.length) {
@@ -1664,10 +1658,7 @@ export default {
           let length = filter.length
           return (
             str.substr(0, length) === filter ||
-            date
-              .clone()
-              .locale('en')
-              .format('dddd') === filter
+            date.clone().locale('en').format('dddd') === filter
           )
         }
         return false
@@ -1729,7 +1720,7 @@ export default {
     setLocale(locale) {
       this.core.changeLocale(locale, this.localeConfig)
       this.date = this.date.clone()
-      this.selectedDates = this.selectedDates.map(d => d.clone())
+      this.selectedDates = this.selectedDates.map((d) => d.clone())
       this.$forceUpdate()
     },
     setTimezone(date, mode) {
@@ -1738,10 +1729,7 @@ export default {
         let r = mode === 'in' ? 1 : -1
         let moment = this.core.moment
         if (typeof tz === 'string') {
-          let t =
-            moment()
-              .utc()
-              .format('YYYY-MM-DDTHH:mm:ss') + tz
+          let t = moment().utc().format('YYYY-MM-DDTHH:mm:ss') + tz
           date.add(moment.parseZone(t).utcOffset() * r, 'minutes')
         } else if (typeof tz === 'boolean' && tz) {
           date.subtract(new Date(date).getTimezoneOffset() * r, 'minutes')
@@ -1753,7 +1741,7 @@ export default {
     },
     convertToLocaleNumber(value) {
       if (this.convertNumbers && this.locale === 'fa') {
-        return `${value}`.replace(/\d+/g, function(digit) {
+        return `${value}`.replace(/\d+/g, function (digit) {
           let ret = ''
           for (let i = 0, len = digit.length; i < len; i++) {
             ret += String.fromCharCode(digit.charCodeAt(i) + 1728)
@@ -1790,7 +1778,7 @@ export default {
         'left-top',
         'left-bottom',
         'right-top',
-        'right-bottom'
+        'right-bottom',
       ]
       if (allowed.indexOf(this.popover) !== -1)
         return (this.popoverPlace = this.popover)
@@ -1806,14 +1794,14 @@ export default {
         if (left <= 0) placement[1] = 'left'
         this.popoverPlace = placement.join('-')
       })
-    }
+    },
   },
   install(Vue, options) {
     let component = this
     options = Vue.util.extend(
       {
         name: 'data-picker',
-        props: {}
+        props: {},
       },
       options
     )
@@ -1824,6 +1812,6 @@ export default {
       }
     }
     Vue.component(options.name, component)
-  }
+  },
 }
 </script>
