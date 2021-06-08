@@ -30,6 +30,10 @@
         type="text"
         :name="name"
         :class="[inputClass, { 'vpd-is-editable': editable }]"
+        :style="{
+          color: dark ? '#fff' : '#000',
+          'background-color': dark ? 'transparent' : '#fff'
+        }"
         :placeholder="placeholder"
         :value="displayValue"
         :disabled="disabled"
