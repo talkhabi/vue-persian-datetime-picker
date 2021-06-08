@@ -80,7 +80,10 @@
         <div ref="container" class="vpd-container">
           <div
             class="vpd-content"
-            :style="{ 'background-color': dark ? '#000' : '' }"
+            :style="{
+              'background-color': dark ? '#000' : '',
+              color: dark ? '#fff' : ''
+            }"
           >
             <div class="vpd-header" :style="{ 'background-color': color }">
               <div
