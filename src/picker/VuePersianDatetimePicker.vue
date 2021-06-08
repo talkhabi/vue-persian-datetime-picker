@@ -426,7 +426,12 @@
                 <span
                   v-if="steps.length > 1 && currentStep !== 'd' && hasStep('d')"
                   class="vpd-close-addon"
-                  :style="{ color: dark ? color : '' }"
+                  :style="{
+                    color: dark ? color : '#444',
+                    'background-color': dark
+                      ? 'rgba(255,255,255, 0.9)'
+                      : 'rgba(0, 0, 0, 0.1)'
+                  }"
                   @click="goStep('d')"
                 >
                   <slot name="close-btn" v-bind="{ vm }">x</slot>
