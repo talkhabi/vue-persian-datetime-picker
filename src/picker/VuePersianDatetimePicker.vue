@@ -15,7 +15,7 @@
       <label
         :for="id"
         class="vpd-icon-btn"
-        :style="{ 'background-color': color }"
+        :style="{ 'background-color': dark ? '#000' : color }"
         @click.prevent.stop="visible = !visible"
       >
         <slot name="label">
