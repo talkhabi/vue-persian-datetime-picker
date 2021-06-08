@@ -134,7 +134,7 @@
                   >
                     <arrow
                       width="10"
-                      fill="#000"
+                      :fill="dark ? '#fff' : '#000'"
                       direction="right"
                       style="vertical-align: middle"
                     />
@@ -148,7 +148,7 @@
                   >
                     <arrow
                       width="10"
-                      fill="#000"
+                      :fill="dark ? '#fff' : '#000'"
                       direction="left"
                       style="vertical-align: middle"
                     />
