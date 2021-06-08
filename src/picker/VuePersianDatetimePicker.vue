@@ -251,6 +251,7 @@
                     'vpd-addon-list',
                     { 'vpd-can-close': steps.length > 1 }
                   ]"
+                  :style="{ 'background-color': dark ? '#000' : '#fff' }"
                 >
                   <div class="vpd-addon-list-content">
                     <div
@@ -263,7 +264,10 @@
                         year.attributes.class
                       ]"
                       :style="[
-                        { color: year.selected ? color : '' },
+                        {
+                          color: year.selected ? color : dark ? '#fff' : '',
+                          'border-color': dark ? '#000' : '#fff'
+                        },
                         year.attributes.style
                       ]"
                       :disabled="year.disabled"
