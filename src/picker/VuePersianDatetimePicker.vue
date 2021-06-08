@@ -652,12 +652,6 @@ export default {
     color: { type: String, default: '#417df4' },
 
     /**
-     * Set to Enabel dark mode
-     * @type Boolean
-     */
-    dark: { type: Boolean, default: false },
-
-    /**
      * Auto submit and hide picker when date selected
      * @type Boolean
      * @default False
