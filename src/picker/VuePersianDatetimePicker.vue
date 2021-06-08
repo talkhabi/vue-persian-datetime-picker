@@ -333,6 +333,7 @@
                     'vpd-addon-list vpd-time',
                     { 'vpd-disabled': isDisableTime }
                   ]"
+                  :style="{ 'background-color': dark ? '#000' : '#fff' }"
                 >
                   <div class="vpd-addon-list-content">
                     <div :class="['vpd-time-h', classFastCounter]">
