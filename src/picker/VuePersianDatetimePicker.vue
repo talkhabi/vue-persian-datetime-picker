@@ -290,6 +290,7 @@
                     'vpd-addon-list vpd-month-list',
                     { 'vpd-can-close': steps.length > 1 }
                   ]"
+                  :style="{ 'background-color': dark ? '#000' : '#fff' }"
                 >
                   <div class="vpd-addon-list-content">
                     <div
@@ -303,7 +304,14 @@
                       ]"
                       :disabled="monthItem.disabled"
                       :style="[
-                        { color: monthItem.selected ? color : '' },
+                        {
+                          color: monthItem.selected
+                            ? color
+                            : dark
+                            ? '#fff'
+                            : '',
+                          'border-color': dark ? '#000' : '#fff'
+                        },
                         monthItem.attributes.style
                       ]"
                       @click="selectMonth(monthItem)"
