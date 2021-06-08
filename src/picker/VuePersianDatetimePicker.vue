@@ -78,7 +78,10 @@
         @click.self="wrapperClick"
       >
         <div ref="container" class="vpd-container">
-          <div class="vpd-content">
+          <div
+            class="vpd-content"
+            :style="{ 'background-color': dark ? '#000' : '' }"
+          >
             <div class="vpd-header" :style="{ 'background-color': color }">
               <div
                 v-if="['date', 'datetime', 'year-month'].indexOf(type) !== -1"
