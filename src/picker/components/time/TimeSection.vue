@@ -2,12 +2,15 @@
   <div :class="['vpd-addon-list vpd-time', { 'vpd-disabled': isDisableTime }]">
     <div class="vpd-addon-list-content">
       <time-column
+        ref="minute"
         v-model="hourModel"
         class="vpd-time-h"
         :attributes="timeAttributes"
         :formatter="convertToLocaleNumber"
+        @filled="focusNext"
       />
       <time-column
+        ref="hour"
         v-model="minuteModel"
         class="vpd-time-m"
         :attributes="timeAttributes"
@@ -96,6 +99,9 @@ export default {
       if (this.isMore(time)) time = this.maxDate.clone()
 
       this.$emit('update:time', time)
+    },
+    focusNext() {
+      this.$refs.hour.$el.querySelector('input').focus()
     }
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <div :class="classFastCounter">
+  <div class="vpd-time-column" :class="classFastCounter">
     <btn
       class="vpd-up-arrow-btn"
       @update="update(1)"
@@ -9,9 +9,22 @@
     </btn>
     <div
       class="vpd-counter"
-      :class="directionClass"
+      :class="[directionClass, { 'vpd-is-focused': isInputFocused }]"
       @mousewheel.stop.prevent="wheelUpdate($event)"
     >
+      <input
+        ref="input"
+        v-model="inputValue"
+        type="tel"
+        :maxlength="selfValue.length"
+        :class="{ 'is-empty': !inputValue.length }"
+        @input="onInputChange"
+        @focus="isInputFocused = true"
+        @blur="isInputFocused = false"
+        @keydown.up.prevent="update(1)"
+        @keydown.down.prevent="update(-1)"
+        @keydown.enter.prevent="onInputSubmit"
+      />
       <div
         v-for="(item, i) in value.toString().split('')"
         :key="`h__${i}`"
@@ -59,19 +72,32 @@ export default {
       classFastCounter: '',
       transitionSpeed: 300,
       timeout: false,
-      lastUpdate: new Date().getTime()
+      lastUpdate: new Date().getTime(),
+      isInputFocused: false,
+      inputValue: ''
     }
   },
   watch: {
     selfValue: {
       handler(val, old) {
         if (old) this.setDirection(val, old)
+        this.inputValue = this.selfValue
         this.$nextTick(() => {
           if (this.value.toString() !== this.selfValue.toString())
             this.selfValue = this.value
         })
       },
       immediate: true
+    },
+    isInputFocused(focused) {
+      if (focused) {
+        this.inputValue = this.selfValue
+        this.$nextTick(() => {
+          this.$refs.input.select()
+        })
+      } else if (this.inputValue) {
+        this.onInputSubmit()
+      }
     }
   },
   methods: {
@@ -98,6 +124,14 @@ export default {
     },
     setDirection(val, old) {
       this.directionClass = val > old ? 'direction-next' : 'direction-prev'
+    },
+    onInputSubmit() {
+      this.selfValue = this.inputValue
+      this.transitionSpeed = 0
+    },
+    onInputChange(event) {
+      if (event.target.value.length >= this.selfValue.length)
+        this.$emit('filled')
     }
   }
 }
