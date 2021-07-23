@@ -311,100 +311,22 @@
               </transition>
 
               <transition name="fade">
-                <div
+                <time-section
                   v-if="hasStep('t')"
                   v-show="currentStep === 't'"
                   ref="time"
-                  :class="[
-                    'vpd-addon-list vpd-time',
-                    { 'vpd-disabled': isDisableTime }
-                  ]"
-                >
-                  <div class="vpd-addon-list-content">
-                    <div :class="['vpd-time-h', classFastCounter]">
-                      <btn
-                        class="vpd-up-arrow-btn"
-                        @update="setTime(1, 'h')"
-                        @fastUpdate="fastUpdateCounter"
-                      >
-                        <arrow width="20" direction="up" />
-                      </btn>
-                      <div
-                        class="vpd-counter"
-                        :class="directionClassTime"
-                        @mousewheel.stop.prevent="wheelSetTime('h', $event)"
-                      >
-                        <div
-                          v-for="(item, i) in time.format('HH').split('')"
-                          :key="`h__${i}`"
-                          class="vpd-counter-item"
-                          v-bind="timeAttributes"
-                        >
-                          <transition name="slideY">
-                            <span
-                              :key="`${item}__${i}_h`"
-                              :style="{
-                                transition:
-                                  'all ' +
-                                  timeData.transitionSpeed +
-                                  'ms ease-in-out'
-                              }"
-                              v-text="convertToLocaleNumber(item)"
-                            />
-                          </transition>
-                        </div>
-                      </div>
-                      <btn
-                        class="vpd-down-arrow-btn"
-                        @update="setTime(-1, 'h')"
-                        @fastUpdate="fastUpdateCounter"
-                      >
-                        <arrow width="20" direction="down" />
-                      </btn>
-                    </div>
-                    <div :class="['vpd-time-m', classFastCounter]">
-                      <btn
-                        class="vpd-up-arrow-btn"
-                        @update="setTime(jumpMinute, 'm')"
-                        @fastUpdate="fastUpdateCounter"
-                      >
-                        <arrow width="20" direction="up" />
-                      </btn>
-                      <div
-                        class="vpd-counter"
-                        :class="directionClassTime"
-                        @mousewheel.stop.prevent="wheelSetTime('m', $event)"
-                      >
-                        <div
-                          v-for="(item, i) in time.format('mm').split('')"
-                          :key="`m__${i}`"
-                          class="vpd-counter-item"
-                          v-bind="timeAttributes"
-                        >
-                          <transition name="slideY">
-                            <span
-                              :key="`${item}__${i}_m`"
-                              :style="{
-                                transition:
-                                  'all ' +
-                                  timeData.transitionSpeed +
-                                  'ms ease-in-out'
-                              }"
-                              v-text="convertToLocaleNumber(item)"
-                            />
-                          </transition>
-                        </div>
-                      </div>
-                      <btn
-                        class="vpd-down-arrow-btn"
-                        @update="setTime(-jumpMinute, 'm')"
-                        @fastUpdate="fastUpdateCounter"
-                      >
-                        <arrow width="20" direction="down" />
-                      </btn>
-                    </div>
-                  </div>
-                </div>
+                  :date.sync="date"
+                  :time.sync="time"
+                  :is-more="isMore"
+                  :is-lower="isLower"
+                  :min-date="minDate"
+                  :max-date="maxDate"
+                  :jump-minute="jumpMinute"
+                  :round-minute="roundMinute"
+                  :get-highlights="getHighlights"
+                  :selected-dates="selectedDates"
+                  :convert-to-locale-number="convertToLocaleNumber"
+                />
               </transition>
 
               <transition name="fade">
@@ -470,15 +392,15 @@
 <script>
 import './assets/scss/style.scss'
 import Arrow from './components/Arrow.vue'
-import Btn from './components/Btn.vue'
-import CalendarIcon from './components/CalendarIcon.vue'
 import TimeIcon from './components/TimeIcon.vue'
+import CalendarIcon from './components/CalendarIcon.vue'
 import CoreModule from './modules/core'
 import LocaleChange from './components/LocaleChange'
 import { cloneDates, isSameDay } from './modules/utils'
+import TimeSection from './components/time/TimeSection'
 
 export default {
-  components: { LocaleChange, Arrow, Btn, CalendarIcon, TimeIcon },
+  components: { TimeSection, LocaleChange, Arrow, CalendarIcon, TimeIcon },
   model: {
     prop: 'value',
     event: 'input'
@@ -857,8 +779,6 @@ export default {
       visible: false,
       directionClass: '',
       directionClassDate: '',
-      directionClassTime: '',
-      classFastCounter: '',
       steps: ['y', 'm', 'd', 't'],
       step: 0,
       shortCodes: {
@@ -868,11 +788,6 @@ export default {
         time: 't'
       },
       time: {},
-      timeData: {
-        transitionSpeed: 300,
-        timeout: false,
-        lastUpdate: new Date().getTime()
-      },
       minDate: false,
       maxDate: false,
       output: [],
@@ -1134,9 +1049,6 @@ export default {
     isDisableTime() {
       return this.hasStep('t') && this.checkDisable('t', this.time)
     },
-    timeAttributes() {
-      return this.hasStep('t') ? this.getHighlights('t', this.time) : {}
-    },
     canSubmit() {
       if (!this.disable) return true
       let can = true
@@ -1191,30 +1103,12 @@ export default {
       immediate: true
     },
     selectedDate(val, old) {
-      this.setDirection('directionClass', val, old)
+      this.setDirection(val, old)
     },
     date(val, old) {
-      this.setDirection('directionClassDate', val, old)
+      this.setDirection(val, old)
       if (this.isLower(this.date)) this.date = this.minDate.clone()
       if (this.isMore(this.date)) this.date = this.maxDate.clone()
-    },
-    time: {
-      handler(val, old) {
-        if (this.hasStep('t') && this.roundMinute) {
-          let time = this.time.clone()
-          let jm = this.jumpMinute
-          let m = (jm - (time.minute() % jm)) % jm
-          time.add({ m })
-          if (time.valueOf() !== this.time.valueOf()) {
-            this.time = time
-            // @todo: this line should apply time to current date selection,
-            // not all of them
-            this.selectedDates.forEach(d => d.set({ m: time.minute() }))
-          }
-        }
-        if (old) this.setDirection('directionClassTime', val, old)
-      },
-      immediate: true
     },
     visible(val) {
       if (val) {
@@ -1342,10 +1236,6 @@ export default {
         }, 100)
       }
     },
-    fastUpdateCounter(e) {
-      if (!e) this.timeData.transitionSpeed = 300
-      this.classFastCounter = e ? 'fast-updating' : ''
-    },
     nextMonth() {
       this.date = this.date.clone().xAdd(1, 'month')
     },
@@ -1395,37 +1285,6 @@ export default {
       this.date = this.date.clone().xMonth(month.xMonth())
       this.selectedDates = [this.date.clone()]
       this.nextStep()
-    },
-    setTime(v, k) {
-      let time = this.time.clone()
-
-      time.add({ [k]: v })
-
-      if (this.type !== 'time') {
-        let date = this.date.clone()
-        time.set({ year: date.year(), month: date.month(), date: date.date() })
-        date.set({ hour: time.hour(), minute: time.minute() })
-        this.date = date
-      }
-
-      if (this.isLower(time)) time = this.minDate.clone()
-      if (this.isMore(time)) time = this.maxDate.clone()
-
-      this.time = time
-
-      let now = new Date().getTime(),
-        def = now - this.timeData.lastUpdate
-      if (20 < def && def < 300) this.timeData.transitionSpeed = def
-      this.timeData.lastUpdate = now
-
-      window.clearTimeout(this.timeData.timeout)
-      this.timeData.timeout = window.setTimeout(() => {
-        this.timeData.transitionSpeed = 300
-      }, 300)
-    },
-    wheelSetTime(k, e) {
-      let delta = k === 'm' ? this.jumpMinute : 1
-      this.setTime(e.wheelDeltaY > 0 ? delta : -delta, k)
     },
     submit(close = true) {
       let steps = this.steps.length - 1
@@ -1551,8 +1410,8 @@ export default {
       let s = this.shortCodes[this.view]
       if (this.hasStep(s)) this.goStep(s)
     },
-    setDirection(prop, val, old) {
-      this[prop] = val > old ? 'direction-next' : 'direction-prev'
+    setDirection(val, old) {
+      this.directionClass = val > old ? 'direction-next' : 'direction-prev'
     },
     setMinMax() {
       let min = this.getMoment(this.min),
