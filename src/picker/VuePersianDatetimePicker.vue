@@ -1306,7 +1306,8 @@ export default {
       let step = this.step + 1
       if (this.compactTime && this.type === 'datetime') step += 1
       if (this.steps.length <= step) {
-        let passSelected = this.selectedDates.length >= (this.range ? 2 : 1)
+        let minLengthToSubmit = this.range ? 2 : this.multiple ? 0 : 1
+        let passSelected = this.selectedDates.length >= minLengthToSubmit
         if ((this.autoSubmit || this.inline) && passSelected) {
           this.submit(!this.multiple)
         }
