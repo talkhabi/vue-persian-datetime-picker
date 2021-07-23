@@ -1738,7 +1738,7 @@ export default {
       let tz = this.timezone
       if (tz) {
         let r = mode === 'in' ? 1 : -1
-        let moment = this.core.moment
+        let moment = this.core.momentBase
         if (typeof tz === 'string') {
           let t =
             moment()

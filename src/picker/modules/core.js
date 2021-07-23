@@ -1,6 +1,7 @@
 /*global getYear*/
 /*eslint no-undef: ["error", { "typeof": true }] */
 
+import momentBase from 'moment'
 import moment from 'moment-jalaali'
 import fa from './moment.locale.fa'
 import utils from './utils'
@@ -67,6 +68,7 @@ const Core = function(defaultLocaleName, defaultOptions) {
 
   const Instance = {
     moment: moment,
+    momentBase: momentBase,
     locale: { name: 'fa', config: {} },
     localesConfig: {},
     setLocalesConfig: null,
