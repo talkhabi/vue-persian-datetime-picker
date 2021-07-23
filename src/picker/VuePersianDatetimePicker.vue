@@ -1456,6 +1456,10 @@ export default {
     updateDates(payload) {
       if (this.isDataArray && !payload) payload = []
 
+      // fix: don't update dates if they are already up to date
+      if (this.date.clone && payload.toString() === this.outputValue.toString())
+        return
+
       const payloadIsArray = payload instanceof Array
       const getDate = (input, index = 0) => {
         let date
