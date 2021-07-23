@@ -37,6 +37,10 @@
             &lt;/ul&gt;
           &lt;/template&gt;
 
+          &lt;!-- slots for "next-month" & "prev-month" --&gt;
+          &lt;i slot="next-month" class="icon-left" /&gt;
+          &lt;i slot="prev-month" class="icon-right" /&gt;
+
           &lt;!-- slot for "weekday" --&gt;
           &lt;template v-slot:weekday="{ vm, day }"&gt;
             &lt;span&gt;{{ day }}&lt;/span&gt;

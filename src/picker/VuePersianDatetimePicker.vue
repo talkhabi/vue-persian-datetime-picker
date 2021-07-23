@@ -129,12 +129,14 @@
                     :disabled="nextMonthDisabled"
                     @click="nextMonth"
                   >
-                    <arrow
-                      width="10"
-                      fill="#000"
-                      direction="right"
-                      style="vertical-align: middle"
-                    />
+                    <slot name="next-month">
+                      <arrow
+                        width="10"
+                        fill="#000"
+                        direction="right"
+                        style="vertical-align: middle"
+                      />
+                    </slot>
                   </button>
                   <button
                     type="button"
@@ -143,12 +145,14 @@
                     :disabled="prevMonthDisabled"
                     @click="prevMonth"
                   >
-                    <arrow
-                      width="10"
-                      fill="#000"
-                      direction="left"
-                      style="vertical-align: middle"
-                    />
+                    <slot name="prev-month">
+                      <arrow
+                        width="10"
+                        fill="#000"
+                        direction="left"
+                        style="vertical-align: middle"
+                      />
+                    </slot>
                   </button>
                   <transition name="slideX">
                     <div
