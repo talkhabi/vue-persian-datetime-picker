@@ -51,7 +51,7 @@
     "eslint-plugin-vue": "^5.2.2",
     "file-loader": "^1.1.4",
     "highlight.js": "^9.12.0",
-    "node-sass": "^4.7.2",
+    "node-sass": "^4.14.1",
     "postcss-loader": "^3.0.0",
     "sass-loader": "^6.0.6",
     "vue": "^2.4.4",
@@ -61,7 +61,7 @@
     "vue-router": "^3.0.2",
     "vue-template-compiler": "^2.4.4",
     "webpack": "^3.6.0",
-    "webpack-dev-server": "^2.9.1"
+    "webpack-dev-server": "^2.11.5"
   },
   "eslintConfig": {
     "root": true,
