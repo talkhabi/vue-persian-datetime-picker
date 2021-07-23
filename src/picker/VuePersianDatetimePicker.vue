@@ -1306,7 +1306,8 @@ export default {
       let step = this.step + 1
       if (this.compactTime && this.type === 'datetime') step += 1
       if (this.steps.length <= step) {
-        let passSelected = this.selectedDates.length >= (this.range ? 2 : 1)
+        let minLengthToSubmit = this.range ? 2 : this.multiple ? 0 : 1
+        let passSelected = this.selectedDates.length >= minLengthToSubmit
         if ((this.autoSubmit || this.inline) && passSelected) {
           this.submit(!this.multiple)
         }
@@ -1382,13 +1383,13 @@ export default {
     selectYear(year) {
       if (year.disabled) return
       this.date = this.date.clone().xYear(year.xYear())
-      this.selectedDates = [this.date]
+      this.selectedDates = [this.date.clone()]
       this.nextStep()
     },
     selectMonth(month) {
       if (month.disabled) return
       this.date = this.date.clone().xMonth(month.xMonth())
-      this.selectedDates = [this.date]
+      this.selectedDates = [this.date.clone()]
       this.nextStep()
     },
     setTime(v, k) {
@@ -1455,6 +1456,10 @@ export default {
     },
     updateDates(payload) {
       if (this.isDataArray && !payload) payload = []
+
+      // fix: don't update dates if they are already up to date
+      if (this.date.clone && payload.toString() === this.outputValue.toString())
+        return
 
       const payloadIsArray = payload instanceof Array
       const getDate = (input, index = 0) => {
@@ -1738,7 +1743,7 @@ export default {
       let tz = this.timezone
       if (tz) {
         let r = mode === 'in' ? 1 : -1
-        let moment = this.core.moment
+        let moment = this.core.momentBase
         if (typeof tz === 'string') {
           let t =
             moment()
