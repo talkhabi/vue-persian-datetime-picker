@@ -1383,13 +1383,13 @@ export default {
     selectYear(year) {
       if (year.disabled) return
       this.date = this.date.clone().xYear(year.xYear())
-      this.selectedDates = [this.date]
+      this.selectedDates = [this.date.clone()]
       this.nextStep()
     },
     selectMonth(month) {
       if (month.disabled) return
       this.date = this.date.clone().xMonth(month.xMonth())
-      this.selectedDates = [this.date]
+      this.selectedDates = [this.date.clone()]
       this.nextStep()
     },
     setTime(v, k) {
