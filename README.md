@@ -121,6 +121,12 @@ This project is licensed under the MIT License
 
 ## Change log
 
+### 2.7.0 (2021-07-23)
+ * Fixed [moment.parseZone](https://github.com/talkhabi/vue-persian-datetime-picker/issues/156)
+ * Fixed Unwanted change of date when using `auto-submit` and `multiple` together
+ * Feat: [Added slots for next-month and prev-month button](https://github.com/talkhabi/vue-persian-datetime-picker/issues/147)
+ * Feat: [Ability to change the time using the keyboard](https://github.com/talkhabi/vue-persian-datetime-picker/issues/159)
+
 ### 2.6.1 (2021-05-17)
  * Fixed [year-month](https://github.com/talkhabi/vue-persian-datetime-picker/issues/150)
 
