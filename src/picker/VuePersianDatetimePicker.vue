@@ -1113,10 +1113,10 @@ export default {
       immediate: true
     },
     selectedDate(val, old) {
-      this.setDirection(val, old)
+      this.setDirection('directionClass', val, old)
     },
     date(val, old) {
-      this.setDirection(val, old)
+      this.setDirection('directionClassDate', val, old)
       if (this.isLower(this.date)) this.date = this.minDate.clone()
       if (this.isMore(this.date)) this.date = this.maxDate.clone()
     },
@@ -1420,8 +1420,8 @@ export default {
       let s = this.shortCodes[this.view]
       if (this.hasStep(s)) this.goStep(s)
     },
-    setDirection(val, old) {
-      this.directionClass = val > old ? 'direction-next' : 'direction-prev'
+    setDirection(prop, val, old) {
+      this[prop] = val > old ? 'direction-next' : 'direction-prev'
     },
     setMinMax() {
       let min = this.getMoment(this.min),
