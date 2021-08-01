@@ -366,7 +366,18 @@
          * @example &lt;date-picker popover="top-left" /&gt;
          * @version 2.6.0
          */
-        popover: true
+        popover: true,
+
+        /**
+         * If you want to change route address in open/close action,
+         * then enable this prop
+         * @type Boolean | String
+         * @default false
+         * @example &lt;date-picker use-router /&gt;          => example.com/home?vpd-75454=active
+         * @example &lt;date-picker use-router="foo" /&gt;    => example.com/home?vpd-foo=active
+         * @example &lt;date-picker id="bar" use-router /&gt; => example.com/home?vpd-bar=active
+         */
+        useRouter: false
       &rbrace;
     </highlight-code>
     <!-- eslint-enable -->
