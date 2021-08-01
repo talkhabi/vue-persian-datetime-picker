@@ -25,6 +25,7 @@ import Timezone from './components/examples/Timezone'
 import Range from './components/examples/Range'
 import Multiple from './components/examples/Multiple'
 import Popover from './components/examples/Popover'
+import UseRouter from './components/examples/UseRouter'
 import PropsDocs from './components/PropsDocs.vue'
 import EventsDocs from './components/EventsDocs.vue'
 import Slots from './components/Slots.vue'
@@ -179,6 +180,12 @@ export const routes = [
     name: 'time-picker',
     meta: { pageTitle: 'Time picker' },
     components: cmp(SimpleTime)
+  },
+  {
+    path: '/use-router',
+    name: 'use-router',
+    meta: { pageTitle: 'Use router' },
+    components: cmp(UseRouter)
   },
   {
     path: '/popover',
