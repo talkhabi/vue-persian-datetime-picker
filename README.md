@@ -121,6 +121,10 @@ This project is licensed under the MIT License
 
 ## Change log
 
+### 2.8.0 (2021-08-01)
+ * Feat: [Added ability to control route in show/close action](https://talkhabi.github.io/vue-persian-datetime-picker/#/use-router)
+ * Fixed Date change animation and transition
+
 ### 2.7.0 (2021-07-23)
  * Fixed [moment.parseZone](https://github.com/talkhabi/vue-persian-datetime-picker/issues/156)
  * Fixed Unwanted change of date when using `auto-submit` and `multiple` together
