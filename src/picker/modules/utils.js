@@ -138,6 +138,6 @@ export const isSameDay = (a, b) => {
  * @param obj
  * @returns {any}
  */
-const clone = obj => JSON.parse(JSON.stringify(obj))
+export const clone = obj => JSON.parse(JSON.stringify(obj))
 
 export default { extend, clone }
