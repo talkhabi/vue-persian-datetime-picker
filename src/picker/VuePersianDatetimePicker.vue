@@ -391,16 +391,19 @@
 
 <script>
 import './assets/scss/style.scss'
-import Arrow from './components/Arrow.vue'
-import TimeIcon from './components/TimeIcon.vue'
-import CalendarIcon from './components/CalendarIcon.vue'
-import CoreModule from './modules/core'
+import Arrow from './components/Arrow'
+import TimeIcon from './components/TimeIcon'
+import CalendarIcon from './components/CalendarIcon'
 import LocaleChange from './components/LocaleChange'
-import { cloneDates, isSameDay } from './modules/utils'
 import TimeSection from './components/time/TimeSection'
+
+import CoreModule from './modules/core'
+import { popupRouteChanger } from './modules/mixins'
+import { cloneDates, isSameDay } from './modules/utils'
 
 export default {
   components: { TimeSection, LocaleChange, Arrow, CalendarIcon, TimeIcon },
+  mixins: [popupRouteChanger],
   model: {
     prop: 'value',
     event: 'input'
@@ -765,7 +768,18 @@ export default {
      * @example <date-picker popover="top-left" />
      * @version 2.6.0
      */
-    popover: { type: [Boolean, String], default: false }
+    popover: { type: [Boolean, String], default: false },
+
+    /**
+     * If you want to change route address in open/close action,
+     * then enable this prop
+     * @type Boolean | String
+     * @default false
+     * @example <date-picker use-router />          => example.com/home?vpd-75454=active
+     * @example <date-picker use-router="foo" />    => example.com/home?vpd-foo=active
+     * @example <date-picker id="bar" use-router /> => example.com/home?vpd-bar=active
+     */
+    useRouter: { type: [Boolean, String], default: false }
   },
   data() {
     let defaultLocale = this.locale.split(',')[0]
@@ -803,12 +817,8 @@ export default {
       return this
     },
     id() {
-      return (
-        '_' +
-        Math.random()
-          .toString(36)
-          .substr(2, 9)
-      )
+      let randId = Math.round(Math.random() * 1000000)
+      return `vpd-${this.$attrs.id || randId}`
     },
     currentStep() {
       return this.steps[this.step]
