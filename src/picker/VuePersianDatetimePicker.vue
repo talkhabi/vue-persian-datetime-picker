@@ -1289,14 +1289,16 @@ export default {
     selectYear(year) {
       if (year.disabled) return
       this.date = this.date.clone().xYear(year.xYear())
-      this.selectedDates = [this.date.clone()]
+      if (['year', 'year-month'].indexOf(this.type) !== -1)
+        this.selectedDates = [this.date.clone()]
       this.$emit('year-change', year)
       this.nextStep()
     },
     selectMonth(month) {
       if (month.disabled) return
       this.date = this.date.clone().xMonth(month.xMonth())
-      this.selectedDates = [this.date.clone()]
+      if (['month', 'year-month'].indexOf(this.type) !== -1)
+        this.selectedDates = [this.date.clone()]
       this.$emit('month-change', month)
       this.nextStep()
     },
