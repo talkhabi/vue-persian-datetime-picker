@@ -1290,6 +1290,7 @@ export default {
       if (year.disabled) return
       this.date = this.date.clone().xYear(year.xYear())
       this.selectedDates = [this.date.clone()]
+      this.$emit('year-change', year)
       this.nextStep()
     },
     selectMonth(month) {
