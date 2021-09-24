@@ -1296,6 +1296,7 @@ export default {
       if (month.disabled) return
       this.date = this.date.clone().xMonth(month.xMonth())
       this.selectedDates = [this.date.clone()]
+      this.$emit('month-change', month)
       this.nextStep()
     },
     submit(close = true) {
