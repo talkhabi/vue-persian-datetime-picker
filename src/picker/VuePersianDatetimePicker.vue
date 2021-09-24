@@ -1248,9 +1248,11 @@ export default {
     },
     nextMonth() {
       this.date = this.date.clone().xAdd(1, 'month')
+      this.$emit('next-month', this.date.clone())
     },
     prevMonth() {
       this.date = this.date.clone().xAdd(-1, 'month')
+      this.$emit('prev-month', this.date.clone())
     },
     selectDay(day) {
       if (!day.date || day.disabled) return
