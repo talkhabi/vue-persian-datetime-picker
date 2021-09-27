@@ -24,7 +24,7 @@ export default {
   name: 'Sidebar',
   data() {
     return {
-      newItems: ['locale', 'range', 'multiple', 'popover', 'use-router']
+      newItems: ['locale', 'simpleMode', 'popover', 'use-router']
     }
   },
   computed: {
