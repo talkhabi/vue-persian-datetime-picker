@@ -377,7 +377,16 @@
          * @example &lt;date-picker use-router="foo" /&gt;    => example.com/home?vpd-foo=active
          * @example &lt;date-picker id="bar" use-router /&gt; => example.com/home?vpd-bar=active
          */
-        useRouter: false
+        useRouter: false,
+
+        /**
+         * Additional attributes for input element
+         * @type Object
+         * @default null
+         * @example &lt;date-picker :input-attrs="{ foo: 'bar' }" /&gt;
+         * @version 2.9.0
+         */
+        inputAttrs: { style: 'color: red' }
       &rbrace;
     </highlight-code>
     <!-- eslint-enable -->
