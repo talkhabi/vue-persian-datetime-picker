@@ -393,7 +393,7 @@
   }
 
   &.#{$prefix}selected {
-    font-size: 17px;
+    font-weight: bold;
     background-color: #f5f5f5;
   }
 }
@@ -778,6 +778,119 @@
     cursor: pointer;
   }
 }
+
+// =======================
+//      Simple Mode
+// =======================
+.#{$prefix}simple-body {
+  .#{$prefix}header {
+    display: flex;
+    padding: 10px;
+    justify-content: space-between;
+  }
+  .#{$prefix}locales {
+    position: static;
+    padding: 0 5px;
+    line-height: unset;
+  }
+}
+
+.#{$prefix}simple-content {
+  display: flex;
+  justify-content: center;
+  height: 240px;
+  direction: ltr;
+
+  .#{$prefix}column {
+    height: 100%;
+    flex-grow: 1;
+    display: flex;
+    flex-flow: column;
+    padding: 5px;
+
+    .#{$prefix}column-header {
+      text-align: center;
+      font-weight: bold;
+      color: black;
+      height: 30px;
+      line-height: 30px;
+    }
+
+    .#{$prefix}column-content {
+      flex-grow: 1;
+      height: 100%;
+      overflow: auto;
+      padding-right: 4px;
+      position: relative;
+      &:before,
+      &:after {
+        display: block;
+        height: 80px;
+        content: '';
+      }
+
+      @media screen and (min-width: 640px) {
+        &::-webkit-scrollbar {
+          width: 8px;
+        }
+        &::-webkit-scrollbar-track {
+          background: rgba(black, 0.05);
+          border-radius: 5px;
+        }
+        &::-webkit-scrollbar-thumb {
+          background: rgba(black, 0.2);
+          border-radius: 5px;
+        }
+        &::-webkit-scrollbar-thumb:hover {
+          background: rgba(black, 0.5);
+        }
+      }
+    }
+  }
+
+  .#{$prefix}addon-list-item {
+    width: 100%;
+    float: none !important;
+    line-height: 42px;
+    height: 44px;
+    border: solid 1px white;
+  }
+
+  .#{$prefix}range-first {
+    border-radius: 40px 40px 0 0;
+  }
+
+  .#{$prefix}range-between {
+    font-weight: bold;
+    background-color: #f5f5f5;
+  }
+
+  .#{$prefix}range-last {
+    border-radius: 0 0 40px 40px;
+    &.#{$prefix}range-first {
+      border-radius: 40px;
+    }
+  }
+
+  .#{$prefix}column.#{$prefix}is-mounted {
+    .#{$prefix}selected:not(.#{$prefix}range-first):not(.#{$prefix}range-last):not([disabled]) {
+      position: sticky;
+      top: 0;
+      bottom: 0;
+    }
+  }
+}
+
+.#{$prefix}is-multiple {
+  .#{$prefix}simple-content {
+    .#{$prefix}column {
+      .#{$prefix}selected {
+        position: static !important;
+      }
+    }
+  }
+}
+
 
 .#{$prefix}dir-ltr {
   .#{$prefix}content,

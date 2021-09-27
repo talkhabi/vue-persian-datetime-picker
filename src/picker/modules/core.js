@@ -45,7 +45,10 @@ const localesConfig = {
       cancel: 'انصراف',
       now: 'اکنون',
       nextMonth: 'ماه بعد',
-      prevMonth: 'ماه قبل'
+      prevMonth: 'ماه قبل',
+      year: 'سال',
+      month: 'ماه',
+      day: 'روز'
     }
   },
   en: {
@@ -58,7 +61,10 @@ const localesConfig = {
       cancel: 'Cancel',
       now: 'Now',
       nextMonth: 'Next month',
-      prevMonth: 'Previous month'
+      prevMonth: 'Previous month',
+      year: 'Year',
+      month: 'Month',
+      day: 'Day'
     }
   }
 }
