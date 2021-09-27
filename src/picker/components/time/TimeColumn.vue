@@ -11,6 +11,7 @@
       class="vpd-counter"
       :class="[directionClass, { 'vpd-is-focused': isInputFocused }]"
       @mousewheel.stop.prevent="wheelUpdate($event)"
+      @DOMMouseScroll.stop.prevent="wheelUpdate($event)"
     >
       <input
         ref="input"
@@ -115,8 +116,9 @@ export default {
       }, 300)
     },
     wheelUpdate(e) {
-      let delta = this.jump
-      this.update(e.wheelDeltaY > 0 ? delta : -delta)
+      const delta = this.jump
+      const goUp = (e.wheelDeltaY || -e.detail) > 0
+      this.update(goUp ? delta : -delta)
     },
     fastUpdateCounter(e) {
       if (!e) this.transitionSpeed = 300

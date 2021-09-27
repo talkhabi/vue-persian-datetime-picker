@@ -33,6 +33,7 @@
         :placeholder="placeholder"
         :value="displayValue"
         :disabled="disabled"
+        v-bind="inputAttrs"
         @focus="focus"
         @blur="setOutput"
         @keydown.enter="setOutput"
@@ -70,7 +71,7 @@
             'vpd-is-range': range,
             'vpd-is-inline': inline,
             'vpd-is-multiple': multiple,
-            'vpd-compact-time': compactTime,
+            'vpd-compact-time': isCompactTime,
             'vpd-no-footer': autoSubmit && !hasStep('t')
           }
         ]"
@@ -79,7 +80,11 @@
       >
         <div ref="container" class="vpd-container">
           <div class="vpd-content">
-            <div class="vpd-header" :style="{ 'background-color': color }">
+            <div
+              v-if="!simple"
+              class="vpd-header"
+              :style="{ 'background-color': color }"
+            >
               <div
                 v-if="['date', 'datetime', 'year-month'].indexOf(type) !== -1"
                 :class="['vpd-year-label', directionClass]"
@@ -120,195 +125,255 @@
               </slot>
             </div>
             <div class="vpd-body">
-              <template v-if="hasStep('d')">
-                <div :class="['vpd-controls', directionClassDate]">
-                  <button
-                    type="button"
-                    class="vpd-next"
-                    :title="lang.nextMonth"
-                    :disabled="nextMonthDisabled"
-                    @click="nextMonth"
-                  >
-                    <slot name="next-month">
-                      <arrow
-                        width="10"
-                        fill="#000"
-                        direction="right"
-                        style="vertical-align: middle"
-                      />
-                    </slot>
-                  </button>
-                  <button
-                    type="button"
-                    class="vpd-prev"
-                    :title="lang.prevMonth"
-                    :disabled="prevMonthDisabled"
-                    @click="prevMonth"
-                  >
-                    <slot name="prev-month">
-                      <arrow
-                        width="10"
-                        fill="#000"
-                        direction="left"
-                        style="vertical-align: middle"
-                      />
-                    </slot>
-                  </button>
-                  <transition name="slideX">
-                    <div
-                      :key="date.xMonth()"
-                      class="vpd-month-label"
-                      @click="goStep('m')"
+              <simple-mode
+                v-if="simple"
+                :lang="lang"
+                :core="core"
+                :range="range"
+                :color="color"
+                :locales="locales"
+                :visible="visible"
+                :multiple="multiple"
+                :years="years"
+                :months="months"
+                :month-days="monthDays"
+                :has-step="hasStep"
+                :selected-dates="selectedDates"
+                :formatted-date="formattedDate"
+                :hovered-item.sync="hoveredItem"
+                :set-locale="setLocale"
+                :convert-to-locale-number="convertToLocaleNumber"
+                @select-year="selectYear"
+                @select-month="selectMonth"
+                @select-day="selectDay"
+              >
+                <template v-slot:header-date="slotData">
+                  <slot name="header-date" v-bind="slotData" />
+                </template>
+                <template v-slot:locales="slotData">
+                  <slot name="locales" v-bind="slotData" />
+                </template>
+                <template v-slot:year-item="slotData">
+                  <slot name="year-item" v-bind="slotData" />
+                </template>
+                <template v-slot:month-item="slotData">
+                  <slot name="month-item" v-bind="slotData" />
+                </template>
+                <template v-slot:day-item="slotData">
+                  <slot name="day-item" v-bind="slotData" />
+                </template>
+              </simple-mode>
+              <template v-else>
+                <template v-if="hasStep('d')">
+                  <div :class="['vpd-controls', directionClassDate]">
+                    <button
+                      type="button"
+                      class="vpd-next"
+                      :title="lang.nextMonth"
+                      :disabled="nextMonthDisabled"
+                      @click="nextMonth"
                     >
-                      <slot name="month-name" v-bind="{ vm, date, color }">
-                        <span
-                          :style="{ 'border-color': color, color }"
-                          v-text="
-                            convertToLocaleNumber(date.xFormat('jMMMM jYYYY'))
-                          "
+                      <slot name="next-month">
+                        <arrow
+                          width="10"
+                          fill="#000"
+                          direction="right"
+                          style="vertical-align: middle"
                         />
                       </slot>
-                    </div>
-                  </transition>
-                </div>
-                <div
-                  class="vpd-clearfix"
-                  :class="['vpd-month', directionClassDate]"
-                >
-                  <div class="vpd-clearfix vpd-week">
-                    <div
-                      v-for="(day, i) in weekDays"
-                      :key="`${i}-${day}`"
-                      class="vpd-weekday"
+                    </button>
+                    <button
+                      type="button"
+                      class="vpd-prev"
+                      :title="lang.prevMonth"
+                      :disabled="prevMonthDisabled"
+                      @click="prevMonth"
                     >
-                      <slot name="weekday" v-bind="{ vm, day }">
-                        {{ day }}
+                      <slot name="prev-month">
+                        <arrow
+                          width="10"
+                          fill="#000"
+                          direction="left"
+                          style="vertical-align: middle"
+                        />
                       </slot>
-                    </div>
-                  </div>
-                  <div
-                    class="vpd-days"
-                    :style="{ height: month.length * 40 + 'px' }"
-                    @mouseleave="hoveredItem = null"
-                  >
-                    <transition name="slideX" :class="directionClassDate">
-                      <div :key="date.xMonth()">
-                        <div
-                          v-for="(m, mi) in monthDays"
-                          :key="mi"
-                          class="vpd-clearfix"
-                        >
-                          <div
-                            v-for="(day, di) in m"
-                            :key="di"
-                            :class="[
-                              'vpd-day',
-                              {
-                                'vpd-selected': day.selected,
-                                'vpd-empty': day.date == null,
-                                'vpd-range-first': day.isFirst,
-                                'vpd-range-last': day.isLast,
-                                'vpd-range-between': day.isBetween,
-                                'vpd-range-hover': hoveredItem && day.isHover
-                              },
-                              day.attributes.class
-                            ]"
-                            v-bind="day.attributes"
-                            :disabled="day.disabled"
-                            @click="selectDay(day)"
-                            @mouseover="hoveredItem = day.date"
-                          >
-                            <template v-if="day.date != null">
-                              <slot name="day-item" v-bind="{ vm, day, color }">
-                                <span
-                                  class="vpd-day-effect"
-                                  :style="{ 'background-color': color }"
-                                />
-                                <span
-                                  class="vpd-day-text"
-                                  v-text="convertToLocaleNumber(day.formatted)"
-                                />
-                              </slot>
-                            </template>
-                          </div>
-                        </div>
+                    </button>
+                    <transition name="slideX">
+                      <div
+                        :key="date.xMonth()"
+                        class="vpd-month-label"
+                        @click="goStep('m')"
+                      >
+                        <slot name="month-name" v-bind="{ vm, date, color }">
+                          <span
+                            :style="{ 'border-color': color, color }"
+                            v-text="
+                              convertToLocaleNumber(date.xFormat('jMMMM jYYYY'))
+                            "
+                          />
+                        </slot>
                       </div>
                     </transition>
                   </div>
-                </div>
+                  <div
+                    class="vpd-clearfix"
+                    :class="['vpd-month', directionClassDate]"
+                  >
+                    <div class="vpd-clearfix vpd-week">
+                      <div
+                        v-for="(day, i) in weekDays"
+                        :key="`${i}-${day}`"
+                        class="vpd-weekday"
+                      >
+                        <slot name="weekday" v-bind="{ vm, day }">
+                          {{ day }}
+                        </slot>
+                      </div>
+                    </div>
+                    <div
+                      class="vpd-days"
+                      :style="{ height: month.length * 40 + 'px' }"
+                      @mouseleave="hoveredItem = null"
+                    >
+                      <transition name="slideX" :class="directionClassDate">
+                        <div :key="date.xMonth()">
+                          <div
+                            v-for="(m, mi) in monthDays"
+                            :key="mi"
+                            class="vpd-clearfix"
+                          >
+                            <div
+                              v-for="(day, di) in m"
+                              :key="di"
+                              :class="[
+                                'vpd-day',
+                                {
+                                  'vpd-selected': day.selected,
+                                  'vpd-empty': day.date == null,
+                                  'vpd-range-first': day.isFirst,
+                                  'vpd-range-last': day.isLast,
+                                  'vpd-range-between': day.isBetween,
+                                  'vpd-range-hover': hoveredItem && day.isHover
+                                },
+                                day.attributes.class
+                              ]"
+                              v-bind="day.attributes"
+                              :disabled="day.disabled"
+                              @click="selectDay(day)"
+                              @mouseover="hoveredItem = day.date"
+                            >
+                              <template v-if="day.date != null">
+                                <slot
+                                  name="day-item"
+                                  v-bind="{ vm, day, color }"
+                                >
+                                  <span
+                                    class="vpd-day-effect"
+                                    :style="{ 'background-color': color }"
+                                  />
+                                  <span
+                                    class="vpd-day-text"
+                                    v-text="
+                                      convertToLocaleNumber(day.formatted)
+                                    "
+                                  />
+                                </slot>
+                              </template>
+                            </div>
+                          </div>
+                        </div>
+                      </transition>
+                    </div>
+                  </div>
+                </template>
+
+                <div v-else style="height:250px" />
+
+                <transition name="fade">
+                  <div
+                    v-if="hasStep('y')"
+                    v-show="currentStep === 'y'"
+                    ref="year"
+                    :class="[
+                      'vpd-addon-list',
+                      { 'vpd-can-close': steps.length > 1 }
+                    ]"
+                  >
+                    <div class="vpd-addon-list-content">
+                      <div
+                        v-for="(year, yi) in years"
+                        :key="yi"
+                        v-bind="year.attributes"
+                        :class="[
+                          'vpd-addon-list-item',
+                          { 'vpd-selected': year.selected },
+                          year.attributes.class
+                        ]"
+                        :style="[
+                          { color: year.selected ? color : '' },
+                          year.attributes.style
+                        ]"
+                        :disabled="year.disabled"
+                        @click="selectYear(year)"
+                      >
+                        <slot name="year-item" v-bind="{ vm, year, color }">
+                          {{ convertToLocaleNumber(year.xFormat('jYYYY')) }}
+                        </slot>
+                      </div>
+                    </div>
+                  </div>
+                </transition>
+
+                <transition name="fade">
+                  <div
+                    v-if="hasStep('m')"
+                    v-show="currentStep === 'm'"
+                    ref="month"
+                    :class="[
+                      'vpd-addon-list vpd-month-list',
+                      { 'vpd-can-close': steps.length > 1 }
+                    ]"
+                  >
+                    <div class="vpd-addon-list-content">
+                      <div
+                        v-for="(monthItem, mi) in months"
+                        :key="mi"
+                        v-bind="monthItem.attributes"
+                        :class="[
+                          'vpd-addon-list-item',
+                          { 'vpd-selected': monthItem.selected },
+                          monthItem.attributes.class
+                        ]"
+                        :disabled="monthItem.disabled"
+                        :style="[
+                          { color: monthItem.selected ? color : '' },
+                          monthItem.attributes.style
+                        ]"
+                        @click="selectMonth(monthItem)"
+                      >
+                        <slot
+                          name="month-item"
+                          v-bind="{ vm, monthItem, color }"
+                        >
+                          {{ monthItem.xFormat('jMMMM') }}
+                        </slot>
+                      </div>
+                    </div>
+                  </div>
+                </transition>
+
+                <transition name="fade">
+                  <span
+                    v-if="
+                      steps.length > 1 && currentStep !== 'd' && hasStep('d')
+                    "
+                    class="vpd-close-addon"
+                    @click="goStep('d')"
+                  >
+                    <slot name="close-btn" v-bind="{ vm }">x</slot>
+                  </span>
+                </transition>
               </template>
-
-              <div v-else style="height:250px" />
-
-              <transition name="fade">
-                <div
-                  v-if="hasStep('y')"
-                  v-show="currentStep === 'y'"
-                  ref="year"
-                  :class="[
-                    'vpd-addon-list',
-                    { 'vpd-can-close': steps.length > 1 }
-                  ]"
-                >
-                  <div class="vpd-addon-list-content">
-                    <div
-                      v-for="(year, yi) in years"
-                      :key="yi"
-                      v-bind="year.attributes"
-                      :class="[
-                        'vpd-addon-list-item',
-                        { 'vpd-selected': year.selected },
-                        year.attributes.class
-                      ]"
-                      :style="[
-                        { color: year.selected ? color : '' },
-                        year.attributes.style
-                      ]"
-                      :disabled="year.disabled"
-                      @click="selectYear(year)"
-                    >
-                      <slot name="year-item" v-bind="{ vm, year, color }">
-                        {{ convertToLocaleNumber(year.xFormat('jYYYY')) }}
-                      </slot>
-                    </div>
-                  </div>
-                </div>
-              </transition>
-
-              <transition name="fade">
-                <div
-                  v-if="hasStep('m')"
-                  v-show="currentStep === 'm'"
-                  ref="month"
-                  :class="[
-                    'vpd-addon-list vpd-month-list',
-                    { 'vpd-can-close': steps.length > 1 }
-                  ]"
-                >
-                  <div class="vpd-addon-list-content">
-                    <div
-                      v-for="(monthItem, mi) in months"
-                      :key="mi"
-                      v-bind="monthItem.attributes"
-                      :class="[
-                        'vpd-addon-list-item',
-                        { 'vpd-selected': monthItem.selected },
-                        monthItem.attributes.class
-                      ]"
-                      :disabled="monthItem.disabled"
-                      :style="[
-                        { color: monthItem.selected ? color : '' },
-                        monthItem.attributes.style
-                      ]"
-                      @click="selectMonth(monthItem)"
-                    >
-                      <slot name="month-item" v-bind="{ vm, monthItem, color }">
-                        {{ monthItem.xFormat('jMMMM') }}
-                      </slot>
-                    </div>
-                  </div>
-                </div>
-              </transition>
 
               <transition name="fade">
                 <time-section
@@ -329,18 +394,9 @@
                 />
               </transition>
 
-              <transition name="fade">
-                <span
-                  v-if="steps.length > 1 && currentStep !== 'd' && hasStep('d')"
-                  class="vpd-close-addon"
-                  @click="goStep('d')"
-                >
-                  <slot name="close-btn" v-bind="{ vm }">x</slot>
-                </span>
-              </transition>
-
-              <br v-if="autoSubmit && !hasStep('t')" />
-
+              <template v-if="autoSubmit && !hasStep('t')">
+                <br v-if="!simple" />
+              </template>
               <div v-else class="vpd-actions">
                 <slot
                   name="submit-btn"
@@ -396,13 +452,21 @@ import TimeIcon from './components/TimeIcon'
 import CalendarIcon from './components/CalendarIcon'
 import LocaleChange from './components/LocaleChange'
 import TimeSection from './components/time/TimeSection'
+import SimpleMode from './components/simple/SimpleMode'
 
 import CoreModule from './modules/core'
 import { popupRouteChanger } from './modules/mixins'
 import { cloneDates, isSameDay } from './modules/utils'
 
 export default {
-  components: { TimeSection, LocaleChange, Arrow, CalendarIcon, TimeIcon },
+  components: {
+    SimpleMode,
+    TimeSection,
+    LocaleChange,
+    Arrow,
+    CalendarIcon,
+    TimeIcon
+  },
   mixins: [popupRouteChanger],
   model: {
     prop: 'value',
@@ -779,7 +843,25 @@ export default {
      * @example <date-picker use-router="foo" />    => example.com/home?vpd-foo=active
      * @example <date-picker id="bar" use-router /> => example.com/home?vpd-bar=active
      */
-    useRouter: { type: [Boolean, String], default: false }
+    useRouter: { type: [Boolean, String], default: false },
+
+    /**
+     * Enable or disable simple mode
+     * @type Boolean
+     * @default false
+     * @example <date-picker simple />
+     * @version 2.9.0
+     */
+    simple: { type: Boolean, default: false },
+
+    /**
+     * Additional attributes for input element
+     * @type Object
+     * @default null
+     * @example <date-picker :input-attrs="{ foo: 'bar' }" />
+     * @version 2.9.0
+     */
+    inputAttrs: { type: Object, default: null }
   },
   data() {
     let defaultLocale = this.locale.split(',')[0]
@@ -893,7 +975,8 @@ export default {
       })
     },
     years() {
-      if (!this.hasStep('y') || this.currentStep !== 'y') return []
+      const isYearSectionVisible = this.currentStep === 'y' || this.simple
+      if (!this.hasStep('y') || !isYearSectionVisible) return []
       let moment = this.core.moment
       let min = this.minDate ? this.minDate : moment('1300', 'jYYYY')
       let max = this.maxDate ? this.maxDate : min.clone().add(150, 'year')
@@ -1090,6 +1173,9 @@ export default {
     },
     isDataArray() {
       return this.range || this.multiple
+    },
+    isCompactTime() {
+      return this.compactTime || (this.type === 'datetime' && this.simple)
     }
   },
   watch: {
@@ -1210,15 +1296,30 @@ export default {
     }
   },
   methods: {
-    nextStep() {
-      let step = this.step + 1
-      if (this.compactTime && this.type === 'datetime') step += 1
-      if (this.steps.length <= step) {
+    nextStep(fromStep) {
+      const checkAndSubmit = () => {
         let minLengthToSubmit = this.range ? 2 : this.multiple ? 0 : 1
         let passSelected = this.selectedDates.length >= minLengthToSubmit
         if ((this.autoSubmit || this.inline) && passSelected) {
           this.submit(!this.multiple)
         }
+      }
+
+      if (this.simple) {
+        if (
+          (this.type === 'date' && fromStep === 'day') ||
+          (this.type === 'year-month' && fromStep === 'month') ||
+          this.type === 'year' ||
+          this.type === 'month'
+        )
+          checkAndSubmit()
+        return
+      }
+
+      let step = this.step + 1
+      if (this.isCompactTime && this.type === 'datetime') step += 1
+      if (this.steps.length <= step) {
+        checkAndSubmit()
       } else {
         this.step++
         this.goStep(this.step)
@@ -1248,9 +1349,11 @@ export default {
     },
     nextMonth() {
       this.date = this.date.clone().xAdd(1, 'month')
+      this.$emit('next-month', this.date.clone())
     },
     prevMonth() {
       this.date = this.date.clone().xAdd(-1, 'month')
+      this.$emit('prev-month', this.date.clone())
     },
     selectDay(day) {
       if (!day.date || day.disabled) return
@@ -1282,25 +1385,29 @@ export default {
       } else {
         this.selectedDates = [date.clone()]
       }
-      this.nextStep()
+      this.nextStep('day')
     },
     selectYear(year) {
       if (year.disabled) return
       this.date = this.date.clone().xYear(year.xYear())
-      this.selectedDates = [this.date.clone()]
-      this.nextStep()
+      if (['year', 'year-month'].indexOf(this.type) !== -1)
+        this.selectedDates = [this.date.clone()]
+      this.$emit('year-change', year)
+      this.nextStep('year')
     },
     selectMonth(month) {
       if (month.disabled) return
       this.date = this.date.clone().xMonth(month.xMonth())
-      this.selectedDates = [this.date.clone()]
-      this.nextStep()
+      if (['month', 'year-month'].indexOf(this.type) !== -1)
+        this.selectedDates = [this.date.clone()]
+      this.$emit('month-change', month)
+      this.nextStep('month')
     },
     submit(close = true) {
       let steps = this.steps.length - 1
       let selected = this.selectedDates
-      if (this.compactTime && this.type === 'datetime') steps -= 1
-      if (this.step < steps) return this.nextStep()
+      if (this.isCompactTime && this.type === 'datetime') steps -= 1
+      if (this.step < steps && !this.simple) return this.nextStep()
 
       if (this.hasStep('t')) {
         let t = { hour: this.time.hour(), minute: this.time.minute() }

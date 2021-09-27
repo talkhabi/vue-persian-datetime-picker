@@ -76,15 +76,33 @@
         </highlight-code>
         <highlight-code lang="scss">
           .highlighted-1 {
-            > span {  color: #EF6C00 !important;  }
+            > span {
+              color: #EF6C00 !important;
+            }
             .{{ $prefix }}day-effect {
               background-color: #f9e1be !important;
               border: solid 1px #EF6C00;
             }
+            // for simple mode:
+            &.{{ $prefix }}addon-list-item {
+              color: #ef6c00 !important;
+              &.{{ $prefix }}selected {
+                background-color: #f9e1be;
+              }
+            }
           }
           .highlighted-2 {
             color: #E91E63;
-            .{{ $prefix }}day-effect {  background-color: #E91E63 !important;  }
+            .{{ $prefix }}day-effect {
+              background-color: #E91E63 !important;
+            }
+            // for simple mode:
+            &.{{ $prefix }}addon-list-item {
+              color: #e91e63 !important;
+              &.{{ $prefix }}selected {
+                background-color: #f1d4de;
+              }
+            }
           }
         </highlight-code>
         <!-- eslint-enable -->
@@ -239,11 +257,25 @@ export default {
     background-color: #f9e1be !important;
     border: solid 1px #ef6c00;
   }
+  // for simple mode:
+  &.vpd-addon-list-item {
+    color: #ef6c00 !important;
+    &.vpd-selected {
+      background-color: #f9e1be;
+    }
+  }
 }
 .highlighted-2 {
   color: #e91e63;
   .vpd-day-effect {
     background-color: #e91e63 !important;
+  }
+  // for simple mode:
+  &.vpd-addon-list-item {
+    color: #e91e63 !important;
+    &.vpd-selected {
+      background-color: #f1d4de;
+    }
   }
 }
 </style>

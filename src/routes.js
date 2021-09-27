@@ -29,6 +29,7 @@ import UseRouter from './components/examples/UseRouter'
 import PropsDocs from './components/PropsDocs.vue'
 import EventsDocs from './components/EventsDocs.vue'
 import Slots from './components/Slots.vue'
+import SimpleMode from './components/examples/SimpleMode'
 
 const cmp = component => ({
   default: component,
@@ -78,6 +79,12 @@ export const routes = [
     name: 'view',
     meta: { pageTitle: 'View at startup' },
     components: cmp(ViewProp)
+  },
+  {
+    path: '/simple-mode',
+    name: 'simpleMode',
+    meta: { pageTitle: 'Simple Mode' },
+    components: cmp(SimpleMode)
   },
   {
     path: '/range',

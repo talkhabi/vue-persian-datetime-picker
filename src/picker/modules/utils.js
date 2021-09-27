@@ -140,4 +140,44 @@ export const isSameDay = (a, b) => {
  */
 export const clone = obj => JSON.parse(JSON.stringify(obj))
 
+/**
+ * https://stackoverflow.com/a/51029299/3183699
+ * @param element
+ * @param duration
+ * @param callback
+ */
+export const scrollIntoCenter = function(element, duration = 200, callback) {
+  const parent = element.parentNode
+  let startingTop = parent.scrollTop
+  let parentCenter = parent.offsetHeight / 2
+  let elementCenter = element.offsetHeight / 2
+  let distance = element.offsetTop - startingTop - parentCenter + elementCenter
+  let start
+  const done = () => {
+    if (typeof callback === 'function') {
+      callback()
+    }
+  }
+
+  if (!duration) {
+    parent.scrollTo(0, startingTop + distance)
+    done()
+    return
+  }
+
+  window.requestAnimationFrame(function step(timestamp) {
+    if (!start) start = timestamp
+    let time = timestamp - start
+    let percent = Math.min(time / duration, 1)
+    parent.scrollTo(0, startingTop + distance * percent)
+
+    // Proceed with animation as long as we wanted it to.
+    if (time < duration) {
+      window.requestAnimationFrame(step)
+    } else {
+      done()
+    }
+  })
+}
+
 export default { extend, clone }
