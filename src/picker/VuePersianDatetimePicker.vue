@@ -850,6 +850,7 @@ export default {
      * @type Boolean
      * @default false
      * @example <date-picker simple />
+     * @version 2.9.0
      */
     simple: { type: Boolean, default: false },
 

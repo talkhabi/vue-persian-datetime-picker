@@ -380,6 +380,15 @@
         useRouter: false,
 
         /**
+         * Enable or disable simple mode
+         * @type Boolean
+         * @default false
+         * @example &lt;date-picker simple /&gt;
+         * @version 2.9.0
+         */
+        simple: false,
+
+        /**
          * Additional attributes for input element
          * @type Object
          * @default null
