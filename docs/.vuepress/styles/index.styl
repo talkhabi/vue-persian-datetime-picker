@@ -1,0 +1,73 @@
+/**
+ * Custom Styles here.
+ *
+ * ref：https://v1.vuepress.vuejs.org/config/#index-styl
+ */
+
+@font-face
+  font-family IRANSans
+  font-style normal
+  font-weight bold
+  font-display fallback
+  src url('/fonts/IRANSansWeb(FaNum)_Bold.eot')
+  src url('/fonts/IRANSansWeb(FaNum)_Bold.eot?#iefix') format('embedded-opentype'),
+    url('/fonts/IRANSansWeb(FaNum)_Bold.woff2') format('woff2'),
+    url('/fonts/IRANSansWeb(FaNum)_Bold.woff') format('woff'),
+    url('/fonts/IRANSansWeb(FaNum)_Bold.ttf') format('truetype')
+
+@font-face
+  font-family IRANSans
+  font-style normal
+  font-weight normal
+  font-display fallback
+  src url('/fonts/IRANSansWeb(FaNum).eot')
+  src url('/fonts/IRANSansWeb(FaNum).eot?#iefix') format('embedded-opentype'),
+    url('/fonts/IRANSansWeb(FaNum).woff2') format('woff2'),
+    url('/fonts/IRANSansWeb(FaNum).woff') format('woff'),
+    url('/fonts/IRANSansWeb(FaNum).ttf') format('truetype')
+
+@font-face
+  font-family IRANSans
+  font-style normal
+  font-weight 300
+  font-display fallback
+  src url('/fonts/IRANSansWeb(FaNum)_Light.eot')
+  src url('/fonts/IRANSansWeb(FaNum)_Light.eot?#iefix') format('embedded-opentype'),
+    url('/fonts/IRANSansWeb(FaNum)_Light.woff2') format('woff2'),
+    url('/fonts/IRANSansWeb(FaNum)_Light.woff') format('woff'),
+    url('/fonts/IRANSansWeb(FaNum)_Light.ttf') format('truetype')
+
+.vpd-container
+  font-family IRANSans, sans-serif
+  font-size 13px
+  button
+    font-family inherit
+
+.vpd-input-group
+  input
+    border-left none
+    border-right solid 1px #dadada
+    border-radius 0
+  label svg + span
+    margin-right 0 !important
+    margin-left 4px
+  .vpd-clear-btn
+    left auto
+    right 0
+
+.vpd-main
+  max-width 260px
+  margin 10px 0 30px
+  display inline-block
+
+.home .hero img
+  max-height 486px!important
+
+.form-control
+  border solid 1px #dadada
+  background white
+  line-height 30px
+  padding 0 15px
+  vertical-align middle
+  &:disabled
+    background-color #e9ecef
