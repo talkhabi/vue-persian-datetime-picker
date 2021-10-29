@@ -4,38 +4,40 @@
  * ref：https://v1.vuepress.vuejs.org/config/#index-styl
  */
 
+$fonts-path = '/vue-persian-datetime-picker/fonts/'
+
 @font-face
   font-family IRANSans
   font-style normal
   font-weight bold
   font-display fallback
-  src url('/fonts/IRANSansWeb(FaNum)_Bold.eot')
-  src url('/fonts/IRANSansWeb(FaNum)_Bold.eot?#iefix') format('embedded-opentype'),
-    url('/fonts/IRANSansWeb(FaNum)_Bold.woff2') format('woff2'),
-    url('/fonts/IRANSansWeb(FaNum)_Bold.woff') format('woff'),
-    url('/fonts/IRANSansWeb(FaNum)_Bold.ttf') format('truetype')
+  src url($fonts-path + 'IRANSansWeb_Bold.eot')
+  src url($fonts-path + 'IRANSansWeb_Bold.eot?#iefix') format('embedded-opentype'),
+  url($fonts-path + 'IRANSansWeb_Bold.woff2') format('woff2'),
+  url($fonts-path + 'IRANSansWeb_Bold.woff') format('woff'),
+  url($fonts-path + 'IRANSansWeb_Bold.ttf') format('truetype')
 
 @font-face
   font-family IRANSans
   font-style normal
   font-weight normal
   font-display fallback
-  src url('/fonts/IRANSansWeb(FaNum).eot')
-  src url('/fonts/IRANSansWeb(FaNum).eot?#iefix') format('embedded-opentype'),
-    url('/fonts/IRANSansWeb(FaNum).woff2') format('woff2'),
-    url('/fonts/IRANSansWeb(FaNum).woff') format('woff'),
-    url('/fonts/IRANSansWeb(FaNum).ttf') format('truetype')
+  src url($fonts-path + 'IRANSansWeb.eot')
+  src url($fonts-path + 'IRANSansWeb.eot?#iefix') format('embedded-opentype'),
+  url($fonts-path + 'IRANSansWeb.woff2') format('woff2'),
+  url($fonts-path + 'IRANSansWeb.woff') format('woff'),
+  url($fonts-path + 'IRANSansWeb.ttf') format('truetype')
 
 @font-face
   font-family IRANSans
   font-style normal
   font-weight 300
   font-display fallback
-  src url('/fonts/IRANSansWeb(FaNum)_Light.eot')
-  src url('/fonts/IRANSansWeb(FaNum)_Light.eot?#iefix') format('embedded-opentype'),
-    url('/fonts/IRANSansWeb(FaNum)_Light.woff2') format('woff2'),
-    url('/fonts/IRANSansWeb(FaNum)_Light.woff') format('woff'),
-    url('/fonts/IRANSansWeb(FaNum)_Light.ttf') format('truetype')
+  src url($fonts-path + 'IRANSansWeb_Light.eot')
+  src url($fonts-path + 'IRANSansWeb_Light.eot?#iefix') format('embedded-opentype'),
+  url($fonts-path + 'IRANSansWeb_Light.woff2') format('woff2'),
+  url($fonts-path + 'IRANSansWeb_Light.woff') format('woff'),
+  url($fonts-path + 'IRANSansWeb_Light.ttf') format('truetype')
 
 .vpd-container
   font-family IRANSans, sans-serif
