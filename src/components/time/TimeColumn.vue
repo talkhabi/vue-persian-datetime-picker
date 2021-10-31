@@ -103,7 +103,7 @@ export default {
   },
   methods: {
     update(value) {
-      this.selfValue = this.selfValue * 1 + value * this.jump
+      this.selfValue = +this.selfValue + value * this.jump
 
       let now = new Date().getTime(),
         def = now - this.lastUpdate

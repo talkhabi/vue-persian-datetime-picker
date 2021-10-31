@@ -2,7 +2,7 @@
   <div :class="['vpd-addon-list vpd-time', { 'vpd-disabled': isDisableTime }]">
     <div class="vpd-addon-list-content">
       <time-column
-        ref="minute"
+        ref="hour"
         v-model="hourModel"
         class="vpd-time-h"
         :attributes="timeAttributes"
@@ -10,9 +10,10 @@
         @filled="focusNext"
       />
       <time-column
-        ref="hour"
+        ref="minute"
         v-model="minuteModel"
         class="vpd-time-m"
+        :jump="jumpMinute"
         :attributes="timeAttributes"
         :formatter="convertToLocaleNumber"
       />
@@ -101,7 +102,7 @@ export default {
       this.$emit('update:time', time)
     },
     focusNext() {
-      this.$refs.hour.$el.querySelector('input').focus()
+      this.$refs.minute.$el.querySelector('input').focus()
     }
   }
 }
