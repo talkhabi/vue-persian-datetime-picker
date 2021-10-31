@@ -147,19 +147,19 @@
                 @select-month="selectMonth"
                 @select-day="selectDay"
               >
-                <template v-slot:header-date="slotData">
+                <template #header-date="slotData">
                   <slot name="header-date" v-bind="slotData" />
                 </template>
-                <template v-slot:locales="slotData">
+                <template #locales="slotData">
                   <slot name="locales" v-bind="slotData" />
                 </template>
-                <template v-slot:year-item="slotData">
+                <template #year-item="slotData">
                   <slot name="year-item" v-bind="slotData" />
                 </template>
-                <template v-slot:month-item="slotData">
+                <template #month-item="slotData">
                   <slot name="month-item" v-bind="slotData" />
                 </template>
-                <template v-slot:day-item="slotData">
+                <template #day-item="slotData">
                   <slot name="day-item" v-bind="slotData" />
                 </template>
               </simple-mode>
