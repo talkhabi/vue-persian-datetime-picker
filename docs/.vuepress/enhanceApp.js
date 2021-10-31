@@ -3,7 +3,7 @@
  *
  * https://v1.vuepress.vuejs.org/guide/basic-config.html#app-level-enhancements
  */
-import VuePersianDatetimePicker from '../../src/picker/VuePersianDatetimePicker'
+import VuePersianDatetimePicker from '../../src/VuePersianDatetimePicker'
 
 export default ({
   Vue, // the version of Vue being used in the VuePress app
