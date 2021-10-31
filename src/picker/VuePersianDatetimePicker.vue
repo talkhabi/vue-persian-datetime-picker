@@ -494,7 +494,7 @@ export default {
      * Format for {value}
      * @type String
      * @default Null
-     * @example jYYYY/jMM/jDD HH:mm | YYYY/MM/DD HH:mm | x | unix | HH:mm
+     * @example jYYYY/jMM/jDD HH:mm | YYYY/MM/DD HH:mm | x | HH:mm
      * @if empty {inputFormat} = {format}
      * @see https://github.com/jalaali/moment-jalaali
      */
@@ -504,7 +504,7 @@ export default {
      * Format only to display the date in the field
      * @type String
      * @default Null
-     * @example jYYYY/jMM/jDD HH:mm | YYYY/MM/DD HH:mm | x | unix | HH:mm
+     * @example jYYYY/jMM/jDD HH:mm | YYYY/MM/DD HH:mm | x | HH:mm
      * @if empty {displayFormat} = {format}
      * @see https://github.com/jalaali/moment-jalaali
      */
