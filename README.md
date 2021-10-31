@@ -127,6 +127,9 @@ This project is licensed under the MIT License
 
 ## Change log
 
+### 2.9.1 (2021-10-31)
+ * Fixed: [Using jumpMinute and roundMinute together](https://github.com/talkhabi/vue-persian-datetime-picker/issues/182)
+
 ### 2.9.0 (2021-09-27)
  * Feat: [Added simple-mode](https://talkhabi.github.io/vue-persian-datetime-picker/#/simple-mode)
  * Feat: [Added `input-attrs`](https://github.com/talkhabi/vue-persian-datetime-picker/issues/170)
