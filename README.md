@@ -14,21 +14,21 @@ If you are using vuejs 3, please refer to [this repository](https://github.com/t
 ```html
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="https://cdn.jsdelivr.net/npm/moment"></script>
-<script src="https://cdn.jsdelivr.net/npm/moment-jalaali@0.7.4/build/moment-jalaali.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vue-persian-datetime-picker/dist/vue-persian-datetime-picker-browser.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment-jalaali@0.9.2/build/moment-jalaali.js"></script>
+<script src="/dist/vue-persian-datetime-picker.umd.min.js"></script>
 <div id="app">
-    <date-picker v-model="date"></date-picker>
+  <date-picker v-model="date"></date-picker>
 </div>
 <script>
-    var app = new Vue({
-        el: '#app',
-        data: {
-            date: '1397/02/02'
-        },
-        components: {
-            DatePicker: VuePersianDatetimePicker
-        }
-    });
+var app = new Vue({
+  el: '#app',
+  data: {
+    date: '1397/02/02'
+  },
+  components: {
+    DatePicker: VuePersianDatetimePicker
+  }
+});
 </script>
 ```
 
@@ -37,22 +37,28 @@ If you are using vuejs 3, please refer to [this repository](https://github.com/t
 npm install vue-persian-datetime-picker --save
 ```
 
-webpack.config.js:
+Configuration for moment to ignore loading locales
 ```javascript
-/**
- * configuration for moment to ignore loading locales
- */
+// webpack.config.js:
 module.exports.plugins = [
-    //...
-    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
-    //...
+  //...
+  new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
+  //...
 ]
+
+// vue.config.js:
+module.exports = {
+  //..
+  configureWebpack: {
+    plugins: [new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)]
+  },
+  //...
+}
 ```
 
 ### Usage
-
-main.js
 ```javascript
+// main.js
 //...
 import VuePersianDatetimePicker from 'vue-persian-datetime-picker';
 Vue.component('date-picker', VuePersianDatetimePicker);
@@ -61,51 +67,51 @@ Vue.component('date-picker', VuePersianDatetimePicker);
 Or in component
 ```html
 <template>
-    <div>
-        <date-picker v-model="date"></date-picker>
-    </div>
+  <div>
+    <date-picker v-model="date"></date-picker>
+  </div>
 </template>
  
 <script>
-    import VuePersianDatetimePicker from 'vue-persian-datetime-picker'
-    export default {
-        data(){
-            return {
-                date: ''
-            }
-        },
-        components: {
-            datePicker: VuePersianDatetimePicker
-        }
+import VuePersianDatetimePicker from 'vue-persian-datetime-picker'
+export default {
+  data(){
+    return {
+      date: ''
     }
+  },
+  components: {
+    datePicker: VuePersianDatetimePicker
+  }
+}
 </script>
 ```
 
 
 ## You can also set default values: 
-main.js
 ```javascript
+// main.js
 import VuePersianDatetimePicker from 'vue-persian-datetime-picker';
 Vue.use(VuePersianDatetimePicker, {
-    name: 'custom-date-picker',
-    props: {
-        inputFormat: 'YYYY-MM-DD HH:mm',
-        format: 'jYYYY-jMM-jDD HH:mm',
-        editable: false,
-        inputClass: 'form-control my-custom-class-name',
-        placeholder: 'Please select a date',
-        altFormat: 'YYYY-MM-DD HH:mm',
-        color: '#00acc1',
-        autoSubmit: false,
-        //...  
-        //... And whatever you want to set as default 
-        //... 
-    }
+  name: 'custom-date-picker',
+  props: {
+    inputFormat: 'YYYY-MM-DD HH:mm',
+    format: 'jYYYY-jMM-jDD HH:mm',
+    editable: false,
+    inputClass: 'form-control my-custom-class-name',
+    placeholder: 'Please select a date',
+    altFormat: 'YYYY-MM-DD HH:mm',
+    color: '#00acc1',
+    autoSubmit: false,
+    //...  
+    //... And whatever you want to set as default 
+    //... 
+  }
 });
 ```
 Then use in component
 ```html
-<custom-date-picker v-model="date"></custom-date-picker>
+<custom-date-picker v-model="date" />
 ```
 
 ### [Click to see full documentation and demo](https://talkhabi.github.io/vue-persian-datetime-picker)
