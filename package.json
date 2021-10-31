@@ -23,11 +23,14 @@
     "url": "https://github.com/talkhabi/vue-persian-datetime-picker"
   },
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "vuepress dev docs",
     "build": "npm run export-common & npm run export-umd",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint",
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs",
+    "docs:deploy": "docs.deploy.sh",
     "export-common": "vue-cli-service build --target lib --name VuePersianDatetimePicker --filename vue-persian-datetime-picker src/VuePersianDatetimePicker.vue --formats commonjs --no-clean",
     "export-umd": "vue-cli-service build --target lib --name VuePersianDatetimePicker --filename vue-persian-datetime-picker src/VuePersianDatetimePicker.vue --formats umd,umd-min --no-clean"
   },
@@ -51,7 +54,8 @@
     "prettier": "^1.19.1",
     "sass-loader": "^8.0.2",
     "vue": "^2.6.11",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.11",
+    "vuepress": "^1.8.2"
   },
   "eslintConfig": {
     "root": true,
