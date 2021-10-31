@@ -6,6 +6,8 @@
 
 See documentation and demo at [vue-persian-datetime-picker](https://talkhabi.github.io/vue-persian-datetime-picker)
 
+If you are using vuejs 3, please refer to [this repository](https://github.com/talkhabi/vue3-persian-datetime-picker).
+
 
 ## Installation
 ### browser
