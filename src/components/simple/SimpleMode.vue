@@ -144,7 +144,7 @@ export default {
     monthDays: { type: Array, default: () => [] },
     selectedDates: { type: Array, default: () => [] },
     formattedDate: { type: String, default: null },
-    hoveredItem: { type: Object, default: null },
+    hoveredItem: { type: Date, default: null },
     locales: { type: Array, default: () => [] },
     core: { type: Object, default: null },
     setLocale: { type: Function, default: null },

@@ -1,6 +1,11 @@
 @import 'variables';
 @import 'transitions';
 
+.#{$prefix}main *,
+.#{$prefix}wrapper * {
+  box-sizing: border-box;
+}
+
 .#{$prefix}clearfix {
   &:after, &:before {
     content: " ";
@@ -13,12 +18,11 @@
 }
 
 .#{$prefix}input-group {
-  display: table;
-  width: 100%;
+  display: flex;
   position: relative;
 
   input {
-    display: table-cell;
+    flex-grow: 1;
     border: 1px solid #dadada;
     border-right: none;
     border-top-right-radius: 0;
@@ -67,15 +71,11 @@
 }
 
 .#{$prefix}icon-btn {
-  display: table-cell;
-  width: 1%;
   cursor: pointer;
   padding: 0 10px;
-  vertical-align: middle;
-
-  > svg {
-    vertical-align: middle;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .#{$prefix}wrapper {
