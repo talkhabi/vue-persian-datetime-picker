@@ -1449,7 +1449,7 @@ export default {
       }
     },
     updateDates(payload) {
-      if (this.isDataArray && !payload) payload = []
+      if (!payload) payload = this.isDataArray ? [] : ''
 
       // fix: don't update dates if they are already up to date
       if (this.date.clone && payload.toString() === this.outputValue.toString())
