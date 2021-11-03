@@ -1,18 +1,19 @@
 # Custom input
 
+- #### Using `custom-input` prop
 ```vue
 <input
-  id="my-custom-input"
-  v-model="date"
   type="text"
-  class="form-control"
+  class="custom-input"
   placeholder="select date"
 />
+<span>date = {{ date }}</span>
 
 <date-picker
   v-model="date"
-  format="jYYYY/jMM/jDD"
-  element="my-custom-input"
+  format="YYYY-MM-DD"
+  display-format="jYYYY-jMM-jDD"
+  custom-input=".custom-input"
 />
 ```
 ```js
@@ -30,6 +31,7 @@ export default {
   data() {
     return {
       date: '',
+      date1: '',
       date2: '',
       show: false
     }
@@ -38,8 +40,54 @@ export default {
 </script>
 
 <input
+  type="text"
+  class="custom-input form-control"
+  placeholder="select date"
+/>
+
+<code>date = {{ date }}</code>
+
+<ClientOnly>
+  <date-picker
+    v-model="date"
+    format="YYYY-MM-DD"
+    display-format="jYYYY-jMM-jDD"
+    custom-input=".custom-input"
+  />
+</ClientOnly>
+
+
+- #### Method B: Using `element` prop (deprecated)
+
+:::details show example
+```vue
+<input
   id="my-custom-input"
   v-model="date"
+  type="text"
+  class="form-control"
+  placeholder="select date"
+/>
+
+<date-picker
+  v-model="date"
+  format="jYYYY/jMM/jDD"
+  element="my-custom-input"
+/>
+```
+```js
+export default {
+  data() {
+    return {
+      date: ''
+    }
+  }
+}
+```
+
+<input
+  id="my-custom-input"
+  v-model="date1"
   type="text"
   class="form-control"
   placeholder="select date"
@@ -47,75 +95,41 @@ export default {
 
 <ClientOnly>
   <date-picker
-    v-model="date"
+    v-model="date1"
     format="jYYYY/jMM/jDD"
     element="my-custom-input"
   />
 </ClientOnly>
 
-::: danger
-Custom input does not support `display-format`.
-
-You have to create a specific component for this purpose or use a computed property.
-
-See the following example:
 :::
 
-```vue
-<input
-  id="my-custom-input"
-  v-model="dateFormatted"
-  type="text"
-  class="form-control"
-  placeholder="select date"
-/>
 
-<date-picker
-  v-model="date"
-  format="YYYY-MM-DD"
-  element="my-custom-input"
-/>
-```
-```js
-import moment from 'moment-jalaali'
-export default {
-  data() {
-    return {
-      date: ''
-    }
-  },
-  computed: {
-    dateFormatted() {
-      return moment(this.date, 'YYYY-MM-DD').format('jYYYY/jMM/jDD')
-    }
-  }
-}
-```
+::: danger
+`element` does not support `display-format`.
+
+please use `custom-input`.
+:::
+
 
 ### Custom editable input
 ```vue
-<button
-  type="button"
-  class="btn btn-primary"
-  @click="show=true"
->
+<button type="button" class="btn btn-primary" @click="show = true">
   Show Datepicker
 </button>
 
 <input
   id="my-custom-editable-input"
-  v-model="date"
   type="text"
-  class="form-control is-editable"
   placeholder="YYYY/MM/DD"
 />
 
 <date-picker
   v-model="date"
-  format="jYYYY/jMM/jDD"
-  element="my-custom-editable-input"
-  :editable="true"
   :show="show"
+  :editable="true"
+  format="YYYY-MM-DD"
+  display-format="jYYYY/jMM/jDD"
+  custom-input="#my-custom-editable-input"
   @close="show=false"
 />
 ```
@@ -139,17 +153,19 @@ Show Datepicker
   type="text"
   class="form-control is-editable"
   placeholder="YYYY/MM/DD"
-  v-model="date2"
   id="my-custom-editable-input"
 />
+
+<code>date = {{ date2 }}</code>
 
 <ClientOnly>
   <date-picker
     v-model="date2"
-    format="jYYYY/jMM/jDD"
-    element="my-custom-editable-input"
-    :editable="true"
     :show="show"
+    :editable="true"
+    format="YYYY-MM-DD"
+    display-format="jYYYY/jMM/jDD"
+    custom-input="#my-custom-editable-input"
     @close="show=false"
   />
 </ClientOnly>

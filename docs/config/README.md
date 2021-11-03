@@ -94,14 +94,23 @@ Editable input or just readonly
 
 
 ## element
-
-The specified input element ID
+Deprecated, Use [customInput](/config/#custominput)
 
 Sometimes you don't want to use picker default input,
 so you can use our own input element with `id` attribute
 - Type: `String`
 - Default: `undefined`
 - Example: `the-id-of-custom-input`
+
+
+## customInput
+New version of `element`
+use this instead of `element`, this custom input does not need v-model, and it will be automatically updated
+also supports `display-format`
+- Type: String (DOMString containing a selector list)
+- Default: `undefined`
+- Example: `.my-custom-input`
+- Version: `>= 2.10.0`
 
 
 ## name
