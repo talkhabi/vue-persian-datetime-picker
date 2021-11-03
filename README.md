@@ -129,11 +129,14 @@ This project is licensed under the MIT License
 
 ## Change log
 
+### 2.10.0 (2021-11-03)
+ * Feat: Added support for display format when using [`custom-input`](https://talkhabi.github.io/vue-persian-datetime-picker/guide/custom-input.html)
+
 ### 2.9.1 (2021-10-31)
  * Fixed: [Using jumpMinute and roundMinute together](https://github.com/talkhabi/vue-persian-datetime-picker/issues/182)
 
 ### 2.9.0 (2021-09-27)
- * Feat: [Added simple-mode](https://talkhabi.github.io/vue-persian-datetime-picker/#/simple-mode)
+ * Feat: [Added simple-mode](https://talkhabi.github.io/vue-persian-datetime-picker/guide/simple-mode.html)
  * Feat: [Added `input-attrs`](https://github.com/talkhabi/vue-persian-datetime-picker/issues/170)
  * Feat: [Added `@next-month` and `@prev-month` events](https://github.com/talkhabi/vue-persian-datetime-picker/issues/176)
  * Feat: Added `@year-change` and `@month-change` events
@@ -141,7 +144,7 @@ This project is licensed under the MIT License
  * Fixed: Prevent selected dates from being reset
 
 ### 2.8.0 (2021-08-01)
- * Feat: [Added ability to control route in show/close action](https://talkhabi.github.io/vue-persian-datetime-picker/#/use-router)
+ * Feat: [Added ability to control route in show/close action](https://talkhabi.github.io/vue-persian-datetime-picker/guide/use-router.html)
  * Fixed Date change animation and transition
 
 ### 2.7.0 (2021-07-23)
@@ -154,12 +157,12 @@ This project is licensed under the MIT License
  * Fixed [year-month](https://github.com/talkhabi/vue-persian-datetime-picker/issues/150)
 
 ### 2.6.0 (2021-02-05)
- * Added [multiple selection](https://talkhabi.github.io/vue-persian-datetime-picker/#/multiple) (for type `date` only)
- * Added [popover mode](https://talkhabi.github.io/vue-persian-datetime-picker/#/popover)
+ * Added [multiple selection](https://talkhabi.github.io/vue-persian-datetime-picker/guide/multiple.html) (for type `date` only)
+ * Added [popover mode](https://talkhabi.github.io/vue-persian-datetime-picker/guide/popover.html)
  * Close picker with `escape` key, fixes [#141](https://github.com/talkhabi/vue-persian-datetime-picker/issues/141)
  
 ### 2.5.0 (2021-01-30)
- * Added [range option](https://talkhabi.github.io/vue-persian-datetime-picker/#/range) (for type `date` only)
+ * Added [range option](https://talkhabi.github.io/vue-persian-datetime-picker/guide/range.html) (for type `date` only)
  * Fixed [#136](https://github.com/talkhabi/vue-persian-datetime-picker/issues/136)
 
 ### 2.4.1 (2020-11-13)
@@ -176,8 +179,8 @@ This project is licensed under the MIT License
  * Added [`convert-numbers`](https://github.com/talkhabi/vue-persian-datetime-picker/pull/117) prop that converts numbers to persian in fa locale: `<date-picker convert-numbers />`
 
 ### 2.2.0 (2020-08-02)
- * [Custom localization](https://talkhabi.github.io/vue-persian-datetime-picker/#/locale) is now supported
- * Added some [slots](https://talkhabi.github.io/vue-persian-datetime-picker/#/slots)
+ * [Custom localization](https://talkhabi.github.io/vue-persian-datetime-picker/guide/localization.html) is now supported
+ * Added some [slots](https://talkhabi.github.io/vue-persian-datetime-picker/guide/slots.html)
 
 ### 2.1.6 (2020-07-13)
  * Fixed `locale-config` prop [#116](https://github.com/talkhabi/vue-persian-datetime-picker/issues/116)
