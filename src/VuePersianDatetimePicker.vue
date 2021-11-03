@@ -8,7 +8,7 @@
     :class="{ 'vpd-is-popover': isPopover }"
   >
     <span
-      v-if="!element"
+      v-if="!customInputElement"
       ref="inputGroup"
       :class="['vpd-input-group', { 'vpd-disabled': disabled }]"
     >
@@ -457,6 +457,7 @@ import SimpleMode from './components/simple/SimpleMode'
 import CoreModule from './modules/core'
 import { popupRouteChanger } from './modules/mixins'
 import { cloneDates, isSameDay } from './modules/utils'
+import { addLiveEvent } from './modules/utils'
 
 export default {
   components: {
@@ -575,6 +576,7 @@ export default {
     editable: { type: Boolean, default: false },
 
     /**
+     * @deprecated
      * The specified input element ID
      * @type String
      * @default Undefined
@@ -583,6 +585,17 @@ export default {
      * and use <... element="the_id_of_input">
      */
     element: { type: String, default: undefined },
+
+    /**
+     * New version of `element`
+     * @type String (DOMString containing a selector list)
+     * @desc use this instead of `element`,
+     * this custom input does not need v-model, and it will be automatically updated
+     * also supports `display-format`
+     * @example .my-custom-input | #my-custom-input | div.foo > input
+     * @version 2.10.0
+     */
+    customInput: { type: String, default: undefined },
 
     /**
      * The form input name when not using {element}
@@ -1176,6 +1189,10 @@ export default {
     },
     isCompactTime() {
       return this.compactTime || (this.type === 'datetime' && this.simple)
+    },
+    customInputElement() {
+      if (this.element) return `#${this.element}`
+      return this.customInput
     }
   },
   watch: {
@@ -1253,6 +1270,14 @@ export default {
     'localeData.name'() {
       this.$emit('localeChange', this.localeData)
       this.setMinMax()
+    },
+    displayValue: {
+      immediate: true,
+      handler: function(displayValue) {
+        if (!this.customInput) return
+        const customInput = document.querySelector(this.customInput)
+        if (customInput) customInput.value = displayValue
+      }
     }
   },
   created() {
@@ -1262,21 +1287,10 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-      let addEvent = (el, type, handler) => {
-        if (el.attachEvent) el.attachEvent('on' + type, handler)
-        else el.addEventListener(type, handler)
-      }
-      let live = (selector, event, callback, context) => {
-        addEvent(context || document, event, function(e) {
-          let found,
-            el = e.target || e.srcElement
-          while (el && !(found = el.id === selector)) el = el.parentElement
-          if (found) callback.call(el, e)
-        })
-      }
-      if (this.element && !this.editable) {
-        live(this.element, 'click', this.focus)
-      }
+      if (this.customInputElement && !this.editable)
+        addLiveEvent(this.customInputElement, 'click', this.focus)
+      if (this.customInput && this.editable)
+        addLiveEvent(this.customInput, 'blur', this.setOutput)
     })
     document.body.addEventListener('keydown', e => {
       e = e || event
