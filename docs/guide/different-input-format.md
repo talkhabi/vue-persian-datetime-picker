@@ -40,7 +40,7 @@ returns formatted datetime
 <date-picker
   value="1396-05-05"
   input-format="jYYYY-jMM-jDD"
-  format="YYYY/MM/jDD"
+  format="YYYY/MM/DD"
   @input="date=$event"
 />
 ```
