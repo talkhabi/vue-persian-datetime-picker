@@ -129,6 +129,9 @@ This project is licensed under the MIT License
 
 ## Change log
 
+### 2.10.1 (2021-11-12)
+ * Fixed build problem #191 #190 #188
+
 ### 2.10.0 (2021-11-03)
  * Feat: Added support for display format when using [`custom-input`](https://talkhabi.github.io/vue-persian-datetime-picker/guide/custom-input.html)
 
