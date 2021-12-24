@@ -28,7 +28,7 @@
 <date-picker popover auto-submit />
 ```
 <ClientOnly>
-  <date-picker popover auto-submit />
+  <date-picker popover="right" auto-submit />
 </ClientOnly>
 
 

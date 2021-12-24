@@ -1,10 +1,10 @@
 # Popover mode
 
 ```vue
-<date-picker auto-submit popover />
+<date-picker auto-submit popover="right" />
 ```
 <ClientOnly>
-  <date-picker auto-submit popover />
+  <date-picker auto-submit popover="right" />
 </ClientOnly>
 
 
@@ -24,7 +24,7 @@ accepted:
   
   `bottom-right` | `bottom-left`
   
-  `left-top` | `left-bottom`
+  `top` | `bottom`
   
-  `right-top` | `right-bottom`
+  `right` | `left`
 

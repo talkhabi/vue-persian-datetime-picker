@@ -2,7 +2,6 @@
   <span
     class="vpd-main"
     :data-type="type"
-    :data-placement="popoverPlace"
     :data-locale="localeData.name"
     :data-locale-dir="localeData.config.dir"
     :class="{ 'vpd-is-popover': isPopover }"
@@ -70,6 +69,7 @@
           {
             'vpd-is-range': range,
             'vpd-is-inline': inline,
+            'vpd-is-popover': isPopover,
             'vpd-is-multiple': multiple,
             'vpd-compact-time': isCompactTime,
             'vpd-no-footer': autoSubmit && !hasStep('t')
@@ -458,6 +458,7 @@ import CoreModule from './modules/core'
 import { popupRouteChanger } from './modules/mixins'
 import { cloneDates, isSameDay } from './modules/utils'
 import { addLiveEvent } from './modules/utils'
+import popover from './modules/popover-util'
 
 export default {
   components: {
@@ -838,10 +839,11 @@ export default {
      * @type Boolean | String
      * @accepted:
      *    true | false
+     *    top | bottom | right | left
      *    top-left | top-right | bottom-right | bottom-left
-     *    left-top | left-bottom | right-top | right-bottom
      * @default false
      * @example <date-picker popover />
+     * @example <date-picker popover="right" />
      * @example <date-picker popover="top-left" />
      * @version 2.6.0
      */
@@ -904,7 +906,6 @@ export default {
       locales: ['fa'],
       localeData: coreModule.locale,
       windowWidth: window.innerWidth,
-      popoverPlace: 'bottom-right'
     }
   },
   computed: {
@@ -1229,18 +1230,12 @@ export default {
         if (this.type === 'datetime' && this.view === 'day') this.goStep('d')
         if (this.view !== 'day') this.goStep(this.shortCodes[this.view] || 'd')
         this.$nextTick(() => {
-          if (this.appendTo) {
-            try {
-              let container = document.querySelector(this.appendTo)
-              container.appendChild(this.$refs.picker)
-            } catch (er) {
-              // eslint-disable-next-line
-              console.warn(`Cannot append picker to "${this.appendTo}"!`)
-            }
+          if (popover.shouldAppendPicker(this.appendTo, this.isPopover)) {
+            popover.appendChild(this.appendTo, this.$refs.picker)
           }
         })
         this.checkScroll()
-        this.setPlacement()
+        this.$nextTick(this.setPlacement)
         this.$emit('open', this)
       } else {
         if (this.inline && !this.disabled) return (this.visible = true)
@@ -1297,16 +1292,17 @@ export default {
       let code = e.keyCode
       if ((code === 9 || code === 27) && this.visible) this.visible = false
     })
+    window.addEventListener('scroll', this.onWindowScroll, true)
     window.addEventListener('resize', this.onWindowResize, true)
     window.addEventListener('mousedown', this.onWindowClick, true)
   },
   beforeDestroy() {
     window.clearInterval(this.updateNowInterval)
+    window.removeEventListener('scroll', this.onWindowScroll, true)
     window.removeEventListener('resize', this.onWindowResize, true)
     window.removeEventListener('mousedown', this.onWindowClick, true)
-    let picker = this.$refs.picker
-    if (this.appendTo && picker && picker.$el && picker.$el.parentNode) {
-      picker.$el.parentNode.removeChild(picker.$el)
+    if (popover.shouldAppendPicker(this.appendTo, this.isPopover)) {
+      popover.removeChild(this.$refs.picker)
     }
   },
   methods: {
@@ -1764,13 +1760,23 @@ export default {
       }
       return value
     },
+    getInputGroupElement() {
+      return this.customInput
+        ? document.querySelector(this.customInput)
+        : this.$refs.inputGroup
+    },
     onWindowResize() {
       this.windowWidth = window.innerWidth
+      this.setPlacement()
+    },
+    onWindowScroll() {
+      this.setPlacement()
     },
     onWindowClick(event) {
-      if (this.isPopover && this.$refs.picker && this.$refs.inputGroup) {
+      const inputGroup = this.getInputGroupElement()
+      if (this.isPopover && this.$refs.picker && inputGroup) {
         let isOnPicker = this.$refs.picker.contains(event.target)
-        let isOnInput = this.$refs.inputGroup.contains(event.target)
+        let isOnInput = inputGroup.contains(event.target)
         if (isOnPicker) event.preventDefault()
         if (!isOnPicker && !isOnInput) {
           // setTimeout because:
@@ -1782,31 +1788,16 @@ export default {
       }
     },
     setPlacement() {
-      if (!this.isPopover) return
-      let allowed = [
-        'top-left',
-        'top-right',
-        'bottom-right',
-        'bottom-left',
-        'left-top',
-        'left-bottom',
-        'right-top',
-        'right-bottom'
-      ]
-      if (allowed.indexOf(this.popover) !== -1)
-        return (this.popoverPlace = this.popover)
-
-      this.popoverPlace = 'bottom-right'
-      this.$nextTick(() => {
-        let placement = ['bottom', 'right']
-        let container = this.$refs.container
-        let rect = container.getBoundingClientRect()
-        let left = rect.left
-        let bottom = window.innerHeight - rect.bottom
-        if (bottom <= 0) placement[0] = 'top'
-        if (left <= 0) placement[1] = 'left'
-        this.popoverPlace = placement.join('-')
-      })
+      if (!this.isPopover || !this.visible) return
+      const positionOptions = {
+        placement: this.popover
+      }
+      popover.setPickerPosition(
+        this.$refs.picker,
+        this.$refs.container,
+        this.getInputGroupElement(),
+        positionOptions
+      )
     }
   },
   install(Vue, options) {

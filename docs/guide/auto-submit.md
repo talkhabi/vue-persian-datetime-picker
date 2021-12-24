@@ -15,18 +15,18 @@
 </ClientOnly>
 
 ```vue
-<date-picker popover auto-submit />
+<date-picker popover="right" auto-submit />
 ```
 <ClientOnly>
-  <date-picker popover auto-submit />
+  <date-picker popover="right" auto-submit />
 </ClientOnly>
 
 
 ```vue
-<date-picker simple popover auto-submit />
+<date-picker simple popover="right" auto-submit />
 ```
 <ClientOnly>
-  <date-picker simple popover auto-submit />  
+  <date-picker simple popover="right" auto-submit />  
 </ClientOnly>
 
 - Wrapper submit

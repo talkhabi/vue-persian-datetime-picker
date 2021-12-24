@@ -116,9 +116,8 @@ export default {
       }, 300)
     },
     wheelUpdate(e) {
-      const delta = this.jump
       const goUp = (e.wheelDeltaY || -e.detail) > 0
-      this.update(goUp ? delta : -delta)
+      this.update(goUp ? 1 : -1)
     },
     fastUpdateCounter(e) {
       if (!e) this.transitionSpeed = 300
