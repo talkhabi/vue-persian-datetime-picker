@@ -841,13 +841,15 @@ export default {
      *    true | false
      *    top | bottom | right | left
      *    top-left | top-right | bottom-right | bottom-left
+     *    { offsetX: -10, offsetY: 10 }
+     *    { placement: 'right', offsetX: 10, offsetY: 10 }
      * @default false
      * @example <date-picker popover />
      * @example <date-picker popover="right" />
      * @example <date-picker popover="top-left" />
      * @version 2.6.0
      */
-    popover: { type: [Boolean, String], default: false },
+    popover: { type: [Boolean, String, Object], default: false },
 
     /**
      * If you want to change route address in open/close action,
@@ -1789,9 +1791,15 @@ export default {
     },
     setPlacement() {
       if (!this.isPopover || !this.visible) return
-      const positionOptions = {
-        placement: this.popover
+      let positionOptions = {
+        placement: '',
+        offsetX: 0,
+        offsetY: 0
       }
+      if (typeof this.popover === 'object' && this.popover)
+        positionOptions.placement = this.popover
+      else if (typeof this.popover === 'string')
+        positionOptions.placement = this.popover
       popover.setPickerPosition(
         this.$refs.picker,
         this.$refs.container,
