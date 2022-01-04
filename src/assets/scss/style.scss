@@ -582,6 +582,8 @@
   width: 100px;
   height: 0;
   z-index: 500;
+  right: unset;
+  bottom: unset;
   .#{$prefix}container {
     position: absolute;
     transform: none;
