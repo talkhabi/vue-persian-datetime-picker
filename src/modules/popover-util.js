@@ -26,8 +26,8 @@ const popover = {
   setPickerPosition(pickerWrapperEl, containerEl, inputWrapperEl, options) {
     if (!inputWrapperEl || !pickerWrapperEl) return
 
+    let { placement = '', offsetX = 0, offsetY = 0 } = options
     let dataPlacement = ''
-    const placement = options.placement
     let isOnTop = /top/.test(placement)
     let isOnLeft = /left/.test(placement)
     let isOnRight = /right/.test(placement)
@@ -52,13 +52,15 @@ const popover = {
     dataPlacement += isOnLeft ? '-left' : '-right'
 
     if (isOnTop) {
-      pickerWrapperEl.style.top = inputWrapperRect.top - distanceY + 'px'
+      pickerWrapperEl.style.top =
+        inputWrapperRect.top - distanceY - offsetY + 'px'
     } else {
-      pickerWrapperEl.style.top = top + distanceY + 'px'
+      pickerWrapperEl.style.top = top + distanceY + offsetY + 'px'
     }
 
+    offsetX *= isOnRight ? 1 : -1
     pickerWrapperEl.setAttribute('data-placement', dataPlacement)
-    pickerWrapperEl.style.left = inputWrapperRect.left + 'px'
+    pickerWrapperEl.style.left = inputWrapperRect.left + offsetX + 'px'
   }
 }
 

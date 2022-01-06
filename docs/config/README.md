@@ -324,14 +324,14 @@ Enable or disable multiple mode
 ## popover
 
 Enable or disable popover mode
-- Type: `Boolean` | `String`
+- Type: `Boolean` | `String` | `Object`
 - Default: `false`
 - Accepted: 
     * `true` | `false`
-    * `top-left` | `top-right`
-    * `bottom-right` | `bottom-left`
-    * `left-top` | `left-bottom`
-    * `right-top` | `right-bottom`
+    * `top` | `bottom` | `right` | `left`
+    * `top-left` | `top-right` | `bottom-right` | `bottom-left`
+    * `{ offsetX: Number, offsetY: Number }`
+    * `{ placement: String, offsetX: Number, offsetY: Number }`
 
 
 ## useRouter

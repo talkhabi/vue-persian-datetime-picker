@@ -129,6 +129,9 @@ const Core = function(defaultLocaleName, defaultOptions) {
       date.xAdd = function(amount, key) {
         return this.add(amount, methods[key])
       }
+      date.xDaysInMonth = function() {
+        return xDaysInMonth(this.xYear(), this.xMonth())
+      }
       date.clone = function() {
         return Instance.moment(this.toDate())
       }

@@ -841,13 +841,15 @@ export default {
      *    true | false
      *    top | bottom | right | left
      *    top-left | top-right | bottom-right | bottom-left
+     *    { offsetX: -10, offsetY: 10 }
+     *    { placement: 'right', offsetX: 10, offsetY: 10 }
      * @default false
      * @example <date-picker popover />
      * @example <date-picker popover="right" />
      * @example <date-picker popover="top-left" />
      * @version 2.6.0
      */
-    popover: { type: [Boolean, String], default: false },
+    popover: { type: [Boolean, String, Object], default: false },
 
     /**
      * If you want to change route address in open/close action,
@@ -1400,18 +1402,29 @@ export default {
     selectYear(year) {
       if (year.disabled) return
       this.date = this.date.clone().xYear(year.xYear())
-      if (['year', 'year-month'].indexOf(this.type) !== -1)
-        this.selectedDates = [this.date.clone()]
+      this.keepCurrentSelectedDay()
+      this.resetSelectedDates(this.date)
       this.$emit('year-change', year)
       this.nextStep('year')
     },
     selectMonth(month) {
       if (month.disabled) return
       this.date = this.date.clone().xMonth(month.xMonth())
-      if (['month', 'year-month'].indexOf(this.type) !== -1)
-        this.selectedDates = [this.date.clone()]
+      this.keepCurrentSelectedDay()
+      this.resetSelectedDates(this.date)
       this.$emit('month-change', month)
       this.nextStep('month')
+    },
+    keepCurrentSelectedDay() {
+      if (!this.simple || this.multiple || this.range) return
+      let currentDay = this.selectedDate.xDate()
+      this.date.xDate(Math.min(currentDay, this.date.xDaysInMonth()))
+      this.selectedDates = [this.date.clone()]
+      this.autoSubmit && this.submit(false)
+    },
+    resetSelectedDates(date) {
+      if (['month', 'year-month'].indexOf(this.type) !== -1)
+        this.selectedDates = [date.clone()]
     },
     submit(close = true) {
       let steps = this.steps.length - 1
@@ -1789,9 +1802,15 @@ export default {
     },
     setPlacement() {
       if (!this.isPopover || !this.visible) return
-      const positionOptions = {
-        placement: this.popover
+      let positionOptions = {
+        placement: '',
+        offsetX: 0,
+        offsetY: 0
       }
+      if (typeof this.popover === 'object' && this.popover)
+        positionOptions.placement = this.popover
+      else if (typeof this.popover === 'string')
+        positionOptions.placement = this.popover
       popover.setPickerPosition(
         this.$refs.picker,
         this.$refs.container,
