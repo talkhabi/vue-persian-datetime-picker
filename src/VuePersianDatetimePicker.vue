@@ -1402,18 +1402,29 @@ export default {
     selectYear(year) {
       if (year.disabled) return
       this.date = this.date.clone().xYear(year.xYear())
-      if (['year', 'year-month'].indexOf(this.type) !== -1)
-        this.selectedDates = [this.date.clone()]
+      this.keepCurrentSelectedDay()
+      this.resetSelectedDates(this.date)
       this.$emit('year-change', year)
       this.nextStep('year')
     },
     selectMonth(month) {
       if (month.disabled) return
       this.date = this.date.clone().xMonth(month.xMonth())
-      if (['month', 'year-month'].indexOf(this.type) !== -1)
-        this.selectedDates = [this.date.clone()]
+      this.keepCurrentSelectedDay()
+      this.resetSelectedDates(this.date)
       this.$emit('month-change', month)
       this.nextStep('month')
+    },
+    keepCurrentSelectedDay() {
+      if (!this.simple || this.multiple || this.range) return
+      let currentDay = this.selectedDate.xDate()
+      this.date.xDate(Math.min(currentDay, this.date.xDaysInMonth()))
+      this.selectedDates = [this.date.clone()]
+      this.autoSubmit && this.submit(false)
+    },
+    resetSelectedDates(date) {
+      if (['month', 'year-month'].indexOf(this.type) !== -1)
+        this.selectedDates = [date.clone()]
     },
     submit(close = true) {
       let steps = this.steps.length - 1
