@@ -1790,7 +1790,6 @@ export default {
       if (this.isPopover && this.$refs.picker && inputGroup) {
         let isOnPicker = this.$refs.picker.contains(event.target)
         let isOnInput = inputGroup.contains(event.target)
-        if (isOnPicker) event.preventDefault()
         if (!isOnPicker && !isOnInput) {
           // setTimeout because:
           // first read the input value
