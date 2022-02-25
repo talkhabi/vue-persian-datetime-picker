@@ -1807,7 +1807,7 @@ export default {
         offsetY: 0
       }
       if (typeof this.popover === 'object' && this.popover)
-        positionOptions.placement = this.popover
+        positionOptions = this.popover
       else if (typeof this.popover === 'string')
         positionOptions.placement = this.popover
       popover.setPickerPosition(
