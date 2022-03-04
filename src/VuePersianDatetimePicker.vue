@@ -1790,7 +1790,6 @@ export default {
       if (this.isPopover && this.$refs.picker && inputGroup) {
         let isOnPicker = this.$refs.picker.contains(event.target)
         let isOnInput = inputGroup.contains(event.target)
-        if (isOnPicker) event.preventDefault()
         if (!isOnPicker && !isOnInput) {
           // setTimeout because:
           // first read the input value
@@ -1808,7 +1807,7 @@ export default {
         offsetY: 0
       }
       if (typeof this.popover === 'object' && this.popover)
-        positionOptions.placement = this.popover
+        positionOptions = this.popover
       else if (typeof this.popover === 'string')
         positionOptions.placement = this.popover
       popover.setPickerPosition(
