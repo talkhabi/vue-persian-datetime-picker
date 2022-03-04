@@ -129,6 +129,10 @@ This project is licensed under the MIT License
 
 ## Change log
 
+### 2.10.4 (2022-03-04)
+ * Fixed [change the time with keyboard in popover mode](https://github.com/talkhabi/vue-persian-datetime-picker/issues/214)
+ * Fixed popover configuration
+
 ### 2.10.3 (2022-01-06)
  * Fixed [popover position in rtl pages](https://github.com/talkhabi/vue-persian-datetime-picker/issues/204)
  * Fixed [keep the selected day in simple mode](https://github.com/talkhabi/vue-persian-datetime-picker/issues/207)
